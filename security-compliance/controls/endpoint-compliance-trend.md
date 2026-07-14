@@ -1,10 +1,10 @@
 # Endpoint Compliance Trend Report
 
-Generated: 2026-07-14 11:48:22
+Generated: 2026-07-14 11:58:11
 Source history: .\security-compliance\controls\endpoint-compliance-history.csv
 
 ## Current Snapshot
-- TimestampUtc: 2026-07-14 11:48:21
+- TimestampUtc: 2026-07-14 11:58:10
 - TotalEndpoints: **120**
 - Closed: **120**
 - RequiresChanges: **0**
@@ -17,11 +17,11 @@ Source history: .\security-compliance\controls\endpoint-compliance-history.csv
 - EvidenceGaps: **0**
 
 ## Change Since Previous Snapshot
-- Closed: **120** (+45)
+- Closed: **120** (+0)
 - RequiresChanges: **0** (+0)
 - InReview: **0** (+0)
-- Pending: **0** (-45)
-- ReadyToClose: **120** (+45)
+- Pending: **0** (+0)
+- ReadyToClose: **120** (+0)
 - Overdue: **0** (+0)
-- EvidenceApproved: **120** (+45)
-- EvidenceGaps: **0** (-45)
+- EvidenceApproved: **120** (+0)
+- EvidenceGaps: **0** (+0)

@@ -55,6 +55,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 28. Added owner test-evidence queue reporting via `scripts/compliance/export-owner-test-evidence-queue.ps1` to produce a prioritized execution queue by risk/due date/owner and integrated it into the compliance cycle.
 29. Added test-evidence update automation scaffolding via `scripts/compliance/generate-test-evidence-updates-template.ps1` and `scripts/compliance/apply-test-evidence-updates.ps1`; integrated optional template generation into `run-endpoint-compliance-cycle.ps1` (`-GenerateTestEvidenceTemplate -TemplateTop <N>`).
 30. Added release packaging automation via `scripts/compliance/package-endpoint-compliance-baseline.ps1` to produce a baseline artifact bundle (directory + zip + SHA256 manifest).
+31. Added enforced CI drift gate via `scripts/compliance/enforce-endpoint-compliance-drift.ps1` and wired it into `.github/workflows/security-compliance-gates.yml` after compliance cycle refresh.
 
 ## Current Endpoint Review Backlog Snapshot
 

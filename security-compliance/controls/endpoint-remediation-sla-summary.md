@@ -1,6 +1,6 @@
 # Endpoint Remediation SLA Summary
 
-Generated: 2026-07-14 11:48:16
+Generated: 2026-07-14 11:58:04
 
 - Open items: **0**
 - Overdue items: **0**

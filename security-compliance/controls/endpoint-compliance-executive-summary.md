@@ -1,6 +1,6 @@
 # Endpoint Compliance Executive Summary
 
-Generated: 2026-07-14 11:48:19
+Generated: 2026-07-14 11:58:08
 
 ## Backlog Health
 - Total endpoints: **120**

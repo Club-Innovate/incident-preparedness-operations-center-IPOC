@@ -28,6 +28,14 @@ jobs:
         shell: pwsh
         run: ./scripts/compliance/check-dotnet-vulnerabilities.ps1 -ProjectPath "IPOC_WEB.Server/IPOC_WEB.Server.csproj" -FailOnSeverities "Critical","High"
 
+      - name: Endpoint compliance cycle (drift refresh)
+        shell: pwsh
+        run: ./scripts/compliance/run-endpoint-compliance-cycle.ps1 -IncludePendingEvidence
+
+      - name: Endpoint compliance drift gate (enforced)
+        shell: pwsh
+        run: ./scripts/compliance/enforce-endpoint-compliance-drift.ps1 -LedgerPath "security-compliance/controls/endpoint-minimum-necessary-reviews.csv" -EvidenceGapCsvPath "security-compliance/controls/endpoint-evidence-completion-gaps.csv" -SlaSummaryPath "security-compliance/controls/endpoint-remediation-sla-summary.md"
+
   frontend-build-and-audit:
     runs-on: ubuntu-latest
     defaults:
