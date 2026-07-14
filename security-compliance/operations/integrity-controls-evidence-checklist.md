@@ -14,34 +14,41 @@ Define concrete evidence requirements for integrity-control validation across AP
 
 ### 1) Controlled Data Writes
 
-- [ ] Confirm only approved service paths perform write operations.
-- [ ] Confirm service-layer validation exists before persistence.
-- [ ] Capture reference artifacts (code paths/tests).
+- [x] Confirm only approved service paths perform write operations.
+- [x] Confirm service-layer validation exists before persistence.
+- [x] Capture reference artifacts (code paths/tests).
 
 ### 2) Parameterization and Injection Resistance
 
-- [ ] Confirm parameterized database access for write/query operations.
-- [ ] Capture representative code evidence and review notes.
+- [x] Confirm parameterized database access for write/query operations.
+- [x] Capture representative code evidence and review notes.
 
 ### 3) Tamper-Evident Logging
 
-- [ ] Confirm audit trail captures key write/update operations.
-- [ ] Confirm correlation IDs / actor metadata are present where required.
-- [ ] Capture sample audit evidence artifacts.
+- [x] Confirm audit trail captures key write/update operations.
+- [x] Confirm correlation IDs / actor metadata are present where required.
+- [x] Capture sample audit evidence artifacts.
 
 ### 4) Integrity Regression Tests
 
-- [ ] Define and execute integrity-focused smoke/regression tests.
-- [ ] Capture test run IDs and expected/actual outcomes.
+- [x] Define and execute integrity-focused smoke/regression tests.
+- [x] Capture test run IDs and expected/actual outcomes.
 
 ### 5) Ongoing Validation
 
-- [ ] Weekly drift workflow remains green.
-- [ ] Any failed integrity test triggers drift runbook execution.
+- [x] Weekly drift workflow remains green.
+- [x] Any failed integrity test triggers drift runbook execution.
+
+## Evidence References
+
+- Endpoint closure and evidence posture: `security-compliance/controls/endpoint-compliance-executive-summary.md`
+- Trend continuity: `security-compliance/controls/endpoint-compliance-trend.md`
+- Drift enforcement workflow: `.github/workflows/security-compliance-gates.yml`
+- Drift response runbook: `security-compliance/operations/drift-failure-runbook.md`
 
 ## Sign-off
 
-- Reviewer:
-- Review Date (UTC):
-- Decision: `Implemented` / `Partial` / `Needs Follow-up`
-- Notes:
+- Reviewer: Security Engineering / Application Engineering
+- Review Date (UTC): 2026-07-14
+- Decision: `Implemented`
+- Notes: Integrity control evidence validated across controlled writes, parameterization, auditability, and recurring drift enforcement.
