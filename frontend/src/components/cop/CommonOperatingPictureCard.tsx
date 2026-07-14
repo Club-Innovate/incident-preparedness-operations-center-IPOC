@@ -29,7 +29,7 @@ type CommonOperatingPictureCardProps = {
 type CopLayerSetPreset = {
   id: string;
   name: string;
-  geoOverlayLayer: 'composite' | 'resource' | 'bed' | 'incident';
+  geoOverlayLayer: 'composite' | 'resource' | 'bed' | 'incident' | 'ai-impact';
   geoOverlayStressFilter: 'all' | 'watch' | 'high';
   copMapBaseLayer: CopMapBaseLayerMode;
   copLiveOverlayFeedMode: CopLiveOverlayFeedMode;
@@ -241,7 +241,7 @@ function CommonOperatingPictureCard({ isAuthenticated, incidents, resourceInvent
   const [locationFilter, setLocationFilter] = useState('All');
   const [drilldownRegion, setDrilldownRegion] = useState<string | null>(null);
   const [drilldownLocationId, setDrilldownLocationId] = useState<number | null>(null);
-  const [geoOverlayLayer, setGeoOverlayLayer] = useState<'composite' | 'resource' | 'bed' | 'incident'>('composite');
+  const [geoOverlayLayer, setGeoOverlayLayer] = useState<'composite' | 'resource' | 'bed' | 'incident' | 'ai-impact'>('composite');
   const [geoOverlayStressFilter, setGeoOverlayStressFilter] = useState<'all' | 'watch' | 'high'>('all');
   const [copLiveOverlayFeedMode, setCopLiveOverlayFeedMode] = useState<CopLiveOverlayFeedMode>('off');
   const [copLiveOverlayFeedPoints, setCopLiveOverlayFeedPoints] = useState<Record<number, CopLiveOverlayFeedPoint>>({});
@@ -371,7 +371,7 @@ function CommonOperatingPictureCard({ isAuthenticated, incidents, resourceInvent
             mapped.push({
               id: `server-${preset.userReportPresetId}`,
               name: preset.presetName,
-              geoOverlayLayer: parsed.geoOverlayLayer === 'resource' || parsed.geoOverlayLayer === 'bed' || parsed.geoOverlayLayer === 'incident' ? parsed.geoOverlayLayer : 'composite',
+              geoOverlayLayer: parsed.geoOverlayLayer === 'resource' || parsed.geoOverlayLayer === 'bed' || parsed.geoOverlayLayer === 'incident' || parsed.geoOverlayLayer === 'ai-impact' ? parsed.geoOverlayLayer : 'composite',
               geoOverlayStressFilter: parsed.geoOverlayStressFilter === 'watch' || parsed.geoOverlayStressFilter === 'high' ? parsed.geoOverlayStressFilter : 'all',
               copMapBaseLayer: parsed.copMapBaseLayer === 'terrain' ? 'terrain' : 'streets',
               copLiveOverlayFeedMode: parsed.copLiveOverlayFeedMode === 'simulated' ? 'simulated' : 'off',
@@ -925,6 +925,14 @@ function CommonOperatingPictureCard({ isAuthenticated, incidents, resourceInvent
         const bedStress = bedTotal > 0 ? (rollup.bedsOccupied + rollup.bedsUnavailable) / bedTotal : 0;
         const compositeStress = Math.round(((resourceStress + bedStress) / 2) * 100);
         const incidentStress = Math.min(100, Math.round((incidentPressurePercent * 0.7) + (compositeStress * 0.3)));
+        const aiImpactStress = Math.min(
+          100,
+          Math.round(
+            (incidentStress * 0.55)
+            + (compositeStress * 0.25)
+            + (weatherOperationalSignal.highRiskDayCount > 0 ? 18 : weatherOperationalSignal.moderateRiskDayCount > 0 ? 10 : 4),
+          ),
+        );
 
         const layerStress = geoOverlayLayer === 'resource'
           ? Math.round(resourceStress * 100)
@@ -932,6 +940,8 @@ function CommonOperatingPictureCard({ isAuthenticated, incidents, resourceInvent
             ? Math.round(bedStress * 100)
             : geoOverlayLayer === 'incident'
               ? incidentStress
+              : geoOverlayLayer === 'ai-impact'
+                ? aiImpactStress
               : compositeStress;
 
         return {
@@ -941,11 +951,12 @@ function CommonOperatingPictureCard({ isAuthenticated, incidents, resourceInvent
           resourceStressPercent: Math.round(resourceStress * 100),
           bedStressPercent: Math.round(bedStress * 100),
           incidentStressPercent: incidentStress,
+          aiImpactStressPercent: aiImpactStress,
           layerStress,
         };
       })
       .slice(0, 30);
-  }, [geoOverlayLayer, incidentPressurePercent, locationRollups, scopedLocationMap]);
+  }, [geoOverlayLayer, incidentPressurePercent, locationRollups, scopedLocationMap, weatherOperationalSignal.highRiskDayCount, weatherOperationalSignal.moderateRiskDayCount]);
 
   useEffect(() => {
     if (!COP_LIVE_OVERLAY_FEED_ENABLED || copLiveOverlayFeedMode !== 'simulated') {
@@ -1084,11 +1095,17 @@ function CommonOperatingPictureCard({ isAuthenticated, incidents, resourceInvent
       .filter((point) => !acknowledgedOverlayLocationIds.includes(point.locationId))
       .map((point) => {
       const priority = point.layerStress >= 85 ? 'Immediate' : point.layerStress >= 70 ? 'Priority' : 'Monitor';
-      const action = point.layerStress >= 85
-        ? 'Escalate incident command execution and validate contingency capacity.'
-        : point.layerStress >= 70
-          ? 'Open planning and assign mitigation actions for the next period cycle.'
-          : 'Track trend and maintain watch posture.';
+      const action = geoOverlayLayer === 'ai-impact'
+        ? point.layerStress >= 85
+          ? 'Trigger AI impact hotspot escalation and execute incident command mitigation package.'
+          : point.layerStress >= 70
+            ? 'Generate AI Incident Co-Pilot brief and assign next-period mitigation actions.'
+            : 'Monitor AI impact trend and maintain watch posture.'
+        : point.layerStress >= 85
+          ? 'Escalate incident command execution and validate contingency capacity.'
+          : point.layerStress >= 70
+            ? 'Open planning and assign mitigation actions for the next period cycle.'
+            : 'Track trend and maintain watch posture.';
 
       return {
         ...point,
@@ -1096,7 +1113,7 @@ function CommonOperatingPictureCard({ isAuthenticated, incidents, resourceInvent
         action,
       };
     });
-  }, [acknowledgedOverlayLocationIds, copGeoHotspots]);
+  }, [acknowledgedOverlayLocationIds, copGeoHotspots, geoOverlayLayer]);
 
   const tableDrilldownRows = useMemo(() => {
     return locationRollups.filter((rollup) => {
@@ -1602,6 +1619,13 @@ function CommonOperatingPictureCard({ isAuthenticated, incidents, resourceInvent
               >
                 Incident pressure
               </Badge>
+              <Badge
+                bg={geoOverlayLayer === 'ai-impact' ? 'dark' : 'secondary'}
+                role="button"
+                onClick={() => setGeoOverlayLayer('ai-impact')}
+              >
+                AI impact hotspots
+              </Badge>
             </div>
             <div className="d-inline-flex flex-wrap gap-2 mb-2">
               <Badge
@@ -1735,6 +1759,7 @@ function CommonOperatingPictureCard({ isAuthenticated, incidents, resourceInvent
                               <div>Resource stress: {point.resourceStressPercent}%</div>
                               <div>Bed stress: {point.bedStressPercent}%</div>
                               <div>Incident stress: {point.incidentStressPercent}%</div>
+                              <div>AI impact stress: {point.aiImpactStressPercent}%</div>
                             </div>
                           </Popup>
                         </Marker>
@@ -1826,6 +1851,7 @@ function CommonOperatingPictureCard({ isAuthenticated, incidents, resourceInvent
                                 <div>Resource stress: {point.resourceStressPercent}%</div>
                                 <div>Bed stress: {point.bedStressPercent}%</div>
                                 <div>Incident stress: {point.incidentStressPercent}%</div>
+                                <div>AI impact stress: {point.aiImpactStressPercent}%</div>
                               </div>
                             </Popup>
                           </Marker>
@@ -1841,7 +1867,7 @@ function CommonOperatingPictureCard({ isAuthenticated, incidents, resourceInvent
               <Badge bg="warning">Watch</Badge>
               <Badge bg="danger">High stress</Badge>
             </div>
-            <div className="small text-muted mt-1">Active overlay: {geoOverlayLayer === 'composite' ? 'Composite stress' : geoOverlayLayer === 'resource' ? 'Resource pressure' : geoOverlayLayer === 'bed' ? 'Bed pressure' : 'Incident pressure'}.</div>
+            <div className="small text-muted mt-1">Active overlay: {geoOverlayLayer === 'composite' ? 'Composite stress' : geoOverlayLayer === 'resource' ? 'Resource pressure' : geoOverlayLayer === 'bed' ? 'Bed pressure' : geoOverlayLayer === 'incident' ? 'Incident pressure' : 'AI impact hotspots'}.</div>
             <div className="small text-muted mt-1">
               AOI overlay summary: avg stress {geoOverlaySummary.averageStress}% · high stress {geoOverlaySummary.highStressCount} · watch {geoOverlaySummary.watchStressCount} · visible markers {copGeoOverlayVisiblePoints.length}/{copGeoOverlayPoints.length}
             </div>

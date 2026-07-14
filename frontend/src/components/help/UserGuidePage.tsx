@@ -289,6 +289,35 @@ const topics: GuideTopic[] = [
               body: 'Predictive analytics are advisory. Confirm recommendations against live operations telemetry before execution.',
             },
           },
+          {
+            id: 'use-cop-ai-impact-hotspots',
+            title: 'Use COP AI impact hotspot overlay',
+            kind: 'HOW-TO GUIDE',
+            detail: 'Activate AI impact hotspots layer in COP to prioritize location-level risk escalation and route command actions.',
+            prerequisites: [
+              'COP has incident/resource/bed baseline data for current AOI scope.',
+              'Operator has access to Incident, Planning, or Operations workspaces for cross-workspace handoff.',
+            ],
+            tutorial: [
+              'Open Common Operating Picture and select AI impact hotspots in geospatial layer controls.',
+              'Use stress filter badges (All, Watch+, High only) to focus map and command queue on highest-risk locations.',
+              'Select hotspot markers to inspect AI impact stress alongside resource, bed, and incident stress context.',
+              'Use queue actions to open Planning/Operations/Incident workspaces with handoff context for mitigation execution.',
+            ],
+            expectedOutcomes: [
+              'Command team can prioritize AI-ranked hotspots in a map-first workflow.',
+              'Cross-workspace action routing starts from COP risk context without losing AOI and stress filters.',
+            ],
+            commonPitfalls: [
+              'Operating only in composite layer and missing AI hotspot prioritization signal.',
+              'Acknowledging queue actions without routing work into downstream planning/operations execution lanes.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Operational use guidance',
+              body: 'AI hotspot ranking is decision-support. Validate local constraints and command intent before escalation actions.',
+            },
+          },
         ],
       },
       {
