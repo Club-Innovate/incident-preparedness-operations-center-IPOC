@@ -58,3 +58,15 @@ declare module 'react-leaflet-cluster' {
 }
 
 declare module 'leaflet/dist/leaflet.css';
+
+declare module '*.css';
+
+declare module '@azure/msal-react' {
+  export function useMsal(): {
+    instance: any;
+    accounts: Array<{ name?: string; username?: string }>;
+    inProgress: any;
+  };
+
+  export const MsalProvider: any;
+}
