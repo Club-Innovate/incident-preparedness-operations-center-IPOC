@@ -1,5 +1,12 @@
 name: security-compliance-gates
 
+permissions:
+  contents: read
+
+concurrency:
+  group: security-compliance-gates-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   pull_request:
     branches: [ main ]
@@ -38,6 +45,20 @@ jobs:
       - name: Endpoint compliance drift gate (enforced)
         shell: pwsh
         run: ./scripts/compliance/enforce-endpoint-compliance-drift.ps1 -LedgerPath "security-compliance/controls/endpoint-minimum-necessary-reviews.csv" -EvidenceGapCsvPath "security-compliance/controls/endpoint-evidence-completion-gaps.csv" -SlaSummaryPath "security-compliance/controls/endpoint-remediation-sla-summary.md"
+
+      - name: Upload endpoint compliance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: endpoint-compliance-artifacts
+          path: |
+            security-compliance/controls/endpoint-compliance-executive-summary.md
+            security-compliance/controls/endpoint-compliance-trend.md
+            security-compliance/controls/endpoint-remediation-kpi.md
+            security-compliance/controls/endpoint-ready-to-close-summary.md
+            security-compliance/controls/endpoint-remediation-sla-summary.md
+            security-compliance/controls/endpoint-evidence-completion-gaps-summary.md
+            security-compliance/controls/endpoint-compliance-history.csv
 
   frontend-build-and-audit:
     runs-on: ubuntu-latest
