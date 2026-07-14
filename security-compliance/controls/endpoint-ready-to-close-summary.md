@@ -1,6 +1,6 @@
 # Endpoint Ready-to-Close Summary
 
-Generated: 2026-07-14 11:57:58
+Generated: 2026-07-14 12:14:02
 
 - Ready to close: **120**
 - Not ready: **0**
