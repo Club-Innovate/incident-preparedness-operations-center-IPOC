@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Infrastructure/Incidents/IncidentQueryService.cs
 Blueprint Name: IncidentDataAccess
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-14
 
 Description:
 Incident query and command data-access service using parameterized SQL operations.
@@ -141,6 +141,23 @@ public sealed class IncidentQueryService : IIncidentQueryService
     private static DateTimeOffset? ReadNullableDateTimeOffset(SqlDataReader reader, int ordinal)
     {
         return reader.IsDBNull(ordinal) ? null : ReadDateTimeOffset(reader, ordinal);
+    }
+
+    private static long ReadInt64Flexible(SqlDataReader reader, int ordinal)
+    {
+        var rawValue = reader.GetValue(ordinal);
+
+        return rawValue switch
+        {
+            long value => value,
+            int value => value,
+            short value => value,
+            byte value => value,
+            decimal value => decimal.ToInt64(value),
+            double value => Convert.ToInt64(value, System.Globalization.CultureInfo.InvariantCulture),
+            float value => Convert.ToInt64(value, System.Globalization.CultureInfo.InvariantCulture),
+            _ => Convert.ToInt64(rawValue, System.Globalization.CultureInfo.InvariantCulture),
+        };
     }
 
     public IncidentQueryService(IConfiguration configuration, IHostEnvironment hostEnvironment, IOptions<SqlDataOptions> sqlOptions, ILogger<IncidentQueryService> logger)
@@ -1835,17 +1852,17 @@ public sealed class IncidentQueryService : IIncidentQueryService
             }
 
             return new IncidentResourceLifecycleSummaryDto(
-                TotalRequests: reader.GetInt64(0),
-                RequestedRequests: reader.GetInt64(1),
-                ApprovedRequests: reader.GetInt64(2),
-                PartiallyFulfilledRequests: reader.GetInt64(3),
-                FulfilledRequests: reader.GetInt64(4),
-                DeniedRequests: reader.GetInt64(5),
-                CancelledRequests: reader.GetInt64(6),
-                ArchivedRequests: reader.GetInt64(7),
+                TotalRequests: ReadInt64Flexible(reader, 0),
+                RequestedRequests: ReadInt64Flexible(reader, 1),
+                ApprovedRequests: ReadInt64Flexible(reader, 2),
+                PartiallyFulfilledRequests: ReadInt64Flexible(reader, 3),
+                FulfilledRequests: ReadInt64Flexible(reader, 4),
+                DeniedRequests: ReadInt64Flexible(reader, 5),
+                CancelledRequests: ReadInt64Flexible(reader, 6),
+                ArchivedRequests: ReadInt64Flexible(reader, 7),
                 TotalRequestedQuantity: reader.GetDecimal(8),
                 TotalAssignedQuantity: reader.GetDecimal(9),
-                OpenUnassignedRequests: reader.GetInt64(10));
+                OpenUnassignedRequests: ReadInt64Flexible(reader, 10));
         }
         catch (SqlException ex)
         {

@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Infrastructure/Configuration/AzureAiSearchOptions.cs
 Blueprint Name: Configuration
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2026-07-07
-Updated: 2026-07-07
+Updated: 2026-07-12
 
 Description:
 Strongly typed Azure AI Search configuration options for RAG retrieval.

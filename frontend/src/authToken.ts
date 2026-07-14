@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: frontend/src/authToken.ts
 Blueprint Name: FrontendTokenAcquisition
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-06-23
 
 Description:
 Token acquisition helper for frontend API authorization.

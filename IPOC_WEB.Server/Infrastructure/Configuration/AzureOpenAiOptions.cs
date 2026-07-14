@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Infrastructure/Configuration/AzureOpenAiOptions.cs
 Blueprint Name: Configuration
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2026-07-06
-Updated: 2026-07-06
+Updated: 2026-07-12
 
 Description:
 Strongly typed Azure OpenAI configuration options.

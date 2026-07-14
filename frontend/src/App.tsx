@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: frontend/src/App.tsx
 Blueprint Name: FrontendAppShell
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-14
 
 Description:
 Primary application shell for ipoc web operations UI.

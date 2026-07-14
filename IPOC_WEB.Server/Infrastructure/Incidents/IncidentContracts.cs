@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Infrastructure/Incidents/IncidentContracts.cs
 Blueprint Name: IncidentContracts
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-12
 
 Description:
 Data transfer contracts for incident list/detail API responses.

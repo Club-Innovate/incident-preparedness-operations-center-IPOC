@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Extensions.cs
 Blueprint Name: ServiceDefaults
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-12
 
 Description:
 Common service defaults for server components, including health checks,

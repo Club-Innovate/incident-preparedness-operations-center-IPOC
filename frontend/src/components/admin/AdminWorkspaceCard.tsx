@@ -2212,7 +2212,7 @@ function AdminWorkspaceCard({
   };
 
   const handleCopySyntheticResetCommand = async () => {
-    const command = '.\\IPOC_WEB.AppHost\\planning\\Initialize-Database.ps1 -ConnectionString "<YOUR_CONNECTION_STRING>" -ResetSyntheticLogisticsData';
+    const command = '.\\Initialize-Database.ps1 -ConnectionString "<YOUR_CONNECTION_STRING>" -ResetSyntheticLogisticsData';
 
     try {
       await navigator.clipboard.writeText(command);

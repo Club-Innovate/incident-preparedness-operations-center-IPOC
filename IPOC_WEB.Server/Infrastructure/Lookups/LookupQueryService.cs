@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Infrastructure/Lookups/LookupQueryService.cs
 Blueprint Name: LookupDataAccess
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2026-06-23
-Updated: 2026-06-23
+Updated: 2026-07-14
 
 Description:
 Lookup query and admin command service for runtime dropdown/reference data.
@@ -251,7 +251,7 @@ public sealed class LookupQueryService : ILookupQueryService
                 r.RegionName,
                 TRY_CAST(l.Latitude AS decimal(9,6)) AS Latitude,
                 TRY_CAST(l.Longitude AS decimal(9,6)) AS Longitude,
-                CAST(l.CityName AS nvarchar(120)) AS CityName,
+                CAST(l.City AS nvarchar(120)) AS CityName,
                 CAST(l.StateCode AS nvarchar(2)) AS StateCode,
                 CAST(l.PostalCode AS nvarchar(20)) AS PostalCode,
                 CONCAT(
@@ -373,7 +373,7 @@ public sealed class LookupQueryService : ILookupQueryService
                 r.RegionName,
                 TRY_CAST(l.Latitude AS decimal(9,6)) AS Latitude,
                 TRY_CAST(l.Longitude AS decimal(9,6)) AS Longitude,
-                CAST(l.CityName AS nvarchar(120)) AS CityName,
+                CAST(l.City AS nvarchar(120)) AS CityName,
                 CAST(l.StateCode AS nvarchar(2)) AS StateCode,
                 CAST(l.PostalCode AS nvarchar(20)) AS PostalCode,
                 l.IsActive,
@@ -481,7 +481,7 @@ public sealed class LookupQueryService : ILookupQueryService
             UPDATE org.Location
             SET Latitude = @latitude,
                 Longitude = @longitude,
-                CityName = @cityName,
+                City = @cityName,
                 StateCode = @stateCode,
                 PostalCode = @postalCode
             WHERE LocationId = @locationId;
@@ -565,7 +565,7 @@ public sealed class LookupQueryService : ILookupQueryService
                 r.RegionName,
                 TRY_CAST(l.Latitude AS decimal(9,6)) AS Latitude,
                 TRY_CAST(l.Longitude AS decimal(9,6)) AS Longitude,
-                CAST(l.CityName AS nvarchar(120)) AS CityName,
+                CAST(l.City AS nvarchar(120)) AS CityName,
                 CAST(l.StateCode AS nvarchar(2)) AS StateCode,
                 CAST(l.PostalCode AS nvarchar(20)) AS PostalCode,
                 l.IsActive,
@@ -670,7 +670,7 @@ public sealed class LookupQueryService : ILookupQueryService
                 l.LocationName,
                 o.OrganizationName,
                 r.RegionName,
-                CAST(l.CityName AS nvarchar(120)) AS CityName,
+                CAST(l.City AS nvarchar(120)) AS CityName,
                 CAST(l.StateCode AS nvarchar(2)) AS StateCode,
                 CAST(l.PostalCode AS nvarchar(20)) AS PostalCode,
                 l.IsActive
@@ -1261,7 +1261,7 @@ public sealed class LookupQueryService : ILookupQueryService
 
         const string sql = """
             SELECT CASE
-                WHEN COL_LENGTH('org.Location', 'CityName') IS NOT NULL
+                WHEN COL_LENGTH('org.Location', 'City') IS NOT NULL
                  AND COL_LENGTH('org.Location', 'StateCode') IS NOT NULL
                  AND COL_LENGTH('org.Location', 'PostalCode') IS NOT NULL
                 THEN 1
@@ -1281,7 +1281,7 @@ public sealed class LookupQueryService : ILookupQueryService
         _locationAddressColumnsAvailable = available;
         if (!available)
         {
-            _logger.LogWarning("org.Location address columns (CityName/StateCode/PostalCode) are unavailable. Falling back to legacy location query/update behavior.");
+            _logger.LogWarning("org.Location address columns (City/StateCode/PostalCode) are unavailable. Falling back to legacy location query/update behavior.");
         }
 
         return available;

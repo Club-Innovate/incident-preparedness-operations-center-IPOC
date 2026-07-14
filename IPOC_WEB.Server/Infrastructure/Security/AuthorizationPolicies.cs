@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Infrastructure/Security/AuthorizationPolicies.cs
 Blueprint Name: Authorization
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-12
 
 Description:
 Central authorization policy definitions for API capability boundaries.

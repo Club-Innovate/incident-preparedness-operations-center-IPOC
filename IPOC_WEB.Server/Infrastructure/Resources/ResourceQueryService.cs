@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Infrastructure/Resources/ResourceQueryService.cs
 Blueprint Name: ResourceDataAccess
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-14
 
 Description:
 Resource and bed data-access service for inventory and availability operations.
@@ -73,6 +73,23 @@ public sealed class ResourceQueryService : IResourceQueryService
     private static DateTimeOffset? ReadNullableDateTimeOffset(SqlDataReader reader, int ordinal)
     {
         return reader.IsDBNull(ordinal) ? null : ReadDateTimeOffset(reader, ordinal);
+    }
+
+    private static long ReadInt64Flexible(SqlDataReader reader, int ordinal)
+    {
+        var rawValue = reader.GetValue(ordinal);
+
+        return rawValue switch
+        {
+            long value => value,
+            int value => value,
+            short value => value,
+            byte value => value,
+            decimal value => decimal.ToInt64(value),
+            double value => Convert.ToInt64(value, CultureInfo.InvariantCulture),
+            float value => Convert.ToInt64(value, CultureInfo.InvariantCulture),
+            _ => Convert.ToInt64(rawValue, CultureInfo.InvariantCulture),
+        };
     }
 
     public ResourceQueryService(IConfiguration configuration, IHostEnvironment hostEnvironment, IOptions<SqlDataOptions> sqlOptions, ILogger<ResourceQueryService> logger)
@@ -307,9 +324,9 @@ public sealed class ResourceQueryService : IResourceQueryService
                     reader.GetDecimal(2),
                     reader.GetDecimal(3),
                     reader.GetDecimal(4),
-                    reader.GetInt64(5),
-                    reader.GetInt64(6),
-                    reader.GetInt64(7)));
+                    ReadInt64Flexible(reader, 5),
+                    ReadInt64Flexible(reader, 6),
+                    ReadInt64Flexible(reader, 7)));
             }
 
             _logger.LogInformation("Retrieved {RollupCount} regional resource rollup records.", items.Count);

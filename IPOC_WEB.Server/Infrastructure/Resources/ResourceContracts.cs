@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Infrastructure/Resources/ResourceContracts.cs
 Blueprint Name: ResourceContracts
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-13
 
 Description:
 Contracts for resource inventory and bed availability API payloads.

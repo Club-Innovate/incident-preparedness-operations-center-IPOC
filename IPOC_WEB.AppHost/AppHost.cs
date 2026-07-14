@@ -1,4 +1,4 @@
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 /*
 File: IPOC_WEB.AppHost/AppHost.cs
@@ -7,7 +7,7 @@ Blueprint Name: AppHost
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-12
 
 Description:
 Aspire application host composition root for IPOC_WEB.

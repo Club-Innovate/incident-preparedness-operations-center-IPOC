@@ -212,6 +212,7 @@ export function useIncidentWorkspaceActions(deps: IncidentWorkspaceActionDeps) {
         incidentName: deps.incidentCreateName.trim(),
         incidentTypeCode: deps.incidentCreateTypeCode.trim(),
         severityCode: deps.incidentCreateSeverity.trim().length > 0 ? deps.incidentCreateSeverity.trim() : undefined,
+        primaryLocationId: Number(deps.incidentCreatePrimaryLocationId),
         isPlannedEvent: deps.incidentCreatePlanned,
         initialSummary: deps.incidentCreateSummary.trim().length > 0 ? deps.incidentCreateSummary.trim() : undefined,
       });
@@ -379,6 +380,7 @@ export function useIncidentWorkspaceActions(deps: IncidentWorkspaceActionDeps) {
         incidentName: deps.incidentEditName.trim(),
         incidentTypeCode: deps.incidentEditTypeCode.trim(),
         severityCode: deps.incidentEditSeverity.trim().length > 0 ? deps.incidentEditSeverity.trim() : undefined,
+        primaryLocationId: selectedEditLocation?.locationId,
         isPlannedEvent: deps.incidentEditPlanned,
         initialSummary: deps.incidentEditInitialSummary.trim().length > 0 ? deps.incidentEditInitialSummary.trim() : undefined,
         situationSummary: deps.incidentEditSituationSummary.trim().length > 0 ? deps.incidentEditSituationSummary.trim() : undefined,

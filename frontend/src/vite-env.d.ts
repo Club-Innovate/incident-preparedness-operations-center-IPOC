@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: frontend/src/vite-env.d.ts
 Blueprint Name: FrontendEnvTyping
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-12
 
 Description:
 Vite environment variable type declarations for frontend build-time config.

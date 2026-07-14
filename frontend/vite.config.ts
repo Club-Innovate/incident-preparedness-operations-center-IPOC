@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: frontend/vite.config.ts
 Blueprint Name: FrontendBuildConfig
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-02
 
 Description:
 Vite configuration for local HTTPS dev hosting, API proxying, and production build tuning.

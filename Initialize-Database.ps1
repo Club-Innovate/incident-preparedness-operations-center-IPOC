@@ -69,8 +69,8 @@ Write-Host ""
 $scriptRoot = Split-Path -Parent $MyInvocation.MyCommand.Path
 $planningDir = Join-Path $scriptRoot "KPP_WEB.AppHost" "planning"
 
-$dataModelScript = Join-Path $planningDir "KDHE_Custom_IOC_EM_NIMS_Data_Model.sql"
-$lookupMigrationScript = Join-Path $planningDir "KDHE_Custom_IOC_EM_Lookup_Migration.sql"
+$dataModelScript = Join-Path $planningDir "IPOC_NIMS_Data_Model.sql"
+$lookupMigrationScript = Join-Path $planningDir "IPOC_Lookup_Migration.sql"
 
 # Validate script files exist
 if (-not (Test-Path $dataModelScript)) {

@@ -260,6 +260,13 @@ function AssistantDock({ isAuthenticated, authRoles = [], onNotify }: AssistantD
   const preferencesRef = useRef<AssistantPreferences>(preferences);
   const analyticsRef = useRef<AssistantAnalyticsState>(analytics);
   const personalizationUpdatedUtcRef = useRef<string | null>(null);
+  const personalizationLastSubmittedSignatureRef = useRef<string | null>(null);
+
+  const buildPersonalizationSignature = (prefs: AssistantPreferences): string => JSON.stringify({
+    avatar: prefs.avatar,
+    theme: prefs.theme,
+    fontScale: prefs.fontScale,
+  });
 
   const persistAssistantLocalStateNow = () => {
     try {
@@ -719,6 +726,11 @@ function AssistantDock({ isAuthenticated, authRoles = [], onNotify }: AssistantD
             ?? (parsedPreferencePayload as Partial<AssistantPreferences>);
 
           if (serverPreferences && typeof serverPreferences === 'object') {
+            const normalizedServerPreferences = applyRestrictedPreferencePolicy(normalizePreferences(serverPreferences));
+            personalizationLastSubmittedSignatureRef.current = buildPersonalizationSignature(normalizedServerPreferences);
+          }
+
+          if (serverPreferences && typeof serverPreferences === 'object') {
             const hasPersistedLocalPreferences = hasLocalPreferencesRef.current
               || localStorage.getItem(ASSISTANT_LOCAL_PREFERENCES_PRESENT_KEY) === '1';
 
@@ -963,6 +975,13 @@ function AssistantDock({ isAuthenticated, authRoles = [], onNotify }: AssistantD
     }
 
     const timeoutId = window.setTimeout(() => {
+      const requestSignature = buildPersonalizationSignature(preferences);
+      if (personalizationLastSubmittedSignatureRef.current === requestSignature) {
+        return;
+      }
+
+      personalizationLastSubmittedSignatureRef.current = requestSignature;
+
       void saveAgentPersonalization({
         avatar: preferences.avatar,
         theme: preferences.theme,
@@ -985,9 +1004,11 @@ function AssistantDock({ isAuthenticated, authRoles = [], onNotify }: AssistantD
             }
 
             onNotify('Personalization updated in another session. Latest version was loaded for subsequent saves.', 'warning');
+            personalizationLastSubmittedSignatureRef.current = null;
             return;
           }
 
+          personalizationLastSubmittedSignatureRef.current = null;
           // local + preset fallback remains active
       });
     }, 450);

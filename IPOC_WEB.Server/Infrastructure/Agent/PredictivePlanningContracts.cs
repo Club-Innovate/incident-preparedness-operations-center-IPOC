@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Infrastructure/Agent/PredictivePlanningContracts.cs
 Blueprint Name: AgentPredictivePlanningContracts
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2026-07-10
-Updated: 2026-07-10
+Updated: 2026-07-12
 
 Description:
 Contracts for predictive demand/supply planning model inputs and outputs.

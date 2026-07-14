@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: frontend/src/api.ts
 Blueprint Name: FrontendApiClient
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-14
 
 Description:
 Typed frontend API client for weather, readiness, incident, resource, bed, and auth diagnostics endpoints.
@@ -739,23 +739,34 @@ export async function getAgentPredictiveDemandSupply(
 }
 
 export async function saveAgentPersonalization(request: AgentPersonalizationRequest): Promise<AgentPersonalizationSaveResult> {
-  const response = await fetchApi('/api/v1/agent/personalization', {
+  const sendRequest = (payload: AgentPersonalizationRequest) => fetchApi('/api/v1/agent/personalization', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(request),
+    body: JSON.stringify(payload),
   });
+
+  let response = await sendRequest(request);
 
   if (response.status === 409) {
     const conflictPayload = await response.json() as { message?: string; currentUpdatedUtc?: string };
-    const conflictMessage = conflictPayload.message ?? 'Agent personalization save conflict. Refresh and retry.';
-    const conflictError = new Error(conflictMessage);
-    Object.assign(conflictError, {
-      name: 'AgentPersonalizationConflictError',
-      currentUpdatedUtc: conflictPayload.currentUpdatedUtc,
-    });
-    throw conflictError;
+    const currentUpdatedUtc = conflictPayload.currentUpdatedUtc?.trim();
+
+    if (currentUpdatedUtc) {
+      response = await sendRequest({
+        ...request,
+        expectedUpdatedUtc: currentUpdatedUtc,
+      });
+    } else {
+      const conflictMessage = conflictPayload.message ?? 'Agent personalization save conflict. Refresh and retry.';
+      const conflictError = new Error(conflictMessage);
+      Object.assign(conflictError, {
+        name: 'AgentPersonalizationConflictError',
+        currentUpdatedUtc: conflictPayload.currentUpdatedUtc,
+      });
+      throw conflictError;
+    }
   }
 
   if (!response.ok) {

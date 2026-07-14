@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Infrastructure/Lookups/LookupContracts.cs
 Blueprint Name: LookupContracts
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2026-06-23
-Updated: 2026-06-23
+Updated: 2026-07-13
 
 Description:
 Lookup and reference-data contracts used by runtime UX dropdowns and admin management APIs.

@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Program.cs
 Blueprint Name: ApiHost
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2025-06-27
-Updated: 2026-06-22
+Updated: 2026-07-14
 
 Description:
 Main API composition root for IPOC_WEB server.
@@ -7208,7 +7208,7 @@ admin.MapPost("/data/synthetic/reset", async (IConfiguration configuration, IHos
     }
 
     var scriptRelativePath = configuration.GetValue<string>("AdminDataOps:InitializeDatabaseScriptPath")
-        ?? Path.Combine("..", "..", "..", "..", "IPOC_WEB.AppHost", "planning", "Initialize-Database.ps1");
+        ?? Path.Combine("..", "..", "..", "..", "Initialize-Database.ps1");
 
     var scriptPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, scriptRelativePath));
     if (!File.Exists(scriptPath))
@@ -7362,7 +7362,7 @@ admin.MapPost("/data/synthetic/seed", async (IConfiguration configuration, IHost
     }
 
     var scriptRelativePath = configuration.GetValue<string>("AdminDataOps:InitializeDatabaseScriptPath")
-        ?? Path.Combine("..", "..", "..", "..", "IPOC_WEB.AppHost", "planning", "Initialize-Database.ps1");
+        ?? Path.Combine("..", "..", "..", "..", "Initialize-Database.ps1");
 
     var scriptPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, scriptRelativePath));
     if (!File.Exists(scriptPath))

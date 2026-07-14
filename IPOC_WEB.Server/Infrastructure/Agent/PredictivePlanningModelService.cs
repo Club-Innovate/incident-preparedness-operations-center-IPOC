@@ -1,11 +1,11 @@
-/*
+﻿/*
 File: IPOC_WEB.Server/Infrastructure/Agent/PredictivePlanningModelService.cs
 Blueprint Name: AgentPredictivePlanningService
 
 -------------------------------------------------------------------
 Author: Hans Esquivel
 Created: 2026-07-10
-Updated: 2026-07-10
+Updated: 2026-07-12
 
 Description:
 Predictive planning model service abstraction and default provider implementation.
