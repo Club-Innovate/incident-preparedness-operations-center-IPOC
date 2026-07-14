@@ -106,6 +106,12 @@ type ReportPendingApprovalDecision = {
   rationale?: string;
 };
 
+type ExecutiveDeltaSummary = {
+  volumeDelta: number;
+  severityDelta: number;
+  activityDelta: number;
+};
+
 type ReportDecisionHistoryEntry = {
   incidentId: number;
   incidentNumber: string;
@@ -193,6 +199,7 @@ function ReportingWorkspaceCard({
   const [pendingApprovalDecisions, setPendingApprovalDecisions] = useState<Record<number, ReportPendingApprovalDecision>>({});
   const [pendingApprovalRationales, setPendingApprovalRationales] = useState<Record<number, string>>({});
   const [pendingApprovalDecisionHistory, setPendingApprovalDecisionHistory] = useState<ReportDecisionHistoryEntry[]>([]);
+  const [executiveDeltaReferenceDateUtc, setExecutiveDeltaReferenceDateUtc] = useState<string | null>(null);
   const [reportFilterPresetName, setReportFilterPresetName] = useState('');
   const [reportFilterPresets, setReportFilterPresets] = useState<ReportFilterPreset[]>(() => {
     try {
@@ -797,7 +804,7 @@ function ReportingWorkspaceCard({
     }
   };
 
-  const downloadBlob = (blob: Blob, filenamePrefix: string, extension: 'csv' | 'zip') => {
+  const downloadBlob = (blob: Blob, filenamePrefix: string, extension: 'csv' | 'zip' | 'md') => {
     const url = URL.createObjectURL(blob);
     const anchor = document.createElement('a');
     anchor.href = url;
@@ -1143,6 +1150,12 @@ function ReportingWorkspaceCard({
     return `Comparative posture: ${volumeText}; ${severityText}; ${activityText}.`;
   })();
 
+  const executiveDeltaSummary: ExecutiveDeltaSummary = {
+    volumeDelta: leftComparisonMetrics && rightComparisonMetrics ? leftComparisonMetrics.total - rightComparisonMetrics.total : 0,
+    severityDelta: leftComparisonMetrics && rightComparisonMetrics ? leftComparisonMetrics.criticalOrHighPercent - rightComparisonMetrics.criticalOrHighPercent : 0,
+    activityDelta: leftComparisonMetrics && rightComparisonMetrics ? leftComparisonMetrics.recentCreatedPercent - rightComparisonMetrics.recentCreatedPercent : 0,
+  };
+
   const swapComparisonSides = () => {
     if (!comparisonLeftValue && !comparisonRightValue) {
       return;
@@ -1150,6 +1163,45 @@ function ReportingWorkspaceCard({
 
     setComparisonLeftGroup(comparisonRightValue);
     setComparisonRightGroup(comparisonLeftValue);
+  };
+
+  const exportExecutiveDecisionBrief = () => {
+    if (pendingApprovalRows.length === 0) {
+      onNotify?.('No recommendation rows available for executive decision brief export.', 'warning');
+      return;
+    }
+
+    const generatedUtc = new Date().toISOString();
+    const topRecommendations = pendingApprovalRows.slice(0, 5);
+    const narrative = [
+      '# Executive Decision Brief',
+      '',
+      `Generated UTC: ${generatedUtc}`,
+      `Reference baseline UTC: ${executiveDeltaReferenceDateUtc ?? 'Not set'}`,
+      `Report scope: ${reportWindowDays}d window · GroupBy ${reportGroupBy} · Status ${reportStatusFilter} · Type ${reportTypeFilter}`,
+      '',
+      '## Trend Delta Summary',
+      `- Volume delta: ${executiveDeltaSummary.volumeDelta > 0 ? '+' : ''}${executiveDeltaSummary.volumeDelta}`,
+      `- Critical/High concentration delta: ${executiveDeltaSummary.severityDelta > 0 ? '+' : ''}${executiveDeltaSummary.severityDelta}%`,
+      `- 72h intake activity delta: ${executiveDeltaSummary.activityDelta > 0 ? '+' : ''}${executiveDeltaSummary.activityDelta}%`,
+      '',
+      '## Recommended Actions',
+      ...topRecommendations.map((row, index) => `${index + 1}. ${row.incidentNumber} (${row.incidentName}) - ${row.recommendation.action} [${Math.round(row.recommendation.confidence * 100)}% confidence]`),
+      '',
+      '## Decision Support Notes',
+      `- Comparative posture: ${comparisonNarrative}`,
+      '- Validate recommendations against current command directives before execution.',
+      '- Capture final decisions in pending approval workflow for auditability.',
+    ].join('\n');
+
+    const blob = new Blob([narrative], { type: 'text/markdown;charset=utf-8;' });
+    downloadBlob(blob, 'reports-executive-decision-brief', 'md');
+    onNotify?.('Executive decision brief exported with trend deltas and recommendations.', 'success');
+  };
+
+  const stampExecutiveDeltaBaseline = () => {
+    setExecutiveDeltaReferenceDateUtc(new Date().toISOString());
+    onNotify?.('Executive trend baseline timestamp captured for delta reporting.', 'info');
   };
 
   const autoPickTopComparisonGroups = () => {
@@ -2046,6 +2098,39 @@ function ReportingWorkspaceCard({
                 <div className="small text-muted">Reporting completeness</div>
                 <div className="fw-semibold fs-5">{reportingCompletenessScore}%</div>
                 <div className="small text-muted">Derived from open vs overdue tasks and open objectives.</div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        <Row className="g-2 mb-3">
+          <Col md={12}>
+            <Card className="border-0 bg-body-tertiary">
+              <Card.Body className="py-2 d-flex flex-wrap align-items-center justify-content-between gap-2">
+                <div>
+                  <div className="small fw-semibold">Executive decision brief package</div>
+                  <div className="small text-muted">
+                    Baseline: {executiveDeltaReferenceDateUtc ? new Date(executiveDeltaReferenceDateUtc).toLocaleString() : 'Not captured'}
+                  </div>
+                </div>
+                <div className="d-inline-flex align-items-center gap-2">
+                  <IconActionButton
+                    iconClassName="bi bi-clock-history"
+                    tooltip="Capture trend delta baseline timestamp"
+                    ariaLabel="Capture trend delta baseline timestamp"
+                    onClick={stampExecutiveDeltaBaseline}
+                    variant="outline-secondary"
+                    testId="reports-executive-brief-stamp-baseline"
+                  />
+                  <IconActionButton
+                    iconClassName="bi bi-file-earmark-arrow-down"
+                    tooltip="Export executive decision brief with trend deltas and top recommendations"
+                    ariaLabel="Export executive decision brief package"
+                    onClick={exportExecutiveDecisionBrief}
+                    variant="outline-primary"
+                    testId="reports-executive-brief-export"
+                  />
+                </div>
               </Card.Body>
             </Card>
           </Col>

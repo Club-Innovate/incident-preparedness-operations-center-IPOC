@@ -318,6 +318,35 @@ const topics: GuideTopic[] = [
               body: 'AI hotspot ranking is decision-support. Validate local constraints and command intent before escalation actions.',
             },
           },
+          {
+            id: 'use-reports-executive-decision-brief-package',
+            title: 'Use Reports executive decision brief package export',
+            kind: 'HOW-TO GUIDE',
+            detail: 'Capture trend baseline and export one-click executive brief package with recommendation bundle for command leadership handoff.',
+            prerequisites: [
+              'Reports filters are set to the desired operational window and grouping scope.',
+              'Pending approval recommendation rows are available in the current report scope.',
+            ],
+            tutorial: [
+              'Open Reports and locate the Executive decision brief package card.',
+              'Use baseline capture action to set the current trend comparison timestamp.',
+              'Review recommendation queue and confidence values in pending approvals section.',
+              'Use export action to download executive decision brief markdown package with trend deltas and top recommendations.',
+            ],
+            expectedOutcomes: [
+              'Leadership receives a concise decision brief with trend-delta context and prioritized recommendations.',
+              'Command teams can archive consistent brief artifacts across reporting cycles.',
+            ],
+            commonPitfalls: [
+              'Skipping baseline capture can reduce interpretability of delta metadata across cycles.',
+              'Exporting before filter validation can produce a brief for unintended operational scope.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Governance reminder',
+              body: 'Executive brief recommendations are decision support artifacts and require command validation prior to execution.',
+            },
+          },
         ],
       },
       {
