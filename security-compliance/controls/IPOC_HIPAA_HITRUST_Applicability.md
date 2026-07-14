@@ -58,6 +58,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 31. Added enforced CI drift gate via `scripts/compliance/enforce-endpoint-compliance-drift.ps1` and wired it into `.github/workflows/security-compliance-gates.yml` after compliance cycle refresh.
 32. Extended CI drift monitoring cadence in `.github/workflows/security-compliance-gates.yml` with `workflow_dispatch` and weekly schedule trigger (`0 6 * * 1`).
 33. Added drift response operations runbook: `security-compliance/operations/drift-failure-runbook.md` with SLA, owner routing, and recovery criteria.
+34. Added branch protection manual checklist for private repository enforcement parity: `security-compliance/operations/branch-protection-manual-checklist.md`.
 
 ## Current Endpoint Review Backlog Snapshot
 
