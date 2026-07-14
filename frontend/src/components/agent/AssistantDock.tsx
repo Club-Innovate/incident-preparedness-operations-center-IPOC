@@ -96,6 +96,8 @@ const ASSISTANT_QUICK_PROMPTS = [
   'Summarize the top open incidents.',
   'Show critical resource shortages by location.',
   'What changed in the last operational period?',
+  'Create an AI incident co-pilot brief for incident 125 over 24 hours.',
+  'Generate ICS draft objectives for incident 125 over 24 hours.',
 ];
 const ASSISTANT_COLOR_SWATCHES = ['#6d28d9', '#9333ea', '#0d6efd', '#0ea5e9', '#10b981', '#ea9a61', '#ef4444'];
 
@@ -1504,15 +1506,19 @@ function AssistantDock({ isAuthenticated, authRoles = [], onNotify }: AssistantD
     trackAnalyticsEvent('assistant_message_sent', activeSession.id, JSON.stringify({ promptLength: trimmed.length }));
 
     const planningMatch = trimmed.match(/\b(predict|forecast|demand|supply|shortfall|resource\s+pressure)\b/i);
+    const operationalCopilotMatch = trimmed.match(/\b(summary|brief|recommend|action\s+plan|next\s+actions?|ics\s*(draft|objective|objectives)|iap)\b/i);
     const incidentIdMatch = trimmed.match(/\bincident\s*#?\s*(\d+)\b/i);
     const horizonMatch = trimmed.match(/\b(\d{1,3})\s*(h|hr|hrs|hour|hours)\b/i);
     const inferredIncidentId = incidentIdMatch ? Number(incidentIdMatch[1]) : NaN;
     const inferredHorizonHours = horizonMatch ? Number(horizonMatch[1]) : 24;
 
-    if (planningMatch && Number.isFinite(inferredIncidentId) && inferredIncidentId > 0 && isAuthenticated) {
+    if ((planningMatch || operationalCopilotMatch) && Number.isFinite(inferredIncidentId) && inferredIncidentId > 0 && isAuthenticated) {
       setIsAwaitingResponse(true);
       void getAgentPredictiveDemandSupply(inferredIncidentId, inferredHorizonHours)
         .then((response) => {
+          const wantsSummary = /\b(summary|brief|sitrep|status)\b/i.test(trimmed);
+          const wantsRecommendations = planningMatch !== null || /\b(recommend|action\s+plan|next\s+actions?|priority)\b/i.test(trimmed);
+          const wantsIcsDraft = /\b(ics\s*(draft|objective|objectives)|iap)\b/i.test(trimmed);
           const recommendationText = response.recommendations.length > 0
             ? response.recommendations.map((item, index) => `${index + 1}. ${item}`).join('\n')
             : 'No immediate recommendation generated.';
@@ -1523,19 +1529,45 @@ function AssistantDock({ isAuthenticated, authRoles = [], onNotify }: AssistantD
               .join('; ')
             : 'No projected resource-type gaps.';
 
-          const assistantText = [
-            `Predictive demand/supply (${response.modelId} ${response.modelVersion}) for incident ${response.incidentNumber} (${response.horizonHours}h horizon):`,
+          const icsDraftObjectives = [
+            `1. Stabilize resource posture for operational period by closing projected shortfall of ${response.predictedShortfallQuantity.toFixed(1)} units and prioritizing top constrained categories (${resourceGapText}).`,
+            `2. Maintain command awareness with risk level ${response.riskLevel} and drift status ${response.driftStatus}; update SITREP cadence for the next ${response.horizonHours}h window.`,
+            `3. Execute highest-priority actions: ${response.recommendations.slice(0, 2).join(' ; ') || 'Maintain current operational tempo and monitor demand/supply changes.'}`,
+          ].join('\n');
+
+          const assumptionsText = response.assumptions.length > 0
+            ? response.assumptions.slice(0, 3).map((item, index) => `${index + 1}. ${item}`).join('\n')
+            : '1. Model assumptions were not explicitly provided by the service response.';
+
+          const sections: string[] = [
+            `AI Incident Co-Pilot brief (${response.modelId} ${response.modelVersion}) for incident ${response.incidentNumber} (${response.horizonHours}h horizon):`,
+            `- Generated: ${new Date(response.generatedUtc).toLocaleString()}`,
             `- Model trained: ${new Date(response.trainedAtUtc).toLocaleString()}`,
             `- Confidence interval: ${Math.round(response.confidenceInterval.lower * 100)}% - ${Math.round(response.confidenceInterval.upper * 100)}%`,
-            `- Drift status: ${response.driftStatus}`,
-            `- Risk level: ${response.riskLevel}`,
-            `- Demand pressure index: ${response.demandPressureIndex}`,
-            `- Supply readiness index: ${response.supplyReadinessIndex}`,
-            `- Projected demand: ${response.projectedDemandQuantity.toFixed(1)} | projected supply: ${response.projectedSupplyQuantity.toFixed(1)} | shortfall: ${response.predictedShortfallQuantity.toFixed(1)}`,
-            `- Top gaps: ${resourceGapText}`,
-            'Recommendations:',
-            recommendationText,
-          ].join('\n');
+          ];
+
+          if (wantsSummary || (!wantsRecommendations && !wantsIcsDraft)) {
+            sections.push(
+              'Operational Summary:',
+              `- Risk level: ${response.riskLevel}`,
+              `- Demand pressure index: ${response.demandPressureIndex}`,
+              `- Supply readiness index: ${response.supplyReadinessIndex}`,
+              `- Projected demand: ${response.projectedDemandQuantity.toFixed(1)} | projected supply: ${response.projectedSupplyQuantity.toFixed(1)} | shortfall: ${response.predictedShortfallQuantity.toFixed(1)}`,
+              `- Top gaps: ${resourceGapText}`,
+            );
+          }
+
+          if (wantsRecommendations || (!wantsSummary && !wantsIcsDraft)) {
+            sections.push('Recommended Actions:', recommendationText);
+          }
+
+          if (wantsIcsDraft) {
+            sections.push('ICS Draft Objectives:', icsDraftObjectives);
+          }
+
+          sections.push('Key Assumptions:', assumptionsText);
+
+          const assistantText = sections.join('\n');
 
           setSessions((current) => current.map((session) => {
             if (session.id !== activeSession.id) {
@@ -1552,7 +1584,7 @@ function AssistantDock({ isAuthenticated, authRoles = [], onNotify }: AssistantD
                   text: assistantText,
                   createdAt: new Date().toISOString(),
                   confidenceScore: 0.72,
-                  citations: [`Predictive model ${response.modelId} ${response.modelVersion}`],
+                  citations: [`Predictive model ${response.modelId} ${response.modelVersion}`, 'AI Incident Co-Pilot operational brief synthesis'],
                   citationLinks: [],
                   retrievalStatus: 'Grounded',
                   approvalStatus,
@@ -1577,7 +1609,7 @@ function AssistantDock({ isAuthenticated, authRoles = [], onNotify }: AssistantD
                 {
                   id: `assistant-${Date.now() + 1}`,
                   role: 'assistant',
-                  text: 'Predictive demand/supply insight could not be generated. Include a valid incident ID, for example: "predict demand for incident 125 over 48 hours".',
+                  text: 'AI Incident Co-Pilot brief could not be generated. Include a valid incident ID, for example: "create incident brief for incident 125 over 48 hours" or "generate ICS draft objectives for incident 125 over 24 hours".',
                   createdAt: fallbackAt,
                   confidenceScore: 0.4,
                   citations: [],

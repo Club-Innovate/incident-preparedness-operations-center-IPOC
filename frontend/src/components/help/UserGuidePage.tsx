@@ -333,6 +333,35 @@ const topics: GuideTopic[] = [
               code: `public sealed class AiSearchOptions\n{\n    public string Endpoint { get; init; } = string.Empty;\n    public string IndexName { get; init; } = string.Empty;\n    public string ApiKey { get; init; } = string.Empty;\n}\n\nbuilder.Services\n    .AddOptions<AiSearchOptions>()\n    .Bind(builder.Configuration.GetSection("AiSearch"))\n    .ValidateDataAnnotations()\n    .Validate(options =>\n        Uri.TryCreate(options.Endpoint, UriKind.Absolute, out _)\n        && !string.IsNullOrWhiteSpace(options.IndexName)\n        && !string.IsNullOrWhiteSpace(options.ApiKey),\n        "AiSearch settings are invalid.");\n\nbuilder.Services.AddSingleton(sp =>\n{\n    var options = sp.GetRequiredService<IOptions<AiSearchOptions>>().Value;\n    var credential = new AzureKeyCredential(options.ApiKey);\n    return new SearchClient(new Uri(options.Endpoint), options.IndexName, credential);\n});`,
             },
           },
+          {
+            id: 'use-ai-incident-copilot-briefing',
+            title: 'Use AI Incident Co-Pilot incident briefing and ICS objective drafts',
+            kind: 'HOW-TO GUIDE',
+            detail: 'Generate incident summary briefs, action recommendations, and ICS draft objectives from AI Incident Co-Pilot prompts with incident ID and horizon context.',
+            prerequisites: [
+              'User is authenticated and Assistant Dock is enabled.',
+              'Prompt includes a valid incident ID (example: incident 125) and optional horizon (example: 24 hours).',
+            ],
+            tutorial: [
+              'Open AI Incident Co-Pilot and submit a brief-style prompt such as "create an AI incident co-pilot brief for incident 125 over 24 hours".',
+              'For action recommendations, include recommendation intent in prompt text.',
+              'For ICS drafting support, use prompt text like "generate ICS draft objectives for incident 125 over 24 hours".',
+              'Review generated assumptions and recommendations before operational execution.',
+            ],
+            expectedOutcomes: [
+              'Command staff receives a concise AI-assisted operational brief for the incident horizon.',
+              'Teams can bootstrap ICS objective drafting with grounded predictive planning context.',
+            ],
+            commonPitfalls: [
+              'Missing incident ID in prompt prevents predictive context retrieval.',
+              'Treating draft objectives as final without command review and approval.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Human-in-the-loop requirement',
+              body: 'AI briefing and ICS draft output are decision-support artifacts and must be reviewed by incident command before execution.',
+            },
+          },
         ],
       },
     ],
