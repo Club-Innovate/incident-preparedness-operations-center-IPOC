@@ -31,6 +31,8 @@ Define recurring operational tasks to maintain HIPAA/HITRUST control posture aft
 3. Review incident communication checklist and escalation paths.
 4. Run breach-notification decision drill and update `security-compliance/operations/breach-notification-drill-log.md`.
 5. Validate legal escalation contacts in `security-compliance/operations/legal-escalation-matrix.md`.
+6. Validate provider physical-attestation and endpoint/device policy evidence in `security-compliance/operations/physical-safeguards-evidence-checklist.md`.
+7. Review PHI retention coverage and dataset ownership in `security-compliance/operations/data-subject-retention-schedule.md`.
 
 ## Per Pull Request
 

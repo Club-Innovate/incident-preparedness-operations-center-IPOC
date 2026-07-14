@@ -19,9 +19,9 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 | Incident Response | Yes | Implemented | `security-compliance/operations/incident-response-runbook.md` + completed tabletop entry in `security-compliance/operations/incident-response-tabletop-log.md` with findings/corrective actions | Maintain quarterly tabletop cadence and track corrective action closure evidence |
 | Vulnerability Management | Yes | Implemented | Security CI gates workflow with enforced .NET severity gate (`scripts/compliance/check-dotnet-vulnerabilities.ps1`) + npm audit high gate + lockfile remediation + scheduled/manual drift checks | Continue dependency maintenance cadence and retain vulnerability closure evidence in baseline packages |
 | Vendor / Third-Party Risk | Yes | Implemented | `security-compliance/operations/vendor-third-party-risk-register.md` + `security-compliance/operations/vendor-third-party-risk-annual-review-log.md` initialized with baseline annual review entry | Maintain annual review cadence and onboard net-new vendors into register within 5 business days |
-| Physical Safeguards | Shared Responsibility | Partial | Cloud-hosted assumptions | Track provider attestations and internal endpoint/device policy |
+| Physical Safeguards | Shared Responsibility | Implemented | `security-compliance/operations/physical-safeguards-evidence-checklist.md` with provider attestation and managed-device policy governance references | Maintain quarterly attestation and endpoint/device policy evidence validation |
 | Breach Notification Readiness | Yes | Implemented | `security-compliance/operations/breach-notification-workflow.md` + `security-compliance/operations/legal-escalation-matrix.md` + completed baseline drill entry in `security-compliance/operations/breach-notification-drill-log.md` | Maintain quarterly breach-notification drill cadence and legal escalation contact validation |
-| Data Subject / Retention | Yes | Partial | Retention knobs exist for telemetry | Expand retention schedule coverage for PHI-bearing datasets |
+| Data Subject / Retention | Yes | Implemented | `security-compliance/operations/data-subject-retention-schedule.md` with PHI-bearing dataset ownership, retention windows, and review cadence | Maintain quarterly retention schedule review and legal-hold exception tracking |
 
 ## Implemented Today
 
@@ -71,6 +71,8 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 44. Added Vendor / Third-Party Risk register and annual review log with baseline review completion.
 45. Added breach notification workflow, legal escalation matrix, and baseline drill log; promoted Breach Notification Readiness to Implemented.
 46. Completed Audit Controls hosting immutability evidence attachment and checklist sign-off; promoted Audit Controls domain to Implemented.
+47. Added Physical Safeguards evidence checklist with provider attestation and managed-device policy governance; promoted Physical Safeguards domain to Implemented.
+48. Added Data Subject / Retention schedule with PHI-bearing dataset coverage and ownership cadence; promoted Data Subject / Retention domain to Implemented.
 
 ## Current Endpoint Review Backlog Snapshot
 
