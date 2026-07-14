@@ -20,7 +20,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 | Vulnerability Management | Yes | Implemented | Security CI gates workflow with enforced .NET severity gate (`scripts/compliance/check-dotnet-vulnerabilities.ps1`) + npm audit high gate + lockfile remediation + scheduled/manual drift checks | Continue dependency maintenance cadence and retain vulnerability closure evidence in baseline packages |
 | Vendor / Third-Party Risk | Yes | Implemented | `security-compliance/operations/vendor-third-party-risk-register.md` + `security-compliance/operations/vendor-third-party-risk-annual-review-log.md` initialized with baseline annual review entry | Maintain annual review cadence and onboard net-new vendors into register within 5 business days |
 | Physical Safeguards | Shared Responsibility | Partial | Cloud-hosted assumptions | Track provider attestations and internal endpoint/device policy |
-| Breach Notification Readiness | Yes | Planned | Operational telemetry and audit foundations | Add breach workflow, legal escalation matrix, and drill cadence |
+| Breach Notification Readiness | Yes | Implemented | `security-compliance/operations/breach-notification-workflow.md` + `security-compliance/operations/legal-escalation-matrix.md` + completed baseline drill entry in `security-compliance/operations/breach-notification-drill-log.md` | Maintain quarterly breach-notification drill cadence and legal escalation contact validation |
 | Data Subject / Retention | Yes | Partial | Retention knobs exist for telemetry | Expand retention schedule coverage for PHI-bearing datasets |
 
 ## Implemented Today
@@ -69,6 +69,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 42. Completed Data-at-Rest encryption evidence checklist sign-off and promoted Data-at-Rest domain to Implemented.
 43. Completed Integrity Controls evidence checklist sign-off and promoted Integrity Controls domain to Implemented.
 44. Added Vendor / Third-Party Risk register and annual review log with baseline review completion.
+45. Added breach notification workflow, legal escalation matrix, and baseline drill log; promoted Breach Notification Readiness to Implemented.
 
 ## Current Endpoint Review Backlog Snapshot
 

@@ -29,6 +29,8 @@ Define recurring operational tasks to maintain HIPAA/HITRUST control posture aft
 1. Run incident-response tabletop drill.
 2. Update `security-compliance/operations/incident-response-tabletop-log.md` with findings and corrective actions.
 3. Review incident communication checklist and escalation paths.
+4. Run breach-notification decision drill and update `security-compliance/operations/breach-notification-drill-log.md`.
+5. Validate legal escalation contacts in `security-compliance/operations/legal-escalation-matrix.md`.
 
 ## Per Pull Request
 
