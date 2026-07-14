@@ -361,3 +361,12 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Internal/private planning assets (not for public publish)
+/planning/
+/planning/**
+
+# Internal audit/reference artifacts (not for public publish)
+/audit/
+/audit/**
+/.github/copilot-instructions.md
