@@ -260,6 +260,35 @@ const topics: GuideTopic[] = [
               body: 'Run this scenario in a tabletop environment first, then repeat in live operations with role-specific job aids.',
             },
           },
+          {
+            id: 'use-reports-predictive-risk-analytics',
+            title: 'Use Reports predictive risk analytics signal',
+            kind: 'HOW-TO GUIDE',
+            detail: 'Review demand/supply forecast risk signal in Reports, adjust horizon, and refresh analytics for current incident scope.',
+            prerequisites: [
+              'At least one active or recent incident is visible in Reports filters.',
+              'Agent predictive-demand endpoint is available for authenticated users.',
+            ],
+            tutorial: [
+              'Open Reports and locate the Predictive risk analytics card under KPI summary tiles.',
+              'Select a 24h, 48h, or 72h horizon based on command planning window.',
+              'Use refresh action to regenerate latest risk signal from predictive model service.',
+              'Apply Top recommendation output into planning and operations workflows after command review.',
+            ],
+            expectedOutcomes: [
+              'Command staff can rapidly assess forecasted shortfall and risk level in Reports.',
+              'Planning teams align actions to an explicit predictive recommendation signal.',
+            ],
+            commonPitfalls: [
+              'Treating predictive output as final command decision without incident commander validation.',
+              'Using stale report filters that hide active incidents and reduce signal relevance.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Decision support guidance',
+              body: 'Predictive analytics are advisory. Confirm recommendations against live operations telemetry before execution.',
+            },
+          },
         ],
       },
       {

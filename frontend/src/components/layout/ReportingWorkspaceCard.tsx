@@ -10,6 +10,7 @@ import {
   exportExternalProviderHealthExecutivePacketZip,
   exportExternalProviderHealthGovernanceCsv,
   exportExternalProviderHealthScorecardCsv,
+  getAgentPredictiveDemandSupply,
   getExternalProviderHealthFederationSummary,
   getExternalProviderHealthTrends,
   getUserReportPresets,
@@ -18,6 +19,7 @@ import {
 import { generateVisualizationSpec, parseVisualizationSpecJson } from './visualizationPrompt';
 import type {
   DashboardSummary,
+  AgentPredictiveDemandSupplyResponse,
   ExternalProviderHealthFederationSummary,
   ExternalProviderHealthTrends,
   IncidentSummary,
@@ -170,7 +172,12 @@ function ReportingWorkspaceCard({
   const [comparisonLeftGroup, setComparisonLeftGroup] = useState<string>('');
   const [comparisonRightGroup, setComparisonRightGroup] = useState<string>('');
   const [externalProviderTrendWindowHours, setExternalProviderTrendWindowHours] = useState<'24' | '168' | '720'>('168');
+  const [predictiveHorizonHours, setPredictiveHorizonHours] = useState<24 | 48 | 72>(24);
   const [externalProviderTrendProvider, setExternalProviderTrendProvider] = useState('');
+  const [predictiveDemandSupplyInsight, setPredictiveDemandSupplyInsight] = useState<AgentPredictiveDemandSupplyResponse | null>(null);
+  const [predictiveDemandSupplyLoading, setPredictiveDemandSupplyLoading] = useState(false);
+  const [predictiveDemandSupplyError, setPredictiveDemandSupplyError] = useState<string | null>(null);
+  const [predictiveRefreshNonce, setPredictiveRefreshNonce] = useState(0);
   const [externalProviderHealthTrends, setExternalProviderHealthTrends] = useState<ExternalProviderHealthTrends | null>(null);
   const [externalProviderHealthFederationSummary, setExternalProviderHealthFederationSummary] = useState<ExternalProviderHealthFederationSummary | null>(null);
   const [externalProviderDashboardLoading, setExternalProviderDashboardLoading] = useState(false);
@@ -1248,6 +1255,50 @@ function ReportingWorkspaceCard({
     .sort((left, right) => right.riskScore - left.riskScore || left.incidentNumber.localeCompare(right.incidentNumber))
     .slice(0, 8);
 
+  const predictiveCandidateIncidentId = decisionQueueRows.find((row) => row.incidentStatusCode === 'Active')?.incidentId
+    ?? decisionQueueRows[0]?.incidentId
+    ?? null;
+
+  useEffect(() => {
+    if (!predictiveCandidateIncidentId) {
+      setPredictiveDemandSupplyInsight(null);
+      setPredictiveDemandSupplyError(null);
+      return;
+    }
+
+    let isCanceled = false;
+    setPredictiveDemandSupplyLoading(true);
+    setPredictiveDemandSupplyError(null);
+
+    void getAgentPredictiveDemandSupply(predictiveCandidateIncidentId, predictiveHorizonHours)
+      .then((result) => {
+        if (isCanceled) {
+          return;
+        }
+
+        setPredictiveDemandSupplyInsight(result);
+      })
+      .catch(() => {
+        if (isCanceled) {
+          return;
+        }
+
+        setPredictiveDemandSupplyInsight(null);
+        setPredictiveDemandSupplyError('Predictive risk insight is currently unavailable for this report scope.');
+      })
+      .finally(() => {
+        if (isCanceled) {
+          return;
+        }
+
+        setPredictiveDemandSupplyLoading(false);
+      });
+
+    return () => {
+      isCanceled = true;
+    };
+  }, [predictiveCandidateIncidentId, predictiveHorizonHours, predictiveRefreshNonce]);
+
   const resolveRecommendation = (riskScore: number) => {
     if (riskScore >= 85) {
       return { action: 'Immediate command escalation', confidence: 0.92, variant: 'danger' as const };
@@ -1995,6 +2046,68 @@ function ReportingWorkspaceCard({
                 <div className="small text-muted">Reporting completeness</div>
                 <div className="fw-semibold fs-5">{reportingCompletenessScore}%</div>
                 <div className="small text-muted">Derived from open vs overdue tasks and open objectives.</div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        <Row className="g-2 mb-3">
+          <Col md={12}>
+            <Card className="ipoc-mission-kpi-card">
+              <Card.Body className="py-2">
+                <div className="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                  <div>
+                    <div className="small text-muted">Predictive risk analytics</div>
+                    <div className="fw-semibold">Demand/Supply forecast signal</div>
+                  </div>
+                  <div className="d-flex align-items-center gap-2">
+                    <Form.Select
+                      size="sm"
+                      value={predictiveHorizonHours}
+                      onChange={(event) => setPredictiveHorizonHours(Number(event.target.value) as 24 | 48 | 72)}
+                      style={{ maxWidth: 170 }}
+                    >
+                      <option value={24}>24-hour horizon</option>
+                      <option value={48}>48-hour horizon</option>
+                      <option value={72}>72-hour horizon</option>
+                    </Form.Select>
+                    <IconActionButton
+                      iconClassName="bi bi-arrow-clockwise"
+                      tooltip="Refresh predictive risk analytics signal"
+                      ariaLabel="Refresh predictive risk analytics signal"
+                      onClick={() => setPredictiveRefreshNonce((current) => current + 1)}
+                      variant="outline-secondary"
+                      disabled={predictiveDemandSupplyLoading || !predictiveCandidateIncidentId}
+                    />
+                  </div>
+                </div>
+
+                {predictiveDemandSupplyLoading && (
+                  <div className="small text-muted">Loading predictive demand/supply risk signal…</div>
+                )}
+
+                {!predictiveDemandSupplyLoading && predictiveDemandSupplyError && (
+                  <div className="small text-muted">{predictiveDemandSupplyError}</div>
+                )}
+
+                {!predictiveDemandSupplyLoading && !predictiveDemandSupplyError && predictiveDemandSupplyInsight && (
+                  <>
+                    <div className="d-flex flex-wrap gap-2 mb-2">
+                      <Badge bg={predictiveDemandSupplyInsight.riskLevel === 'High' ? 'danger' : predictiveDemandSupplyInsight.riskLevel === 'Moderate' ? 'secondary' : 'success'}>
+                        Risk {predictiveDemandSupplyInsight.riskLevel}
+                      </Badge>
+                      <Badge bg="secondary">Demand pressure {predictiveDemandSupplyInsight.demandPressureIndex}</Badge>
+                      <Badge bg="info" text="dark">Supply readiness {predictiveDemandSupplyInsight.supplyReadinessIndex}</Badge>
+                      <Badge bg="secondary">Shortfall {predictiveDemandSupplyInsight.predictedShortfallQuantity.toFixed(1)}</Badge>
+                    </div>
+                    <div className="small text-muted">
+                      Incident {predictiveDemandSupplyInsight.incidentNumber} · horizon {predictiveDemandSupplyInsight.horizonHours}h · model {predictiveDemandSupplyInsight.modelId} {predictiveDemandSupplyInsight.modelVersion}
+                    </div>
+                    <div className="small text-muted mt-1">
+                      Top recommendation: {predictiveDemandSupplyInsight.recommendations[0] ?? 'Maintain current operational tempo and monitor demand/supply cadence.'}
+                    </div>
+                  </>
+                )}
               </Card.Body>
             </Card>
           </Col>
