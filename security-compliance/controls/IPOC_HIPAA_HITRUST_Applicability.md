@@ -12,7 +12,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 |---|---|---|---|---|
 | Identity & Access Management | Yes | Implemented | AuthN/AuthZ required on APIs, role/scope policies, new privileged MFA gate + production guardrail prevents privileged MFA disablement | Maintain Entra claim mapping validation and periodic privileged-role access review evidence |
 | Audit Controls | Yes | Implemented | Audit event writer + audit endpoints + sensitive request logging + `security-compliance/standards/audit-log-retention-standard.md` + completed `security-compliance/operations/audit-immutability-evidence-checklist.md` + hosting evidence in `security-compliance/operations/audit-hosting-immutability-evidence.md` | Maintain monthly manifest/hash verification and branch-protection evidence refresh in baseline package |
-| Transmission Security | Yes | Implemented | HTTPS redirection, HSTS, security headers | Add automated TLS posture verification evidence |
+| Transmission Security | Yes | Implemented | HTTPS redirection, HSTS, security headers + automated TLS posture verification via `scripts/compliance/check-tls-posture.ps1` and `security-compliance/controls/tls-posture-verification.md` | Maintain TLS posture verification artifact in weekly CI and monthly baseline package reviews |
 | Data at Rest Encryption | Yes | Implemented | Encrypted SQL connection settings in config + completed sign-off in `security-compliance/operations/data-at-rest-encryption-evidence-checklist.md` with evidence references | Maintain monthly evidence refresh in baseline package and periodic key-management review records |
 | Minimum Necessary / Data Minimization | Yes | Implemented | User DTOs intentionally omit sensitive fields, redaction helpers for exports + endpoint-level evidence lifecycle fully executed (120/120 closed, 120/120 evidence approved, 0 open gaps) | Run scheduled drift-detection cycle for net-new or changed endpoints and retain release artifacts |
 | Integrity Controls | Yes | Implemented | Parameterized SQL usage patterns and controlled update paths + completed sign-off in `security-compliance/operations/integrity-controls-evidence-checklist.md` with evidence references | Maintain integrity evidence refresh cadence through drift workflow and baseline package reviews |
@@ -73,6 +73,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 46. Completed Audit Controls hosting immutability evidence attachment and checklist sign-off; promoted Audit Controls domain to Implemented.
 47. Added Physical Safeguards evidence checklist with provider attestation and managed-device policy governance; promoted Physical Safeguards domain to Implemented.
 48. Added Data Subject / Retention schedule with PHI-bearing dataset coverage and ownership cadence; promoted Data Subject / Retention domain to Implemented.
+49. Added enforced TLS posture verification automation and evidence artifact integration for Transmission Security recurring validation.
 
 ## Current Endpoint Review Backlog Snapshot
 

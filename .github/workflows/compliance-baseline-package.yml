@@ -32,6 +32,10 @@ jobs:
         shell: pwsh
         run: ./scripts/compliance/enforce-endpoint-compliance-drift.ps1 -LedgerPath "security-compliance/controls/endpoint-minimum-necessary-reviews.csv" -EvidenceGapCsvPath "security-compliance/controls/endpoint-evidence-completion-gaps.csv" -SlaSummaryPath "security-compliance/controls/endpoint-remediation-sla-summary.md"
 
+      - name: Verify TLS posture before packaging
+        shell: pwsh
+        run: ./scripts/compliance/check-tls-posture.ps1 -ProgramPath "IPOC_WEB.Server/Program.cs" -OutputPath "security-compliance/controls/tls-posture-verification.md"
+
       - name: Build compliance baseline package
         shell: pwsh
         run: ./scripts/compliance/package-endpoint-compliance-baseline.ps1 -OutputRoot "security-compliance/releases"
@@ -46,3 +50,4 @@ jobs:
             security-compliance/releases/**/manifest.md
             security-compliance/controls/endpoint-compliance-executive-summary.md
             security-compliance/controls/endpoint-compliance-trend.md
+            security-compliance/controls/tls-posture-verification.md

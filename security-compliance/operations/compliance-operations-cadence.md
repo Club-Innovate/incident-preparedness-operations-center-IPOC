@@ -15,6 +15,7 @@ Define recurring operational tasks to maintain HIPAA/HITRUST control posture aft
    - `endpoint-compliance-executive-summary.md`
    - `endpoint-compliance-trend.md`
    - `endpoint-remediation-kpi.md`
+   - `tls-posture-verification.md`
 4. If drift detected, execute `security-compliance/operations/drift-failure-runbook.md`.
 
 ## Monthly (1st of Month)
@@ -23,6 +24,7 @@ Define recurring operational tasks to maintain HIPAA/HITRUST control posture aft
 2. Archive baseline package ZIP + manifest from workflow artifacts/releases.
 3. Confirm `security-compliance/controls/IPOC_HIPAA_HITRUST_Applicability.md` still reflects current measured state.
 4. Verify branch protection UI settings for `main` and retain screenshot evidence in baseline package notes.
+5. Confirm TLS posture evidence (`security-compliance/controls/tls-posture-verification.md`) is present and passing in package artifacts.
 
 ## Quarterly
 

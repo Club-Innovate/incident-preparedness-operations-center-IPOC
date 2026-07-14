@@ -38,6 +38,10 @@ jobs:
         shell: pwsh
         run: ./scripts/compliance/check-dotnet-vulnerabilities.ps1 -ProjectPath "IPOC_WEB.Server/IPOC_WEB.Server.csproj" -FailOnSeverities "Critical","High"
 
+      - name: TLS posture verification (enforced)
+        shell: pwsh
+        run: ./scripts/compliance/check-tls-posture.ps1 -ProgramPath "IPOC_WEB.Server/Program.cs" -OutputPath "security-compliance/controls/tls-posture-verification.md"
+
       - name: Endpoint compliance cycle (drift refresh)
         shell: pwsh
         run: ./scripts/compliance/run-endpoint-compliance-cycle.ps1 -IncludePendingEvidence
@@ -59,6 +63,7 @@ jobs:
             security-compliance/controls/endpoint-remediation-sla-summary.md
             security-compliance/controls/endpoint-evidence-completion-gaps-summary.md
             security-compliance/controls/endpoint-compliance-history.csv
+            security-compliance/controls/tls-posture-verification.md
 
   frontend-build-and-audit:
     runs-on: ubuntu-latest
