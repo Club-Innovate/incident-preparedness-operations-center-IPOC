@@ -22,6 +22,13 @@ Define recurring operational tasks to maintain HIPAA/HITRUST control posture aft
 1. Ensure `compliance-baseline-package` workflow ran successfully.
 2. Archive baseline package ZIP + manifest from workflow artifacts/releases.
 3. Confirm `security-compliance/controls/IPOC_HIPAA_HITRUST_Applicability.md` still reflects current measured state.
+4. Verify branch protection UI settings for `main` and retain screenshot evidence in baseline package notes.
+
+## Quarterly
+
+1. Run incident-response tabletop drill.
+2. Update `security-compliance/operations/incident-response-tabletop-log.md` with findings and corrective actions.
+3. Review incident communication checklist and escalation paths.
 
 ## Per Pull Request
 
