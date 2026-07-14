@@ -4,7 +4,7 @@ import type { ColDef } from 'ag-grid-community';
 import { Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { MapContainer, Marker, Popup, ScaleControl, TileLayer, Tooltip as LeafletTooltip, useMap, useMapEvents, ZoomControl } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
-import { divIcon } from 'leaflet';
+import { divIcon, type LeafletEvent } from 'leaflet';
 import IconActionButton from '../common/IconActionButton';
 import LabelWithInfo from '../common/LabelWithInfo';
 import MapControlStrip from '../common/MapControlStrip';
@@ -217,7 +217,7 @@ function CopMapZoomSync({
   const [lastZoom, setLastZoom] = useState<number | null>(null);
 
   useMapEvents({
-    zoomend: (event) => {
+    zoomend: (event: LeafletEvent) => {
       const nextZoom = event.target.getZoom();
       if (lastZoom === nextZoom) {
         return;

@@ -82,6 +82,7 @@ const ASSISTANT_LOCAL_STATE_KEY = 'ipoc.agent.dock.state';
 const ASSISTANT_LOCAL_PREFERENCES_KEY = 'ipoc.agent.dock.preferences.v1';
 const ASSISTANT_GLOBAL_STYLE_KEY = 'ipoc.agent.dock.global.style.v1';
 const ASSISTANT_LOCAL_PREFERENCES_PRESENT_KEY = 'ipoc.agent.dock.local.preferences.present.v1';
+const ASSISTANT_PREFILL_PROMPT_KEY = 'ipoc.agent.prefillPrompt';
 const ASSISTANT_SCOPE = 'agent-assistant-dock';
 const ASSISTANT_PRESET = 'default';
 const ASSISTANT_PREFERENCES_SCOPE = 'agent-assistant-preferences';
@@ -1055,6 +1056,21 @@ function AssistantDock({ isAuthenticated, authRoles = [], onNotify }: AssistantD
       window.clearTimeout(timeoutId);
     };
   }, [isAssistantAdmin, isAuthenticated, policyHistory.pageSize, preferences, showPersonalizationPanel]);
+
+  useEffect(() => {
+    if (!isOpen) {
+      return;
+    }
+
+    const prefillPrompt = localStorage.getItem(ASSISTANT_PREFILL_PROMPT_KEY);
+    if (!prefillPrompt || prefillPrompt.trim().length === 0) {
+      return;
+    }
+
+    setComposerText(prefillPrompt);
+    localStorage.removeItem(ASSISTANT_PREFILL_PROMPT_KEY);
+    onNotify('AI Incident Co-Pilot prompt was prefilled from Incident workspace context.', 'info');
+  }, [isOpen, onNotify]);
 
   const policyHistoryRows = useMemo(() => {
     const toDisplayValue = (value: string | number | boolean | string[] | null | undefined): string => {

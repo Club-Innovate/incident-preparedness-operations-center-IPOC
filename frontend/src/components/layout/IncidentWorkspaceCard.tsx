@@ -153,6 +153,17 @@ function IncidentWorkspaceCard({ incidentDetail, resourceRequestCount, communica
     clearCopHandoffBannerContext(setCopHandoffContext, setCopHandoffDismissed, onNotify, false);
   };
 
+  const launchIncidentCopilotBrief = () => {
+    if (!incidentDetail) {
+      onNotify('Select an incident before launching AI Incident Co-Pilot brief.', 'warning');
+      return;
+    }
+
+    const prompt = `Create an AI incident co-pilot brief for incident ${incidentDetail.incidentId} over 24 hours and include recommended actions plus ICS draft objectives.`;
+    localStorage.setItem('ipoc.agent.prefillPrompt', prompt);
+    onNotify('AI Incident Co-Pilot prompt staged. Open the assistant and submit when ready.', 'info');
+  };
+
   return (
     <Card className="shadow-sm mb-3">
       <Card.Header className="fw-semibold">Incident Workspace</Card.Header>
@@ -171,6 +182,15 @@ function IncidentWorkspaceCard({ incidentDetail, resourceRequestCount, communica
           onSelect={handleAccordionSelect}
           className="ipoc-section-accordion"
         >
+          <div className="d-flex justify-content-end mb-2">
+            <button
+              type="button"
+              className="btn btn-sm btn-outline-secondary"
+              onClick={launchIncidentCopilotBrief}
+            >
+              Launch AI Incident Co-Pilot Brief
+            </button>
+          </div>
           <Accordion.Item eventKey="0">
             <Accordion.Header>Situation</Accordion.Header>
             <Accordion.Body>

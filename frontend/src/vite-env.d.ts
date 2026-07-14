@@ -39,3 +39,22 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+declare module 'react-leaflet' {
+  export const MapContainer: any;
+  export const Marker: any;
+  export const Popup: any;
+  export const ScaleControl: any;
+  export const TileLayer: any;
+  export const Tooltip: any;
+  export const ZoomControl: any;
+  export function useMap(): any;
+  export function useMapEvents(events: Record<string, (event: any) => void>): any;
+}
+
+declare module 'react-leaflet-cluster' {
+  const MarkerClusterGroup: any;
+  export default MarkerClusterGroup;
+}
+
+declare module 'leaflet/dist/leaflet.css';
