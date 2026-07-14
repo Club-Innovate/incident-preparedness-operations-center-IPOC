@@ -32,7 +32,7 @@ jobs:
         run: dotnet restore IPOC_WEB.slnx
 
       - name: Build
-        run: dotnet build IPOC_WEB.slnx --configuration Release --no-restore
+        run: dotnet build IPOC_WEB.slnx --configuration Release
 
       - name: Backend package vulnerability audit (enforced)
         shell: pwsh
