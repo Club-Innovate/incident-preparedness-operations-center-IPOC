@@ -1,10 +1,10 @@
 # Endpoint Compliance Trend Report
 
-Generated: 2026-07-14 12:14:17
+Generated: 2026-07-14 14:15:08
 Source history: .\security-compliance\controls\endpoint-compliance-history.csv
 
 ## Current Snapshot
-- TimestampUtc: 2026-07-14 12:14:16
+- TimestampUtc: 2026-07-14 14:15:08
 - TotalEndpoints: **120**
 - Closed: **120**
 - RequiresChanges: **0**

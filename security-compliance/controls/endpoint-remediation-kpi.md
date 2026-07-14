@@ -1,6 +1,6 @@
 # Endpoint Remediation KPI Snapshot
 
-Generated: 2026-07-14 12:14:08
+Generated: 2026-07-14 14:14:56
 
 ## Backlog
 - Total endpoints: **120**
