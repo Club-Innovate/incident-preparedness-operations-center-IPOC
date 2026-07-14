@@ -1857,6 +1857,7 @@ function App() {
                   setReportGroupBy={setReportGroupBy}
                   setReportStatusFilter={setReportStatusFilter}
                   setReportTypeFilter={setReportTypeFilter}
+                  reportOperatorDisplayName={currentUserLabel}
                   onNavigateToView={(view) => handleNavigate(view)}
                   onNotify={showToast}
                 />

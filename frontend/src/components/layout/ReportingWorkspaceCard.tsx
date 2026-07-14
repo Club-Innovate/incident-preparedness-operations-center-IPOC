@@ -40,6 +40,7 @@ type ReportingWorkspaceCardProps = {
   setReportGroupBy: (value: 'status' | 'type') => void;
   setReportStatusFilter: (value: string) => void;
   setReportTypeFilter: (value: string) => void;
+  reportOperatorDisplayName?: string;
   onNavigateToView?: (view: 'incidents' | 'planning' | 'operations' | 'after-action') => void;
   onNotify?: (message: string, variant: 'success' | 'danger' | 'warning' | 'info') => void;
 };
@@ -103,6 +104,7 @@ type ReportPendingApprovalDecision = {
   incidentId: number;
   decision: 'Approved' | 'Deferred' | 'Rejected';
   decidedAtUtc: string;
+  decidedByDisplayName?: string;
   rationale?: string;
 };
 
@@ -120,6 +122,7 @@ type ReportDecisionHistoryEntry = {
   confidencePercent: number;
   decision: 'Approved' | 'Deferred' | 'Rejected';
   decidedAtUtc: string;
+  decidedByDisplayName?: string;
   rationale?: string;
 };
 
@@ -169,6 +172,7 @@ function ReportingWorkspaceCard({
   setReportGroupBy,
   setReportStatusFilter,
   setReportTypeFilter,
+  reportOperatorDisplayName,
   onNavigateToView,
   onNotify,
 }: ReportingWorkspaceCardProps) {
@@ -1536,11 +1540,13 @@ function ReportingWorkspaceCard({
     decision: 'Approved' | 'Deferred' | 'Rejected',
     options?: { silent?: boolean },
   ) => {
+    const decisionActor = reportOperatorDisplayName?.trim() || 'Authenticated User';
     const rationale = (pendingApprovalRationales[row.incidentId] ?? '').trim();
     const nextDecision: ReportPendingApprovalDecision = {
       incidentId: row.incidentId,
       decision,
       decidedAtUtc: new Date().toISOString(),
+      decidedByDisplayName: decisionActor,
       rationale: rationale.length > 0 ? rationale : undefined,
     };
 
@@ -1557,6 +1563,7 @@ function ReportingWorkspaceCard({
       confidencePercent: Math.round((row.recommendation?.confidence ?? 0) * 100),
       decision,
       decidedAtUtc: nextDecision.decidedAtUtc,
+      decidedByDisplayName: decisionActor,
       rationale: nextDecision.rationale,
     };
 
