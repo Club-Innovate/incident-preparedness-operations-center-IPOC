@@ -17,6 +17,7 @@ Define recurring operational tasks to maintain HIPAA/HITRUST control posture aft
    - `endpoint-remediation-kpi.md`
    - `tls-posture-verification.md`
 4. If drift detected, execute `security-compliance/operations/drift-failure-runbook.md`.
+5. If TLS posture verification fails, execute `security-compliance/operations/tls-posture-failure-runbook.md`.
 
 ## Monthly (1st of Month)
 
