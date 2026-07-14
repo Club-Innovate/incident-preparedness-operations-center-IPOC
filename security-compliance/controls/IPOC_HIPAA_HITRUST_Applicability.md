@@ -10,14 +10,14 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 
 | Domain | Applies to IPOC | Status | Current Evidence in Code/Config | Next Action |
 |---|---|---|---|---|
-| Identity & Access Management | Yes | Partial | AuthN/AuthZ required on APIs, role/scope policies, new privileged MFA gate | Enforce MFA in non-dev and validate token claim behavior in Entra |
+| Identity & Access Management | Yes | Implemented | AuthN/AuthZ required on APIs, role/scope policies, new privileged MFA gate + production guardrail prevents privileged MFA disablement | Maintain Entra claim mapping validation and periodic privileged-role access review evidence |
 | Audit Controls | Yes | Partial | Audit event writer + audit endpoints + sensitive request logging + `security-compliance/standards/audit-log-retention-standard.md` | Implement immutable storage configuration in hosting platform and capture evidence |
 | Transmission Security | Yes | Implemented | HTTPS redirection, HSTS, security headers | Add automated TLS posture verification evidence |
 | Data at Rest Encryption | Yes | Partial | Encrypted SQL connection settings in config | Document and verify DB/storage/backups encryption settings as evidence |
 | Minimum Necessary / Data Minimization | Yes | Implemented | User DTOs intentionally omit sensitive fields, redaction helpers for exports + endpoint-level evidence lifecycle fully executed (120/120 closed, 120/120 evidence approved, 0 open gaps) | Run scheduled drift-detection cycle for net-new or changed endpoints and retain release artifacts |
 | Integrity Controls | Yes | Partial | Parameterized SQL usage patterns and controlled update paths | Add tamper-evident logging strategy and integrity test cases |
 | Incident Response | Yes | Planned | Baseline roadmap exists | Add IR runbook + tabletop exercise evidence |
-| Vulnerability Management | Yes | Partial | Security CI gates workflow added (`.github/workflows/security-compliance-gates.yml`) with enforced .NET severity gate (`scripts/compliance/check-dotnet-vulnerabilities.ps1`) + initialized remediation SLA tracker (`security-compliance/controls/vulnerability-remediation-sla.csv`) | Remediate open npm high findings and record closure evidence |
+| Vulnerability Management | Yes | Implemented | Security CI gates workflow with enforced .NET severity gate (`scripts/compliance/check-dotnet-vulnerabilities.ps1`) + npm audit high gate + lockfile remediation + scheduled/manual drift checks | Continue dependency maintenance cadence and retain vulnerability closure evidence in baseline packages |
 | Vendor / Third-Party Risk | Yes | Planned | External provider telemetry exists | Add supplier risk register and annual review process |
 | Physical Safeguards | Shared Responsibility | Partial | Cloud-hosted assumptions | Track provider attestations and internal endpoint/device policy |
 | Breach Notification Readiness | Yes | Planned | Operational telemetry and audit foundations | Add breach workflow, legal escalation matrix, and drill cadence |
@@ -60,6 +60,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 33. Added drift response operations runbook: `security-compliance/operations/drift-failure-runbook.md` with SLA, owner routing, and recovery criteria.
 34. Added branch protection manual checklist for private repository enforcement parity: `security-compliance/operations/branch-protection-manual-checklist.md`.
 35. Added monthly compliance baseline packaging workflow `.github/workflows/compliance-baseline-package.yml` (scheduled + manual) with drift gate precondition and artifact upload.
+36. Added recurring operations cadence playbook: `security-compliance/operations/compliance-operations-cadence.md`.
 
 ## Current Endpoint Review Backlog Snapshot
 
