@@ -57,6 +57,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 30. Added release packaging automation via `scripts/compliance/package-endpoint-compliance-baseline.ps1` to produce a baseline artifact bundle (directory + zip + SHA256 manifest).
 31. Added enforced CI drift gate via `scripts/compliance/enforce-endpoint-compliance-drift.ps1` and wired it into `.github/workflows/security-compliance-gates.yml` after compliance cycle refresh.
 32. Extended CI drift monitoring cadence in `.github/workflows/security-compliance-gates.yml` with `workflow_dispatch` and weekly schedule trigger (`0 6 * * 1`).
+33. Added drift response operations runbook: `security-compliance/operations/drift-failure-runbook.md` with SLA, owner routing, and recovery criteria.
 
 ## Current Endpoint Review Backlog Snapshot
 
