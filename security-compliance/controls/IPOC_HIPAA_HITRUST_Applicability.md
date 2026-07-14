@@ -59,6 +59,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 32. Extended CI drift monitoring cadence in `.github/workflows/security-compliance-gates.yml` with `workflow_dispatch` and weekly schedule trigger (`0 6 * * 1`).
 33. Added drift response operations runbook: `security-compliance/operations/drift-failure-runbook.md` with SLA, owner routing, and recovery criteria.
 34. Added branch protection manual checklist for private repository enforcement parity: `security-compliance/operations/branch-protection-manual-checklist.md`.
+35. Added monthly compliance baseline packaging workflow `.github/workflows/compliance-baseline-package.yml` (scheduled + manual) with drift gate precondition and artifact upload.
 
 ## Current Endpoint Review Backlog Snapshot
 
@@ -88,6 +89,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 - Historical snapshots recorded: **15** rows (`security-compliance/controls/endpoint-compliance-history.csv`)
 - Owner test-evidence queue generated: `security-compliance/controls/endpoint-test-evidence-queue-summary.md` + `.csv`
 - CI artifact upload enabled for compliance outputs in `.github/workflows/security-compliance-gates.yml`
+- Monthly baseline packaging workflow enabled: `.github/workflows/compliance-baseline-package.yml`
 - Top blockers:
 	- Evidence content incomplete: **0**
 - Backlog owner distribution:

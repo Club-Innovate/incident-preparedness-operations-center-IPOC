@@ -1,0 +1,48 @@
+name: compliance-baseline-package
+
+permissions:
+  contents: read
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 7 1 * *'
+
+concurrency:
+  group: compliance-baseline-package-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package-baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Refresh endpoint compliance outputs
+        shell: pwsh
+        run: ./scripts/compliance/run-endpoint-compliance-cycle.ps1 -IncludePendingEvidence
+
+      - name: Enforce drift gate before packaging
+        shell: pwsh
+        run: ./scripts/compliance/enforce-endpoint-compliance-drift.ps1 -LedgerPath "security-compliance/controls/endpoint-minimum-necessary-reviews.csv" -EvidenceGapCsvPath "security-compliance/controls/endpoint-evidence-completion-gaps.csv" -SlaSummaryPath "security-compliance/controls/endpoint-remediation-sla-summary.md"
+
+      - name: Build compliance baseline package
+        shell: pwsh
+        run: ./scripts/compliance/package-endpoint-compliance-baseline.ps1 -OutputRoot "security-compliance/releases"
+
+      - name: Upload compliance release artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compliance-baseline-package
+          path: |
+            security-compliance/releases/**/*.zip
+            security-compliance/releases/**/manifest.md
+            security-compliance/controls/endpoint-compliance-executive-summary.md
+            security-compliance/controls/endpoint-compliance-trend.md
