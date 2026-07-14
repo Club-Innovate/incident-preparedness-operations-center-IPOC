@@ -11,7 +11,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 | Domain | Applies to IPOC | Status | Current Evidence in Code/Config | Next Action |
 |---|---|---|---|---|
 | Identity & Access Management | Yes | Implemented | AuthN/AuthZ required on APIs, role/scope policies, new privileged MFA gate + production guardrail prevents privileged MFA disablement | Maintain Entra claim mapping validation and periodic privileged-role access review evidence |
-| Audit Controls | Yes | Partial | Audit event writer + audit endpoints + sensitive request logging + `security-compliance/standards/audit-log-retention-standard.md` | Implement immutable storage configuration in hosting platform and capture evidence |
+| Audit Controls | Yes | Partial | Audit event writer + audit endpoints + sensitive request logging + `security-compliance/standards/audit-log-retention-standard.md` + `security-compliance/operations/audit-immutability-evidence-checklist.md` | Attach explicit hosting-layer immutability/WORM evidence and complete checklist sign-off |
 | Transmission Security | Yes | Implemented | HTTPS redirection, HSTS, security headers | Add automated TLS posture verification evidence |
 | Data at Rest Encryption | Yes | Partial | Encrypted SQL connection settings in config | Document and verify DB/storage/backups encryption settings as evidence |
 | Minimum Necessary / Data Minimization | Yes | Implemented | User DTOs intentionally omit sensitive fields, redaction helpers for exports + endpoint-level evidence lifecycle fully executed (120/120 closed, 120/120 evidence approved, 0 open gaps) | Run scheduled drift-detection cycle for net-new or changed endpoints and retain release artifacts |
@@ -61,6 +61,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 34. Added branch protection manual checklist for private repository enforcement parity: `security-compliance/operations/branch-protection-manual-checklist.md`.
 35. Added monthly compliance baseline packaging workflow `.github/workflows/compliance-baseline-package.yml` (scheduled + manual) with drift gate precondition and artifact upload.
 36. Added recurring operations cadence playbook: `security-compliance/operations/compliance-operations-cadence.md`.
+37. Added audit immutability evidence checklist: `security-compliance/operations/audit-immutability-evidence-checklist.md` to drive closure for Audit Controls domain.
 
 ## Current Endpoint Review Backlog Snapshot
 
