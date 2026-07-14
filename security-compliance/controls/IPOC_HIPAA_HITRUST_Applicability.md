@@ -16,7 +16,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 | Data at Rest Encryption | Yes | Partial | Encrypted SQL connection settings in config + `security-compliance/operations/data-at-rest-encryption-evidence-checklist.md` | Attach DB/storage/backup encryption proof artifacts and complete sign-off checklist |
 | Minimum Necessary / Data Minimization | Yes | Implemented | User DTOs intentionally omit sensitive fields, redaction helpers for exports + endpoint-level evidence lifecycle fully executed (120/120 closed, 120/120 evidence approved, 0 open gaps) | Run scheduled drift-detection cycle for net-new or changed endpoints and retain release artifacts |
 | Integrity Controls | Yes | Partial | Parameterized SQL usage patterns and controlled update paths + `security-compliance/operations/integrity-controls-evidence-checklist.md` | Attach integrity test evidence and tamper-evident audit proof, then complete sign-off checklist |
-| Incident Response | Yes | Planned | Baseline roadmap exists | Add IR runbook + tabletop exercise evidence |
+| Incident Response | Yes | Partial | `security-compliance/operations/incident-response-runbook.md` + `security-compliance/operations/incident-response-tabletop-log.md` initialized | Execute first tabletop drill and attach exercise evidence/sign-off |
 | Vulnerability Management | Yes | Implemented | Security CI gates workflow with enforced .NET severity gate (`scripts/compliance/check-dotnet-vulnerabilities.ps1`) + npm audit high gate + lockfile remediation + scheduled/manual drift checks | Continue dependency maintenance cadence and retain vulnerability closure evidence in baseline packages |
 | Vendor / Third-Party Risk | Yes | Planned | External provider telemetry exists | Add supplier risk register and annual review process |
 | Physical Safeguards | Shared Responsibility | Partial | Cloud-hosted assumptions | Track provider attestations and internal endpoint/device policy |
@@ -64,6 +64,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 37. Added audit immutability evidence checklist: `security-compliance/operations/audit-immutability-evidence-checklist.md` to drive closure for Audit Controls domain.
 38. Added Data-at-Rest encryption evidence checklist: `security-compliance/operations/data-at-rest-encryption-evidence-checklist.md`.
 39. Added Integrity Controls evidence checklist: `security-compliance/operations/integrity-controls-evidence-checklist.md`.
+40. Added Incident Response operations artifacts: `security-compliance/operations/incident-response-runbook.md` and `security-compliance/operations/incident-response-tabletop-log.md`.
 
 ## Current Endpoint Review Backlog Snapshot
 
