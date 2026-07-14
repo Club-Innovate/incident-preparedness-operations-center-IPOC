@@ -83,10 +83,11 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 - Historical trend log initialized: `security-compliance/controls/endpoint-compliance-history.csv`
 - Trend report generated: `security-compliance/controls/endpoint-compliance-trend.md`
 - Evidence completion gap report generated: `security-compliance/controls/endpoint-evidence-completion-gaps-summary.md` + `.csv`
-- Historical snapshots recorded: **7** rows (`security-compliance/controls/endpoint-compliance-history.csv`)
+- Historical snapshots recorded: **15** rows (`security-compliance/controls/endpoint-compliance-history.csv`)
 - Owner test-evidence queue generated: `security-compliance/controls/endpoint-test-evidence-queue-summary.md` + `.csv`
+- CI artifact upload enabled for compliance outputs in `.github/workflows/security-compliance-gates.yml`
 - Top blockers:
-	- Evidence content incomplete: **120**
+	- Evidence content incomplete: **0**
 - Backlog owner distribution:
   - **Security Engineering**: 29 endpoints
   - **Platform Engineering**: 18 endpoints
