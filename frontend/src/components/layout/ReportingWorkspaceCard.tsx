@@ -1172,13 +1172,31 @@ function ReportingWorkspaceCard({
     }
 
     const generatedUtc = new Date().toISOString();
-    const topRecommendations = pendingApprovalRows.slice(0, 5);
+    const recommendationBundleRows = selectedPendingApprovalRows.length > 0
+      ? selectedPendingApprovalRows
+      : pendingApprovalRows.slice(0, 5);
+    const recommendationBundle = recommendationBundleRows.map((row, index) => {
+      const savedDecision = pendingApprovalDecisions[row.incidentId];
+      const rationale = (savedDecision?.rationale ?? pendingApprovalRationales[row.incidentId] ?? '').trim();
+      return {
+        index: index + 1,
+        incidentNumber: row.incidentNumber,
+        incidentName: row.incidentName,
+        recommendationAction: row.recommendation.action,
+        confidencePercent: Math.round(row.recommendation.confidence * 100),
+        decision: savedDecision?.decision ?? 'Pending review',
+        decidedAtUtc: savedDecision?.decidedAtUtc,
+        rationale,
+      };
+    });
+
     const narrative = [
       '# Executive Decision Brief',
       '',
       `Generated UTC: ${generatedUtc}`,
       `Reference baseline UTC: ${executiveDeltaReferenceDateUtc ?? 'Not set'}`,
       `Report scope: ${reportWindowDays}d window · GroupBy ${reportGroupBy} · Status ${reportStatusFilter} · Type ${reportTypeFilter}`,
+      `Recommendation bundle source: ${selectedPendingApprovalRows.length > 0 ? 'Selected pending approvals' : 'Top pending recommendations'}`,
       '',
       '## Trend Delta Summary',
       `- Volume delta: ${executiveDeltaSummary.volumeDelta > 0 ? '+' : ''}${executiveDeltaSummary.volumeDelta}`,
@@ -1186,7 +1204,16 @@ function ReportingWorkspaceCard({
       `- 72h intake activity delta: ${executiveDeltaSummary.activityDelta > 0 ? '+' : ''}${executiveDeltaSummary.activityDelta}%`,
       '',
       '## Recommended Actions',
-      ...topRecommendations.map((row, index) => `${index + 1}. ${row.incidentNumber} (${row.incidentName}) - ${row.recommendation.action} [${Math.round(row.recommendation.confidence * 100)}% confidence]`),
+      ...recommendationBundle.map((item) => `${item.index}. ${item.incidentNumber} (${item.incidentName}) - ${item.recommendationAction} [${item.confidencePercent}% confidence]`),
+      '',
+      '## Recommendation Bundle Decision State',
+      ...recommendationBundle.map((item) => {
+        const decisionLine = item.decidedAtUtc
+          ? `${item.decision} at ${item.decidedAtUtc}`
+          : item.decision;
+        const rationaleLine = item.rationale.length > 0 ? `; Rationale: ${item.rationale}` : '';
+        return `- ${item.incidentNumber}: ${decisionLine}${rationaleLine}`;
+      }),
       '',
       '## Decision Support Notes',
       `- Comparative posture: ${comparisonNarrative}`,
@@ -1196,7 +1223,7 @@ function ReportingWorkspaceCard({
 
     const blob = new Blob([narrative], { type: 'text/markdown;charset=utf-8;' });
     downloadBlob(blob, 'reports-executive-decision-brief', 'md');
-    onNotify?.('Executive decision brief exported with trend deltas and recommendations.', 'success');
+    onNotify?.(`Executive decision brief exported with ${recommendationBundle.length} recommendation bundle item(s).`, 'success');
   };
 
   const stampExecutiveDeltaBaseline = () => {
