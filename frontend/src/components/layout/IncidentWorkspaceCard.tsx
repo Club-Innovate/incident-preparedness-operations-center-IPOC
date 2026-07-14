@@ -159,7 +159,7 @@ function IncidentWorkspaceCard({ incidentDetail, resourceRequestCount, communica
       return;
     }
 
-    const prompt = `Create an AI incident co-pilot brief for incident ${incidentDetail.incidentId} over 24 hours and include recommended actions plus ICS draft objectives.`;
+    const prompt = `Create an AI incident co-pilot brief for incident ${incidentDetail.incidentNumber} over 24 hours and include recommended actions plus ICS draft objectives.`;
     localStorage.setItem('ipoc.agent.prefillPrompt', prompt);
     onNotify('AI Incident Co-Pilot prompt staged. Open the assistant and submit when ready.', 'info');
   };
