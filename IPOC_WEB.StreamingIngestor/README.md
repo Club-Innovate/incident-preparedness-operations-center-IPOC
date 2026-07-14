@@ -37,7 +37,7 @@ Example (`db` mode, direct load):
 
 ```powershell
 $env:IOCEM_STREAM_MODE = "db"
-$env:IOCEM_DB_CONNECTION = "Server=...;Database=IOCEM;User ID=app_login;Password=!devapp1;TrustServerCertificate=True;"
+$env:IOCEM_DB_CONNECTION = "Server=...;Database=IOCEM;User ID=app_login;Password=P@ssW0rd;TrustServerCertificate=True;"
 dotnet run --project .\IPOC_WEB.StreamingIngestor\IPOC_WEB.StreamingIngestor.csproj
 ```
 

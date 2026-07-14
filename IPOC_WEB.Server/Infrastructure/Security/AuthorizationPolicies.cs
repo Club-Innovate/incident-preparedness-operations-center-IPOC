@@ -38,7 +38,7 @@ public static class AuthorizationPolicies
     private static readonly string[] LookupViewerRoleCodes =
     [
         "SYSTEM_ADMIN",
-        "KDHE_ADMIN",
+        "IPOC_ADMIN",
         "INCIDENT_COMMANDER",
         "LOOKUP_CONTRIBUTOR",
         "LOOKUP_ADMIN"
@@ -47,7 +47,7 @@ public static class AuthorizationPolicies
     private static readonly string[] LookupContributorRoleCodes =
     [
         "SYSTEM_ADMIN",
-        "KDHE_ADMIN",
+        "IPOC_ADMIN",
         "INCIDENT_COMMANDER",
         "LOOKUP_CONTRIBUTOR",
         "LOOKUP_ADMIN"
@@ -56,14 +56,14 @@ public static class AuthorizationPolicies
     private static readonly string[] LookupAdminRoleCodes =
     [
         "SYSTEM_ADMIN",
-        "KDHE_ADMIN",
+        "IPOC_ADMIN",
         "LOOKUP_ADMIN"
     ];
 
     private static readonly string[] DataOpsAdminRoleCodes =
     [
         "SYSTEM_ADMIN",
-        "KDHE_ADMIN",
+        "IPOC_ADMIN",
         "DATA_OPS_ADMIN"
     ];
 

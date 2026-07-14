@@ -13,17 +13,17 @@ const hasAnyScope = (scopes: Set<string>, expectedScopes: string[]) => expectedS
 export const navigationModuleAuthorizationRules = {
   logistics: {
     alignedBackendPolicies: ['AuthorizationPolicies.ResourceReporter', 'AuthorizationPolicies.IncidentCommander'],
-    allowedRoles: ['SYSTEM_ADMIN', 'KDHE_ADMIN', 'INCIDENT_COMMANDER', 'RESOURCE_REPORTER'],
+    allowedRoles: ['SYSTEM_ADMIN', 'IPOC_ADMIN', 'INCIDENT_COMMANDER', 'RESOURCE_REPORTER'],
     allowedScopes: ['access_as_user', 'resource.report'],
   },
   finance: {
     alignedBackendPolicies: ['AuthorizationPolicies.LookupAdmin', 'AuthorizationPolicies.IncidentCommander'],
-    allowedRoles: ['SYSTEM_ADMIN', 'KDHE_ADMIN', 'INCIDENT_COMMANDER', 'LOOKUP_ADMIN'],
+    allowedRoles: ['SYSTEM_ADMIN', 'IPOC_ADMIN', 'INCIDENT_COMMANDER', 'LOOKUP_ADMIN'],
     allowedScopes: ['access_as_user', 'lookup.admin'],
   },
   afterAction: {
     alignedBackendPolicies: ['AuthorizationPolicies.LookupAdmin', 'AuthorizationPolicies.IncidentCommander'],
-    allowedRoles: ['SYSTEM_ADMIN', 'KDHE_ADMIN', 'INCIDENT_COMMANDER', 'LOOKUP_ADMIN'],
+    allowedRoles: ['SYSTEM_ADMIN', 'IPOC_ADMIN', 'INCIDENT_COMMANDER', 'LOOKUP_ADMIN'],
     allowedScopes: ['access_as_user', 'lookup.admin'],
   },
 } satisfies Record<'logistics' | 'finance' | 'afterAction', NavigationModuleAuthorizationRule>;

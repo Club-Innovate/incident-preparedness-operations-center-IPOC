@@ -309,7 +309,7 @@ function AssistantDock({ isAuthenticated, authRoles = [], onNotify }: AssistantD
   const isAssistantAdmin = useMemo(
     () => normalizedRoles.some((role) => [
       'SYSTEM_ADMIN',
-      'KDHE_ADMIN',
+      'IPOC_ADMIN',
       'INCIDENT_COMMANDER',
       'DATA_OPS_ADMIN',
       'LOOKUP_ADMIN',

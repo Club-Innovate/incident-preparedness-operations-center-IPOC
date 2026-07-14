@@ -13309,7 +13309,7 @@ static bool CanManageAgentPersonalizationPolicy(ClaimsPrincipal user)
         .ToHashSet(StringComparer.OrdinalIgnoreCase);
 
     return roles.Contains("SYSTEM_ADMIN")
-        || roles.Contains("KDHE_ADMIN")
+        || roles.Contains("IPOC_ADMIN")
         || roles.Contains("INCIDENT_COMMANDER")
         || roles.Contains("LOOKUP_ADMIN");
 }
