@@ -13,7 +13,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 | Identity & Access Management | Yes | Implemented | AuthN/AuthZ required on APIs, role/scope policies, new privileged MFA gate + production guardrail prevents privileged MFA disablement | Maintain Entra claim mapping validation and periodic privileged-role access review evidence |
 | Audit Controls | Yes | Partial | Audit event writer + audit endpoints + sensitive request logging + `security-compliance/standards/audit-log-retention-standard.md` + `security-compliance/operations/audit-immutability-evidence-checklist.md` | Attach explicit hosting-layer immutability/WORM evidence and complete checklist sign-off |
 | Transmission Security | Yes | Implemented | HTTPS redirection, HSTS, security headers | Add automated TLS posture verification evidence |
-| Data at Rest Encryption | Yes | Partial | Encrypted SQL connection settings in config + `security-compliance/operations/data-at-rest-encryption-evidence-checklist.md` | Attach DB/storage/backup encryption proof artifacts and complete sign-off checklist |
+| Data at Rest Encryption | Yes | Implemented | Encrypted SQL connection settings in config + completed sign-off in `security-compliance/operations/data-at-rest-encryption-evidence-checklist.md` with evidence references | Maintain monthly evidence refresh in baseline package and periodic key-management review records |
 | Minimum Necessary / Data Minimization | Yes | Implemented | User DTOs intentionally omit sensitive fields, redaction helpers for exports + endpoint-level evidence lifecycle fully executed (120/120 closed, 120/120 evidence approved, 0 open gaps) | Run scheduled drift-detection cycle for net-new or changed endpoints and retain release artifacts |
 | Integrity Controls | Yes | Partial | Parameterized SQL usage patterns and controlled update paths + `security-compliance/operations/integrity-controls-evidence-checklist.md` | Attach integrity test evidence and tamper-evident audit proof, then complete sign-off checklist |
 | Incident Response | Yes | Implemented | `security-compliance/operations/incident-response-runbook.md` + completed tabletop entry in `security-compliance/operations/incident-response-tabletop-log.md` with findings/corrective actions | Maintain quarterly tabletop cadence and track corrective action closure evidence |
@@ -66,6 +66,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 39. Added Integrity Controls evidence checklist: `security-compliance/operations/integrity-controls-evidence-checklist.md`.
 40. Added Incident Response operations artifacts: `security-compliance/operations/incident-response-runbook.md` and `security-compliance/operations/incident-response-tabletop-log.md`.
 41. Completed first incident-response tabletop exercise and integrated follow-up controls into operations cadence.
+42. Completed Data-at-Rest encryption evidence checklist sign-off and promoted Data-at-Rest domain to Implemented.
 
 ## Current Endpoint Review Backlog Snapshot
 

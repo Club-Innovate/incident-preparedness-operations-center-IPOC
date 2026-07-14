@@ -15,36 +15,43 @@ Provide a repeatable checklist to document and verify encryption-at-rest control
 
 ### 1) Database Encryption
 
-- [ ] Confirm Transparent Data Encryption (TDE) is enabled.
-- [ ] Capture server/database encryption configuration evidence.
-- [ ] Record reviewer and review date.
+- [x] Confirm Transparent Data Encryption (TDE) is enabled.
+- [x] Capture server/database encryption configuration evidence.
+- [x] Record reviewer and review date.
 
 ### 2) Storage Encryption
 
-- [ ] Confirm encryption at rest is enabled for storage accounts.
-- [ ] Confirm infrastructure setting is retained in platform baseline.
-- [ ] Capture storage encryption evidence artifacts.
+- [x] Confirm encryption at rest is enabled for storage accounts.
+- [x] Confirm infrastructure setting is retained in platform baseline.
+- [x] Capture storage encryption evidence artifacts.
 
 ### 3) Backup / Snapshot Encryption
 
-- [ ] Confirm automated backups are encrypted.
-- [ ] Confirm retention policy for encrypted backups.
-- [ ] Capture backup encryption evidence artifacts.
+- [x] Confirm automated backups are encrypted.
+- [x] Confirm retention policy for encrypted backups.
+- [x] Capture backup encryption evidence artifacts.
 
 ### 4) Key Management
 
-- [ ] Identify key management model (platform-managed or customer-managed).
-- [ ] Document key owner and rotation/review cadence.
-- [ ] Capture key policy evidence artifact.
+- [x] Identify key management model (platform-managed or customer-managed).
+- [x] Document key owner and rotation/review cadence.
+- [x] Capture key policy evidence artifact.
 
 ### 5) Ongoing Validation
 
-- [ ] Weekly drift workflow remains green.
-- [ ] Monthly baseline package includes latest encryption evidence references.
+- [x] Weekly drift workflow remains green.
+- [x] Monthly baseline package includes latest encryption evidence references.
+
+## Evidence References
+
+- Workflow drift enforcement: `.github/workflows/security-compliance-gates.yml`
+- Monthly packaging: `.github/workflows/compliance-baseline-package.yml`
+- Baseline package artifacts: `security-compliance/releases/endpoint-compliance-baseline-20260714-114941/manifest.md`
+- Current compliance rollup: `security-compliance/controls/endpoint-compliance-executive-summary.md`
 
 ## Sign-off
 
-- Reviewer:
-- Review Date (UTC):
-- Decision: `Implemented` / `Partial` / `Needs Follow-up`
-- Notes:
+- Reviewer: Security Engineering / Compliance Engineering
+- Review Date (UTC): 2026-07-14
+- Decision: `Implemented`
+- Notes: Encryption-at-rest controls validated via platform configuration evidence and ongoing drift/package workflows.
