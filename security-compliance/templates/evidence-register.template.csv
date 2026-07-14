@@ -1,0 +1,11 @@
+EvidenceId,ControlId,Domain,ArtifactName,ArtifactLocation,Owner,CollectedUtc,ValidUntilUtc,ReviewCadence,Status,Notes
+EV-001,IAM-01,Identity & Access,Authentication Configuration Export,<path-or-url>,<owner>,<yyyy-mm-dd>,<yyyy-mm-dd>,Quarterly,Current,
+EV-002,IAM-02,Identity & Access,Authorization Policy Matrix,<path-or-url>,<owner>,<yyyy-mm-dd>,<yyyy-mm-dd>,Quarterly,Current,
+EV-003,CRY-01,Encryption,TLS Posture Report,<path-or-url>,<owner>,<yyyy-mm-dd>,<yyyy-mm-dd>,Monthly,Current,
+EV-004,CRY-02,Encryption,At-Rest Encryption Evidence,<path-or-url>,<owner>,<yyyy-mm-dd>,<yyyy-mm-dd>,Monthly,Current,
+EV-005,AUD-01,Auditability,Audit Event Query Sample,<path-or-url>,<owner>,<yyyy-mm-dd>,<yyyy-mm-dd>,Monthly,Current,
+EV-006,SDL-01,SDLC,CI Security Scan Output,<path-or-url>,<owner>,<yyyy-mm-dd>,<yyyy-mm-dd>,Per Build,Current,
+EV-007,VUL-01,Vulnerability Mgmt,Vulnerability SLA Report,<path-or-url>,<owner>,<yyyy-mm-dd>,<yyyy-mm-dd>,Weekly,Current,
+EV-008,IR-01,Incident Response,Incident Drill Summary,<path-or-url>,<owner>,<yyyy-mm-dd>,<yyyy-mm-dd>,Quarterly,Current,
+EV-009,BCDR-01,Resilience,Restore Test Evidence,<path-or-url>,<owner>,<yyyy-mm-dd>,<yyyy-mm-dd>,Quarterly,Current,
+EV-010,PRI-01,Privacy/Retention,Data Inventory and Retention Matrix,<path-or-url>,<owner>,<yyyy-mm-dd>,<yyyy-mm-dd>,Quarterly,Current,

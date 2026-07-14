@@ -161,6 +161,11 @@ function AdminWorkspaceCard({
   const WEATHER_DEFAULT_LOCAL_KEY = 'ipoc.weather.defaultLocation';
   const ADMIN_CACHE_USE_REDIS_LOCAL_KEY = 'ipoc.admin.cache.useRedis';
   const API_TIMING_DEBUG_LOCAL_KEY = 'ipoc.api.timing.debug';
+  const DEFAULT_INTEGRATION_SAMPLES_HINT = '.\\data\\Integration-Samples';
+  const DEFAULT_BATCH_RESOURCE_CSV_HINT = '.\\data\\Integration-Samples\\IOCEM_Batch_ResourceInventory.csv';
+  const DEFAULT_BATCH_BED_CSV_HINT = '.\\data\\Integration-Samples\\IOCEM_Batch_BedAvailability.csv';
+  const DEFAULT_FHIR_BUNDLE_HINT = '.\\data\\Integration-Samples\\IOCEM_FHIR_BedCapacity.bundle.json';
+  const DEFAULT_STREAM_PAYLOAD_HINT = '.\\data\\Integration-Samples\\IOCEM_Streaming_IncidentAndResources.json';
   const [activeTab, setActiveTab] = useState(initialActiveTab ?? 'general');
   const [adminDataMode, setAdminDataMode] = useState<'demo' | 'live'>(() => {
     const persisted = localStorage.getItem('ipoc.admin.dataMode');
@@ -4301,6 +4306,12 @@ function AdminWorkspaceCard({
           </Tab>
 
           <Tab eventKey="imports" title={renderAdminTabTitle('bi bi-file-earmark-arrow-up', 'Batch Imports')}>
+            <div className="small text-muted mb-2">
+              Default sample files now live under <code>{DEFAULT_INTEGRATION_SAMPLES_HINT}</code>.
+            </div>
+            <div className="small text-muted mb-3">
+              Resource CSV: <code>{DEFAULT_BATCH_RESOURCE_CSV_HINT}</code> · Bed CSV: <code>{DEFAULT_BATCH_BED_CSV_HINT}</code>
+            </div>
             <div className="d-flex align-items-center gap-2 mb-3">
               <Badge bg={validationOnlyMode ? 'warning' : 'primary'} text={validationOnlyMode ? 'dark' : undefined}>
                 {validationOnlyMode ? 'Validation-only mode' : 'Import mode'}
@@ -4396,6 +4407,9 @@ function AdminWorkspaceCard({
           </Tab>
 
           <Tab eventKey="fhir" title={renderAdminTabTitle('bi bi-arrow-left-right', 'FHIR Translator')}>
+            <div className="small text-muted mb-2">
+              Default FHIR sample bundle: <code>{DEFAULT_FHIR_BUNDLE_HINT}</code>
+            </div>
             <div className="d-flex justify-content-between align-items-center mb-2">
               <div className="small text-muted">Use the adapter contract to validate payload expectations before importing.</div>
               <IconActionButton
@@ -4455,6 +4469,12 @@ function AdminWorkspaceCard({
           </Tab>
 
           <Tab eventKey="streaming" title={renderAdminTabTitle('bi bi-broadcast', 'Streaming')}>
+            <div className="small text-muted mb-2">
+              Default stream directory: <code>{DEFAULT_INTEGRATION_SAMPLES_HINT}</code>
+            </div>
+            <div className="small text-muted mb-3">
+              Default stream payload sample: <code>{DEFAULT_STREAM_PAYLOAD_HINT}</code>
+            </div>
             <div className="row g-3">
               <div className="col-md-8">
                 <Form.Group className="mb-2">

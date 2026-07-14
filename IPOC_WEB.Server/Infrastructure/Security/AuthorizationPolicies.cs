@@ -20,6 +20,7 @@ Security & Compliance:
 */
 
 using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 
 namespace IPOC_WEB.Server.Infrastructure.Security;
@@ -67,7 +68,7 @@ public static class AuthorizationPolicies
         "DATA_OPS_ADMIN"
     ];
 
-    public static void Configure(AuthorizationOptions options)
+    public static void Configure(AuthorizationOptions options, bool requireMfaForPrivilegedAccess)
     {
         options.AddPolicy(IncidentViewer, policy => policy.RequireAuthenticatedUser());
         options.AddPolicy(IncidentCommander, policy => policy.RequireAuthenticatedUser());
@@ -91,16 +92,22 @@ public static class AuthorizationPolicies
         options.AddPolicy(LookupAdmin, policy => policy
             .RequireAuthenticatedUser()
             .RequireAssertion(context =>
-                HasRoleCode(context.User, LookupAdminRoleCodes)
-                || HasScopeOrPermission(context.User, "lookup.admin")
-                || HasScopeOrPermission(context.User, "access_as_user")));
+                (!requireMfaForPrivilegedAccess || HasMfaSatisfied(context.User))
+                && (
+                    HasRoleCode(context.User, LookupAdminRoleCodes)
+                    || HasScopeOrPermission(context.User, "lookup.admin")
+                    || HasScopeOrPermission(context.User, "access_as_user")
+                )));
 
         options.AddPolicy(DataOpsAdmin, policy => policy
             .RequireAuthenticatedUser()
             .RequireAssertion(context =>
-                HasRoleCode(context.User, DataOpsAdminRoleCodes)
-                || HasScopeOrPermission(context.User, "data.ops.admin")
-                || HasScopeOrPermission(context.User, "access_as_user")));
+                (!requireMfaForPrivilegedAccess || HasMfaSatisfied(context.User))
+                && (
+                    HasRoleCode(context.User, DataOpsAdminRoleCodes)
+                    || HasScopeOrPermission(context.User, "data.ops.admin")
+                    || HasScopeOrPermission(context.User, "access_as_user")
+                )));
     }
 
     private static bool HasRoleCode(ClaimsPrincipal user, IReadOnlyCollection<string> roleCodes)
@@ -132,5 +139,54 @@ public static class AuthorizationPolicies
         return user.FindAll("permissions")
             .Select(claim => claim.Value)
             .Any(permission => string.Equals(permission, value, StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static bool HasMfaSatisfied(ClaimsPrincipal user)
+    {
+        if (HasAffirmativeClaim(user, "mfa") || HasAffirmativeClaim(user, "mfa_satisfied") || HasAffirmativeClaim(user, "MfaSatisfied"))
+        {
+            return true;
+        }
+
+        var amrValues = user.FindAll("amr")
+            .Select(claim => claim.Value)
+            .Where(value => !string.IsNullOrWhiteSpace(value));
+
+        foreach (var value in amrValues)
+        {
+            if (string.Equals(value, "mfa", StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+
+            if (value.StartsWith("[", StringComparison.Ordinal))
+            {
+                try
+                {
+                    var parsed = JsonSerializer.Deserialize<string[]>(value);
+                    if (parsed is not null && parsed.Any(v => string.Equals(v, "mfa", StringComparison.OrdinalIgnoreCase)))
+                    {
+                        return true;
+                    }
+                }
+                catch
+                {
+                    // Ignore invalid claim payload formatting.
+                }
+            }
+        }
+
+        var authMethodRefs = user.FindAll("http://schemas.microsoft.com/claims/authnmethodsreferences")
+            .Select(claim => claim.Value);
+
+        return authMethodRefs.Any(value => value.Contains("mfa", StringComparison.OrdinalIgnoreCase));
+    }
+
+    private static bool HasAffirmativeClaim(ClaimsPrincipal user, string claimType)
+    {
+        var claimValue = user.FindFirst(claimType)?.Value;
+        return string.Equals(claimValue, "true", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(claimValue, "1", StringComparison.OrdinalIgnoreCase)
+            || string.Equals(claimValue, "yes", StringComparison.OrdinalIgnoreCase);
     }
 }

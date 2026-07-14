@@ -1,0 +1,4 @@
+DataElement,Classification,ContainsPHI,SourceSystem,Store,TableOrContainer,FieldOrPath,Purpose,MinimumNecessaryJustification,RetentionPolicy,DeletionMethod,EncryptionAtRest,EncryptionInTransit,AccessRoles,Owner,ReviewCadence,LastReviewedUtc,Notes
+PatientName,PHI,true,<source>,<store>,<table>,<field>,<purpose>,<justification>,<retention>,<deletion>,Yes,Yes,<roles>,<owner>,Quarterly,<yyyy-mm-dd>,
+DOB,PHI,true,<source>,<store>,<table>,<field>,<purpose>,<justification>,<retention>,<deletion>,Yes,Yes,<roles>,<owner>,Quarterly,<yyyy-mm-dd>,
+IncidentSummary,Sensitive,false,<source>,<store>,<table>,<field>,<purpose>,<justification>,<retention>,<deletion>,Yes,Yes,<roles>,<owner>,Quarterly,<yyyy-mm-dd>,

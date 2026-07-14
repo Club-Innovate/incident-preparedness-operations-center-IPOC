@@ -1,0 +1,46 @@
+project:
+  name: "<application-name>"
+  owner: "<team-or-owner>"
+  environmentScope: ["dev", "test", "prod"]
+  dataSensitivity: "<Low|Moderate|High|PHI>"
+  regulatoryScope: ["HIPAA", "HITRUST"]
+
+architecture:
+  trustBoundaries:
+    - name: "<boundary-name>"
+      description: "<what crosses this boundary>"
+  externalDependencies:
+    - "<service/vendor>"
+
+dataInventory:
+  stores:
+    - name: "<store-name>"
+      type: "<db/blob/queue/etc>"
+      containsPHI: true
+      retentionPolicy: "<policy-ref>"
+
+controls:
+  baseline: true
+  tailoredControls:
+    - controlId: "IAM-01"
+      status: "Implemented"
+      owner: "<owner>"
+      evidenceRefs: ["EV-001"]
+    - controlId: "AUD-01"
+      status: "In Progress"
+      owner: "<owner>"
+      evidenceRefs: []
+
+operations:
+  accessReviewCadence: "Quarterly"
+  vulnerabilityReviewCadence: "Weekly"
+  incidentExercisesCadence: "Quarterly"
+  backupRestoreTestCadence: "Quarterly"
+
+riskRegister:
+  - id: "R-001"
+    title: "<risk-title>"
+    likelihood: "<Low|Med|High>"
+    impact: "<Low|Med|High>"
+    treatment: "<Mitigate|Accept|Transfer|Avoid>"
+    targetDate: "<yyyy-mm-dd>"

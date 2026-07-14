@@ -44,8 +44,10 @@ public sealed class StreamingIngestionHostedService : BackgroundService, IStream
         _serviceScopeFactory = serviceScopeFactory;
         _logger = logger;
 
-        _streamDirectory = configuration["StreamingIngestion:Directory"]
-            ?? Path.Combine(AppContext.BaseDirectory, "sample-stream");
+        var configuredDirectory = configuration["StreamingIngestion:Directory"];
+        _streamDirectory = string.IsNullOrWhiteSpace(configuredDirectory)
+            ? Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "data", "Integration-Samples"))
+            : configuredDirectory.Trim();
 
         var configuredPoll = configuration.GetValue("StreamingIngestion:PollIntervalSeconds", 15);
         _pollIntervalSeconds = Math.Clamp(configuredPoll, 5, 300);

@@ -72,6 +72,7 @@ var startupSearchOptions = builder.Configuration.GetSection(AzureAiSearchOptions
 var startupOpenAiAuthMode = ResolveAzureAuthMode(startupOpenAiOptions.UseManagedIdentity, !string.IsNullOrWhiteSpace(startupOpenAiOptions.ApiKey), builder.Environment.IsProduction());
 var startupSearchAuthMode = ResolveAzureAuthMode(startupSearchOptions.UseManagedIdentity, !string.IsNullOrWhiteSpace(startupSearchOptions.ApiKey), builder.Environment.IsProduction());
 var relaxTokenValidationFlag = builder.Configuration.GetValue("AzureAd:RelaxTokenValidationForDevelopment", true);
+var requireMfaForPrivilegedAccessFlag = builder.Configuration.GetValue("Security:RequireMfaForPrivilegedAccess", builder.Environment.IsProduction());
 var authorityConfigured = !string.IsNullOrWhiteSpace(builder.Configuration["AzureAd:Authority"]);
 var audienceConfigured = !string.IsNullOrWhiteSpace(builder.Configuration["AzureAd:Audience"]);
 var includeExceptionDetailsFlag = builder.Configuration.GetValue("Diagnostics:IncludeExceptionDetails", false);
@@ -96,6 +97,11 @@ if (builder.Environment.IsProduction() && (!authorityConfigured || !audienceConf
 if (builder.Environment.IsProduction() && includeExceptionDetailsFlag)
 {
     throw new InvalidOperationException("Diagnostics:IncludeExceptionDetails must be false in production.");
+}
+
+if (builder.Environment.IsProduction() && !requireMfaForPrivilegedAccessFlag)
+{
+    throw new InvalidOperationException("Security:RequireMfaForPrivilegedAccess must be true in production.");
 }
 
 builder.Services.AddHsts(options =>
@@ -297,7 +303,7 @@ builder.Services
             }
         };
     });
-builder.Services.AddAuthorization(options => AuthorizationPolicies.Configure(options));
+builder.Services.AddAuthorization(options => AuthorizationPolicies.Configure(options, requireMfaForPrivilegedAccessFlag));
 builder.Services.AddRateLimiter(options =>
 {
     options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
