@@ -11,7 +11,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 | Domain | Applies to IPOC | Status | Current Evidence in Code/Config | Next Action |
 |---|---|---|---|---|
 | Identity & Access Management | Yes | Implemented | AuthN/AuthZ required on APIs, role/scope policies, new privileged MFA gate + production guardrail prevents privileged MFA disablement | Maintain Entra claim mapping validation and periodic privileged-role access review evidence |
-| Audit Controls | Yes | Partial | Audit event writer + audit endpoints + sensitive request logging + `security-compliance/standards/audit-log-retention-standard.md` + `security-compliance/operations/audit-immutability-evidence-checklist.md` | Attach explicit hosting-layer immutability/WORM evidence and complete checklist sign-off |
+| Audit Controls | Yes | Implemented | Audit event writer + audit endpoints + sensitive request logging + `security-compliance/standards/audit-log-retention-standard.md` + completed `security-compliance/operations/audit-immutability-evidence-checklist.md` + hosting evidence in `security-compliance/operations/audit-hosting-immutability-evidence.md` | Maintain monthly manifest/hash verification and branch-protection evidence refresh in baseline package |
 | Transmission Security | Yes | Implemented | HTTPS redirection, HSTS, security headers | Add automated TLS posture verification evidence |
 | Data at Rest Encryption | Yes | Implemented | Encrypted SQL connection settings in config + completed sign-off in `security-compliance/operations/data-at-rest-encryption-evidence-checklist.md` with evidence references | Maintain monthly evidence refresh in baseline package and periodic key-management review records |
 | Minimum Necessary / Data Minimization | Yes | Implemented | User DTOs intentionally omit sensitive fields, redaction helpers for exports + endpoint-level evidence lifecycle fully executed (120/120 closed, 120/120 evidence approved, 0 open gaps) | Run scheduled drift-detection cycle for net-new or changed endpoints and retain release artifacts |
@@ -70,6 +70,7 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 43. Completed Integrity Controls evidence checklist sign-off and promoted Integrity Controls domain to Implemented.
 44. Added Vendor / Third-Party Risk register and annual review log with baseline review completion.
 45. Added breach notification workflow, legal escalation matrix, and baseline drill log; promoted Breach Notification Readiness to Implemented.
+46. Completed Audit Controls hosting immutability evidence attachment and checklist sign-off; promoted Audit Controls domain to Implemented.
 
 ## Current Endpoint Review Backlog Snapshot
 
