@@ -13,9 +13,9 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 | Identity & Access Management | Yes | Implemented | AuthN/AuthZ required on APIs, role/scope policies, new privileged MFA gate + production guardrail prevents privileged MFA disablement | Maintain Entra claim mapping validation and periodic privileged-role access review evidence |
 | Audit Controls | Yes | Partial | Audit event writer + audit endpoints + sensitive request logging + `security-compliance/standards/audit-log-retention-standard.md` + `security-compliance/operations/audit-immutability-evidence-checklist.md` | Attach explicit hosting-layer immutability/WORM evidence and complete checklist sign-off |
 | Transmission Security | Yes | Implemented | HTTPS redirection, HSTS, security headers | Add automated TLS posture verification evidence |
-| Data at Rest Encryption | Yes | Partial | Encrypted SQL connection settings in config | Document and verify DB/storage/backups encryption settings as evidence |
+| Data at Rest Encryption | Yes | Partial | Encrypted SQL connection settings in config + `security-compliance/operations/data-at-rest-encryption-evidence-checklist.md` | Attach DB/storage/backup encryption proof artifacts and complete sign-off checklist |
 | Minimum Necessary / Data Minimization | Yes | Implemented | User DTOs intentionally omit sensitive fields, redaction helpers for exports + endpoint-level evidence lifecycle fully executed (120/120 closed, 120/120 evidence approved, 0 open gaps) | Run scheduled drift-detection cycle for net-new or changed endpoints and retain release artifacts |
-| Integrity Controls | Yes | Partial | Parameterized SQL usage patterns and controlled update paths | Add tamper-evident logging strategy and integrity test cases |
+| Integrity Controls | Yes | Partial | Parameterized SQL usage patterns and controlled update paths + `security-compliance/operations/integrity-controls-evidence-checklist.md` | Attach integrity test evidence and tamper-evident audit proof, then complete sign-off checklist |
 | Incident Response | Yes | Planned | Baseline roadmap exists | Add IR runbook + tabletop exercise evidence |
 | Vulnerability Management | Yes | Implemented | Security CI gates workflow with enforced .NET severity gate (`scripts/compliance/check-dotnet-vulnerabilities.ps1`) + npm audit high gate + lockfile remediation + scheduled/manual drift checks | Continue dependency maintenance cadence and retain vulnerability closure evidence in baseline packages |
 | Vendor / Third-Party Risk | Yes | Planned | External provider telemetry exists | Add supplier risk register and annual review process |
@@ -62,6 +62,8 @@ Status legend: `Implemented`, `Partial`, `Planned`, `Not Applicable`.
 35. Added monthly compliance baseline packaging workflow `.github/workflows/compliance-baseline-package.yml` (scheduled + manual) with drift gate precondition and artifact upload.
 36. Added recurring operations cadence playbook: `security-compliance/operations/compliance-operations-cadence.md`.
 37. Added audit immutability evidence checklist: `security-compliance/operations/audit-immutability-evidence-checklist.md` to drive closure for Audit Controls domain.
+38. Added Data-at-Rest encryption evidence checklist: `security-compliance/operations/data-at-rest-encryption-evidence-checklist.md`.
+39. Added Integrity Controls evidence checklist: `security-compliance/operations/integrity-controls-evidence-checklist.md`.
 
 ## Current Endpoint Review Backlog Snapshot
 
