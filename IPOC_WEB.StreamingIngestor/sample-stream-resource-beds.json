@@ -1,0 +1,34 @@
+{
+  "inventoryBatch": {
+    "sourceSystemCode": "SIM_STREAM",
+    "sourceMessageId": "stream-20260624-001",
+    "rows": [
+      {
+        "locationId": 101,
+        "resourceTypeCode": "VENT",
+        "quantityTotal": 40,
+        "quantityAvailable": 16,
+        "quantityCommitted": 22,
+        "quantityOutOfService": 2,
+        "reportedUtc": "2026-06-24T15:00:00Z"
+      }
+    ]
+  },
+  "bedBatch": {
+    "sourceSystemCode": "SIM_STREAM",
+    "sourceMessageId": "stream-20260624-001",
+    "rows": [
+      {
+        "locationId": 101,
+        "bedCategoryCode": "ICU",
+        "staffedBedsTotal": 42,
+        "bedsAvailable": 6,
+        "bedsOccupied": 32,
+        "bedsUnavailable": 4,
+        "isolationCapableBeds": 12,
+        "surgeBedsPotential": 8,
+        "reportedUtc": "2026-06-24T15:00:00Z"
+      }
+    ]
+  }
+}

@@ -1,0 +1,2595 @@
+Office of Procurement and Contracts  Phone: 785-296-2376 
+900 SW Jackson St., Room 1001 North  Fax: 785-296-7240 
+Topeka, KS 66612 www.admin.ks.gov/procurement-and-contracts 
+  
+Adam C. Proffitt, Secretary Laura Kelly, Governor 
+Todd Herman, Director 
+ 
+ REQUEST FOR PROPOSAL (RFP) 
+ 
+ 
+ 
+Bid Event Number:    EVT0010848 
+ 
+Date Posted:   June 05, 2026 
+ 
+Closing Date:   July 28, 2026, 2:00 PM CST 
+ 
+Procurement Officer:   Tyrone Gasper 
+Telephone:   785-296-3126 
+E-Mail Address:   Tyrone.Gasper@ks.gov  
+ 
+Web Address:   http://admin.ks.gov/offices/procurement-and-contracts/ 
+ 
+Agency:   Kansas Department of Health and Environment 
+ 
+Item:   Web-Based Preparedness Application 
+ 
+Period of Contract:   Date of final signature through three (3) years  
+(With the option to renew for two (2) additional twelve-month periods) 
+ 
+Bid Guarantee:   No monetary bid guarantee required. 
+This RFP is contingent upon the availability of state or federal funds and may be terminated by 
+thirty (30) day advance written notice by the Director of Purchases. 
+ 
+This Bid Event was recently posted to the Procurement and Contracts Internet website.   
+The document can be downloaded by going to the following website: 
+  
+http://admin.ks.gov/offices/procurement-and-contracts/  
+  
+It shall be the bidder's responsibility to monitor this website on a regular basis for any changes/amendments.  
+
+Event ID:  EVT0010848 
+Page 2 
+ 
+SIGNATURE SHEET 
+ 
+Item: Web-Based Preparedness Application 
+Agency: Kansas Department of Health and Environment 
+Closing Date: July 28, 2026, 2:00 PM CST 
+ 
+By submission of a bid and the signatures affixed thereto, the bidder certifies all products and services 
+proposed in the bid meet or exceed all requirements of this specification as set forth in the request and that all 
+exceptions are clearly identified. 
+ 
+Legal Name of Person, Firm or Corporation  
+ 
+Mailing Address   City & State     Zip    
+ 
+Toll Free Telephone    Local    
+ 
+Cell Phone    Fax Number    
+  
+Tax Number    
+ 
+CAUTION:  If your tax number is the same as your Social Security Number (SSN), you must leave this 
+line blank.  DO NOT enter your SSN on this signature sheet.  If your SSN is required to process a 
+contract award, including any tax clearance requirements, you will be contacted by an authorized 
+representative of the Office of Procurement and Contracts at a later date. 
+ 
+E-Mail    
+ 
+Signature   Date   
+ 
+Typed Name    Title    
+ 
+In the event the contact for the bidding process is different from above, indicate contact information below. 
+ 
+Bidding Process Contact Name   
+ 
+Mailing Address    City & State   Zip   
+ 
+Toll Free Telephone    Local    
+ 
+Cell Phone    Fax Number    
+ 
+E-Mail    
+ 
+If awarded a contract and purchase orders are to be directed to an address other than above, indicate 
+mailing address and telephone number below. 
+ 
+Award Contact Name    
+ 
+Mailing Address    City & State   Zip   
+ 
+Toll Free Telephone    Local    
+ 
+Cell Phone    Fax Number    
+ 
+E-Mail    
+  
+
+Event ID:  EVT0010848 
+Page 3 
+ 
+VENDOR RESPONSE CHECKLIST 
+REQUEST FOR PROPOSAL (RFP) 
+ 
+The following checklist is provided to assist bidders in ensuring all requirements are met and all required submissions are 
+included with the bid.  Bidders are instructed to utilize this list for their own convenience to ensure compliance.  
+ 
+  Completed Bidder Registration submitted prior to bid submission (One time)  
+ 
+       Invitation to participate received from Procurement Officer prior to bid submission (Each bid)  
+ 
+Technical Proposal (See Section 2.1)  
+ 
+  Signature Sheet 
+  Tax Clearance Certificate 
+  Immigration Reform and Control Certification 
+  Sexual Harassment policy 
+  Boycott of Israel 
+  Certificate of Procurement (IT) 
+  Electronic Payment Requirement with Hardship Exception Form 
+  Vendor Preparedness for WCAG 2.1 Level AA 
+  Transmittal Letter   
+  Bidder Information        
+  Qualifications 
+  Experience 
+  Timeline 
+  Methodology 
+  References 
+  Bidder Contracts/Subcontractor information, if applicable 
+  Technical Literature, address Specifications 
+  Completed and signed Event Details document 
+  Sign Any Amendments or Supplemental forms provided     
+  Exceptions to RFP noted, if applicable   
+ 
+Cost Proposal (See Section 2.1) 
+ 
+  Cost Sheet 
+  Completed and signed Event Details document 
+ 
+Bids must be received in our office prior to 2:00PM CST on the closing date to be considered following the 
+instructions in Section 2 Bid Submissions of the solicitation. Bids must be marked as follows: 
+ 
+ Department of Administration 
+ Procurement and Contracts 
+ Proposal # EVT0010848 
+Closing Date: July 28, 2026 
+ 900 SW Jackson, Room 1001 North 
+Topeka, KS 66612-1286 
+ 
+ 
+ 
+NOTE:   In order to properly and completely respond to this Request for Proposal, bidders must carefully review 
+all sections and respond as required. 
+  
+
+Event ID:  EVT0010848 
+Page 4 
+ 
+ 
+ 
+TAX CLEARANCE INSTRUCTIONS 
+ 
+A “Tax Clearance” is a comprehensive tax account review to determine and ensure that the account is compliant with all 
+primary Kansas Tax Laws administered by the Kansas Department of Revenue (KDOR) Director of Taxation. Information 
+pertaining to a Tax Clearance is subject to change(s), which may arise as a result of a State Tax Audit, Federal Revenue 
+Agent Report, or other lawful adjustment(s). 
+ 
+To obtain a Tax Clearance Certificate, you must: 
+• Go to http://www.ksrevenue.org/taxclearance.html  to request a Tax Clearance Certificate 
+• Return to the website the following working day to see if KDOR will issue the certificate  
+• If issued an official certificate, print it and attach it to your signed renewal document  
+• If denied a certificate, engage KDOR in a discussion about why a certificate wasn’t issued  
+ 
+Per KSA 75-3740-(c), the Director of Purchases may reject the bid of any bidder who is in arrears on taxes due the State 
+of Kansas.  The Secretary of the Kansas Department of Revenue is authorized to exchange such information with the 
+Director of Purchases as is necessary to determine a bidder’s tax clearance status, notwithstanding any other provision of 
+law prohibiting disclosure of the contents of taxpayer records or information.  
+ 
+Please Note:  Individual and business applications are available.  For applications entered prior to 5:00 PM Monday 
+through Friday, results typically will be available the following business day.  Tax clearance requests may be denied if the 
+request includes incomplete or incorrect information. 
+ 
+Please Note:  You will need to sign back into the KDOR website to view and print the official tax clearance 
+certificate. 
+ 
+Information about Tax Registration can be found at the following website: 
+http://www.ksrevenue.org/busregistration.html  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+
+Event ID:  EVT0010848 
+Page 5 
+ 
+ 
+ 
+CERTIFICATION REGARDING 
+IMMIGRATION REFORM & CONTROL 
+ 
+ 
+ All Contractors are expected to comply with the Immigration and Reform Control Act of 1986 (IRCA), as may be 
+amended from time to time.  This Act, with certain limitations, requires the verification of the employment status of all 
+individuals who were hired on or after November 6, 1986, by the Contractor as well as any subcontractor or sub-
+subcontractor.  The usual method of verification is through the Employment Verification (I -9) Form.  With the submission 
+of this bid, the Contractor hereby certifies without exception that Contractor has complied with all federal and state laws 
+relating to immigration and reform.  Any misrepresentation in this regard or any employment of persons not authorized to 
+work in the United States constitutes a material breach and, at the State’s option, may subject the contract to termination 
+and any applicable damages.   
+ 
+ Contractor certifies that, should it be awarded a contract by the State, Contractor will comply with all applicable 
+federal and state laws, standards, orders and regulations affecting a person’s participation and eligibility in any program or 
+activity undertaken by the Contractor pursuant to this contract.  Contractor further certifies that it will remain in compliance 
+throughout the term of the contract.   
+ 
+ At the State’s request, Contractor is expected to produce to the State any documentation or other such evidence 
+to verify Contractor’s compliance with any provision, duty, certification, or the like under the contract.   
+ 
+ Contractor agrees to include this Certification in contracts between itself and any subcontractors in connection 
+with the services performed under this contract. 
+ 
+ 
+ 
+_____________________________________________ _       ________________________  
+Signature, Title of Contractor       Date 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+
+Event ID:  EVT0010848 
+Page 6 
+ 
+ 
+Policy Regarding Sexual Harassment 
+ 
+Whereas sexual harassment and retaliation for sexual harassment claims are unacceptable forms of discrimination that 
+must not be tolerated in the workplace; and 
+ 
+Whereas state and federal employment discrimination laws prohibit sexual harassment and retaliation in the workplace; 
+and 
+ 
+Whereas officers and employees of the State of Kansas are entitled to working conditions that are free from sexual 
+harassment, discrimination, and retaliation; and 
+ 
+Whereas the Governor and all officers and employees of the State of Kansas should seek to foster a culture that does not 
+tolerate sexual harassment, retaliation, and unlawful discrimination. 
+ 
+Now Therefore, pursuant to the authority vested in me as Governor of the State of Kansas, I hereby order as follows:  
+1. All Executive Branch department and agency heads shall have available and shall regularly review and update at 
+least every three years or more frequently as necessary, their sexual harassment, discrimination, and retaliation 
+policies.  Such policies shall include components for confidentiality and anonymous reporting, applicability to 
+intern positions, and training policies. 
+2. All Executive Branch department and agency heads shall ensure that their employees, interns, and contractors 
+have been notified of the state’s policy against sexual harassment, discrimination, or retaliation, and shall further 
+ensure that such persons are aware of the procedures for submitting a complaint of sexual harassment, 
+discrimination, or retaliation, including an anonymous complaint. 
+3. Executive Branch departments and agencies shall annually require training seminars regarding the policy against 
+sexual harassment, discrimination, or retaliation.  All employees shall complete their initial training session 
+pursuant to this order by the end of the current fiscal year. 
+4. Within ninety (90) days of this order, all Executive Branch employees, interns, and contractors under the 
+jurisdiction of the Office of the Governor shall be provided a written copy of the policy against sexual harassment, 
+discrimination, and retaliation, and they shall execute a document agreeing and acknowledging that they are 
+aware of and will comply with the policy against sexual harassment, discrimination, and retaliation.  
+5. Matters involving any elected official, department or agency head, or any appointee of the Governor may be 
+investigated by independent legal counsel. 
+6. The Office of the Governor will require annual mandatory training seminars for all staff, employees, and interns in 
+the office regarding the policy against sexual harassment, discrimination, and retaliation, and shall maintain a 
+record of attendance. 
+7. Allegations of sexual harassment, discrimination, or retaliation within the Office of the Governor will be 
+investigated promptly, and violations of law or policy shall constitute grounds for disciplinary action, including 
+dismissal. 
+8. This Order is intended to supplement existing laws and regulations concerning sexual harassment and 
+discrimination and shall not be interpreted to in any way diminish such laws and regulations.  The Order provides 
+conduct requirements for covered persons and is not intended to create any new right or benefit enforceable 
+against the State of Kansas. 
+9. Persons seeking to report violations of this Order, or guidance regarding the application or interpretation of this 
+Order, may contact the Office of the Governor regarding such matters. 
+ 
+Agreement to Comply with the Policy Against Sexual Harassment, Discrimination, and Retaliation.  
+I hereby acknowledge that I have received a copy of the State of Kansas Policy Against Sexual Harassment, 
+Discrimination, and Retaliation established by Executive Order 18- 04 and agree to comply with the provisions of this 
+policy. 
+ 
+ 
+____________________________________   ___________________________________                                     
+Signature and Date                                                       Printed Name  
+
+Event ID:  EVT0010848 
+Page 7 
+ 
+CERTIFICATION OF COMPANY 
+NOT CURRENTLY ENGAGED IN A BOYCOTT OF GOODS or SERVICES FROM ISRAEL  
+ 
+ 
+In accordance with HB 2482, 2018 Legislative Session, the State of Kansas shall not enter into a contract with a Company 
+to acquire or dispose of goods or services with an aggregate price of more than $100,000, unless such Company submits 
+a written certification that such Company is not currently engaged in a boycott of goods or services from Israel that 
+constitutes an integral part of business conducted or sought to be conducted with the State.  
+ 
+ As a Contractor entering a contract with the State of Kansas, it is hereby certified that the Company listed below 
+is not currently engaged in a boycott of Israel as set forth in HB 2482, 2018 Legislature.  
+ 
+  
+ 
+ 
+____________________________________________   ______________________ 
+Signature, Title of Contractor      Date 
+ 
+ 
+____________________________________________ 
+Printed 
+ 
+____________________________________________ 
+Name of Company 
+ 
+  
+
+Event ID:  EVT0010848 
+Page 8 
+ 
+CERTIFICATION OF COMPANY NOT CURRENTLY ENGAGED IN 
+THE PROCUREMENT OR OBTAINMENT OF CERTAIN EQUIPMENT, SERVICES, OR SYSTEMS 
+ 
+WHEREAS, pursuant to Public Law 115-232, Section 889 of the John S. McCain National Defense Authorization Act of 
+2019, “covered telecommunications equipment or services” is defined as: 
+(1) Telecommunications equipment produced by Huawei Technologies Company or ZTE Corporation (or any 
+subsidiary or affiliate of such entities). 
+(2) Video surveillance and telecommunications equipment produced by Hytera Communications Corporation, 
+Hangzhou Hikvision Digital Technology Company, and Dahua Technology Company (or any subsidiary or 
+affiliate of such entities). 
+(3) Telecommunications or video surveillance services provided by such entities or using such equipment. 
+(4) Telecommunications or video surveillance equipment or services produced or provided by an entity that the 
+Secretary of Defense, in consultation with the Director of the National Intelligence or the Director  of the 
+Federal Bureau of Investigation, reasonably believes to be an entity owned or controlled by, or otherwise 
+connected to, the government of a covered foreign country. 
+WHEREAS, a “covered foreign country” means any of the following: (1) The People’s Republic of China, 
+(2) The Russian Federation, or (3) any country that is a state sponsor of terrorism1. 
+WHEREAS, foreign adversaries are increasingly creating and exploiting vulnerabilities in covered telecommunications  
+equipment which store and communicate vast amounts of sensitive information and support infrastructure and 
+emergency services, in order to commit malicious cyber-enabled actions; 
+WHEREAS, the unrestricted acquisition or use in the State of Kansas of covered telecommunications equipment 
+designed, developed, manufactured, or supplied by persons owned by, controlled by, or subject to the jurisdiction or 
+direction of foreign adversaries augments the ability of foreign adversaries to create and exploit vulnerabilities in 
+technological equipment, services, or systems; and 
+WHEREAS, the State of Kansas has an interest in protecting itself against threats related to foreign adversary’s 
+exploitation of vulnerabilities in covered telecommunications equipment.  
+THEREFORE, Contractor certifies that it shall not provide or procure to the State of Kansas or any agency thereof any 
+covered telecommunications equipment either in whole or in part of any product or during the commission of any 
+service. 
+FURTHERMORE, and notwithstanding any other contracts or agreements with Contractor, if Contractor has  violated, 
+misrepresented, or otherwise fails to comply with this certification document as determined by the State, the State may 
+terminate any contract without penalty with Contractor immediately. 
+By signing the below, Contractor acknowledges and agrees to comply with the provisions of this policy. 
+ 
+ 
+CONTRACTOR 
+ 
+ 
+ 
+               Signature, Title                                    Date 
+ 
+1 Designations of a “state sponsor of terrorism” may be found at the U.S. Department of State website.  
+ https://www.state.gov/state-sponsors-of- 
+terrorism/#:~:text=Currently%20there%20are%20four%20countries,)%2C%20Iran%2C%20and%20Syria.&text=For 
+%20more%20details%20about%20State,in%20Country%20Reports%20on%20Terrorism 
+  
+
+Event ID:  EVT0010848 
+Page 9 
+ 
+Electronic Payment Requirement with Hardship Exception 
+ 
+All payments due under this Agreement shall be made via electronic funds transfer (EFT) to the account designated by 
+the receiving party. The State shall bear any fees associated with the transfer. Payment shall be deemed complete upon 
+receipt by the receiving party’s financial institution. The receiving party agrees to complete the State’s DA -130, 
+Authorization for Electronic Deposit of Supplier Payment, through a Docusign process within 14 days of the receipt of the 
+electronic form. 
+ 
+Notwithstanding the foregoing, if the receiving party determines that electronic payment would create a financial or 
+operational hardship, the receiving party may request the State to make payment by alternative means. Such request 
+must be submitted in writing and approved by the State, which shall not unreasonably withhold consent.  
+Such request should be sent to: 
+ 
+Kansas Department of Administration  
+Procurement and Contracts  
+900 SW Jackson, Room 1001 North  
+Topeka, Kansas 66612-1286 
+ 
+  
+
+Event ID:  EVT0010848 
+Page 10 
+ 
+Vendor Preparedness for WCAG 2.1 Level AA Form 
+  
+1. Bid Event Number 
+  
+2. Vendor Name 
+  
+3. Email Address of individual filling out this form 
+  
+4. Are you providing to the State any of the following products, services, or deliverables under this contract? Select 
+all that apply. 
+• Software/application(s) 
+• Mobile application(s) 
+• Website(s) 
+• Online training 
+• Video conferencing/meetings and/or tools 
+• Content or other materials which may include any of the following: text, images, sounds, videos, controls, 
+animations, documents 
+• Documents, including those in any of the following formats: PDFs, word processor file formats, presentation 
+file formats, spreadsheet file formats 
+• Content/Documents which may be posted on social media 
+• Links to other third-party websites/applications 
+• No 
+• Other 
+  
+5. Who are the end users of the products, services, or deliverables selected above? Select all that apply.  
+• State employees 
+• Members of the public 
+• Other third parties 
+• Do not know 
+  
+6. Are each of the selected products, services, or deliverables WCAG 2.1 Level AA compliant today? (Y/N)  
+  
+7. Will each of the above products, services, or deliverables WCAG 2.1 Level AA be compliant by 4/26 /27? (Y/N) 
+
+Event ID:  EVT0010848 
+Page 11 
+ 
+  
+8. Identify the products, services, or deliverables that will not be WCAG 2.1 Level AA be compliant by 4/26 /27. 
+Select all that apply. 
+• Software/application(s) 
+• Mobile application(s) 
+• Website(s) 
+• Online training 
+• Video conferencing/meetings and/or tools 
+• Content or other materials which may include any of the following: text, images, sounds, videos, controls, 
+animations, documents 
+• Documents, including those in any of the following formats: PDFs, word processor file formats, presentation 
+file formats, spreadsheet file formats 
+• Content/Documents which may be posted on social media 
+• Links to other third-party websites/applications 
+• No 
+• Other 
+  
+9. Please provide a link to your Product Accessibility Template (PAT), also known as Voluntary Product Accessibility 
+Template (VPAT). Type N/A if not applicable or available. 
+  
+  
+10. Are you willing to sign a contract change notice affirming compliance or agreeing to become compliant by the 
+deadline? (Y/N) 
+ 
+
+Event ID:  EVT0010848 
+Page 12 
+ 
+1. Bidding Instructions 
+1.1. Bid Event ID / Reference Number 
+The Bid Event ID / RFP number, indicated in the header of this page, as well as on the first page of this 
+proposal, has been assigned to this RFP and MUST be shown on all correspondence or other documents 
+associated with this RFP and MUST be referred to in all verbal communications.  All inquiries, written or verbal, 
+shall be directed only to the procurement officer reflected on Page 1 of this proposal.  There shall be no 
+communication with any other State employee regarding this RFP except with designated state participants in 
+attendance ONLY DURING: 
+ 
+• Negotiations 
+• Contract Signing 
+• as otherwise specified in this RFP. 
+ 
+Violations of this provision by bidder or state agency personnel may result in the rejection of the proposal.  
+1.2. Questions/Addenda 
+Questions requesting clarification of the bid event must be submitted in WRITING to the Procurement Officer 
+prior to the close of business on June 26, 2026, to the following address: 
+ 
+Tyrone Gasper 
+Telephone:  785-296-3126 
+Facsimile:  785-296-7240 
+E-Mail Address:  Tyrone.Gasper@ks.gov  
+ 
+Kansas Department of Administration 
+Procurement and Contracts 
+900 SW Jackson Street, Room 1001 North 
+Topeka, KS  66612-1286 
+ 
+Failure to notify the Procurement Officer of any conflicts or ambiguities in this bid event may result in items 
+being resolved in the best interest of the State.  Any modification to this bid event shall be made in writing by 
+addendum and mailed to all vendors who received the original request.  Only Written communications are 
+binding. 
+ 
+Answers to questions will be available in the form of an addendum on the Procurement and Contracts' website, 
+http://admin.ks.gov/offices/procurement-and-contracts. 
+ 
+It shall be the responsibility of all participating bidders to acquire any and all addenda and additional information 
+as it is made available from the web site cited above. Vendors/Bidders not initially invited to participate in this 
+Bid Event must notify the Procurement Officer (Event Contact) of their intent to bid at least 24 hours prior to the 
+event's closing date/time. Bidders are required to check the website periodically for any additional information or 
+instructions. 
+1.3. Pre-Bid Conference 
+No pre-bid conference is scheduled for this bid event. 
+1.4. Negotiated Procurement 
+This is a negotiated procurement pursuant to K.S.A. 75-37,102.  Final evaluation and award will be made by the 
+Procurement Negotiation Committee (PNC) consisting of the following entities (or their designees):  
+ 
+• Secretary of Department of Administration; 
+• Director of Purchases, Department of Administration; and 
+• Head of Using Agency 
+1.5. Appearance Before Committee 
+Any, all or no bidders may be required to appear before the PNC to explain the bidder's understanding and 
+approach to the project and/or respond to questions from the PNC concerning the proposal; or, the PNC may 
+
+Event ID:  EVT0010848 
+Page 13 
+ 
+award without conducting negotiations, based on the initial proposal.  The PNC reserves the right to request 
+information from bidders as needed.  If information is requested, the PNC is not required to request the 
+information of all bidders. 
+ 
+Bidders selected to participate in negotiations may be given an opportunity to submit a revised technical and/or 
+cost proposal/offer to the PNC, subject to a specified cut off time for submittal of revisions.   Meetings before 
+the PNC are not subject to the Open Meetings Act.  Bidders are prohibited from electronically recording these 
+meetings.  All information received prior to the cut off time will be considered part of the bidder's revised offer.  
+ 
+No additional revisions shall be made after the specified cut off time unless requested by the PNC.  
+1.6. Notices 
+All notices, demands, requests, approvals, reports, instructions, consents or other communications (collectively 
+"notices") that may be required or desired to be given by either party to the other shall be IN WRITING and 
+addressed as follows: 
+ 
+Kansas Department of Administration 
+Procurement and Contracts 
+900 SW Jackson Street, Room 1001 North 
+Topeka, Kansas  66612-1286 
+ 
+RE:  EVT0010848 
+ 
+or to any other persons or addresses as may be designated by notice from one party to the other.  
+1.7. Cost of Preparing Proposal 
+The cost of developing and submitting the proposal is entirely the responsibility of the bidder.  This includes 
+costs to determine the nature of the engagement, preparation of the proposal, submitting the proposal, 
+negotiating for the contract and other costs associated with this RFP. 
+1.8. Preparation of Proposal 
+Prices are to be entered in spaces provided on the cost proposal form if provided herein.  Computations and 
+totals shall be indicated where required.  In case of error in computations or totals, the unit price shall govern.  
+The PNC has the right to rely on any prices provided by bidders.  The bidder shall be responsible for any 
+mathematical errors.  The PNC reserves the right to reject proposals which contain errors.   
+ 
+All copies of cost proposals shall be submitted in a separate sealed envelope or container separate from the 
+technical proposal.  The outside shall be identified clearly as "Cost Proposal" or "Technical Proposal" with the 
+Bid Event ID / RFP number and closing date. 
+ 
+A proposal shall not be considered for award if the price in the proposal was not arrived at independently and 
+without collusion, consultation, communication or agreement as to any matter related to price with any other 
+bidder, competitor or public officer/employee. 
+ 
+Technical proposals shall contain a concise description of bidder's capabilities to satisfy the requirements of this 
+RFP with emphasis on completeness and clarity of content.  Repetition of terms and conditions of the RFP 
+without additional clarification shall not be considered responsive. 
+1.9. Signature of Proposals 
+Each proposal shall give the complete legal name and mailing address of the bidder and be signed by an 
+authorized representative by original signature with his or her name and legal title typed below the signature 
+line.  If the contract's contact will be a different entity, indicate that individual's contact information for 
+communication purposes.  Each proposal shall include the bidder's tax number.  
+1.10. Acknowledgment of Amendments 
+All bidders shall acknowledge receipt of any amendments to this bid event by returning a signed hard copy with 
+the bid.  Failure to acknowledge receipt of any amendments may render the proposal to be non- responsive.  
+Changes to this bid event shall be issued only by the Office of Procurement and Contracts in writing.  
+
+Event ID:  EVT0010848 
+Page 14 
+ 
+1.11. Modification of Proposals 
+A bidder may modify a proposal by letter or by email at any time prior to the closing date and time for receipt of 
+proposals. 
+1.12. Withdrawal of Proposals 
+A proposal may be withdrawn on written request from the bidder to the Procurement Officer at the Office of 
+Procurement and Contracts prior to the closing date. 
+1.13. Competition 
+The purpose of this bid event is to seek competition.  The bidder shall advise the Office of Procurement and 
+Contracts if any specification, language or other requirement inadvertently restricts or limits bidding to a single 
+source.  Notification shall be in writing and must be received by the Office of Procurement and Contracts no 
+later than five (5) business days prior to the bid closing date.  The Director of Purchases reserves the right to 
+waive minor deviations in the specifications which do not hinder the intent of this bid event . 
+1.14. Evaluation of Proposals 
+Award shall be made in the best interest of the State as determined by the PNC or their designees.  Although 
+no weighted value is assigned, consideration may focus toward but is not limited to:  
+ 
+• Cost.  Bidders are not to inflate prices in the initial proposal as cost is a factor in determining who may 
+receive an award or be invited to formal negotiations.  The State reserves the right to award to the lowest 
+responsive bid without conducting formal negotiations, if authorized by the PNC.  
+• Adequacy and completeness of proposal 
+• Bidder's understanding of the project 
+• Compliance with the terms and conditions of the RFP 
+• Experience in providing like services 
+• Qualified staff 
+• Methodology to accomplish tasks 
+• Response format as required by this RFP 
+1.15. Acceptance or Rejection 
+The Committee reserves the right to accept or reject any or all proposals or part of a proposal; to waive any 
+informalities or technicalities; clarify any ambiguities in proposals; modify any criteria in this RFP; and unless 
+otherwise specified, to accept any item in a proposal. 
+1.16. Proposal Disclosures 
+At the time of closing, only the names of those who submitted proposals shall be made public information.  No 
+price information will be released.  A List of Responding Bidders may be obtained in the following manner:  
+ 
+1. Requesting a List of Responding Bidders via E-mail to tabsheets@ks.gov or in writing to the following 
+address. Include the Bid Event number EVT0010848 in all requests.  
+ 
+Kansas Department of Administration 
+Procurement and Contracts 
+Attn:  Bid Results 
+900 SW Jackson Street, Room 1001 North 
+Topeka, KS 66612-1286 
+  
+All other documents pertaining to the bid (tabsheet, individual bids, proposals, contract, etc.) are not available 
+until the bid has been awarded, contract executed or all bids rejected. 
+  
+Once a bid file is available, a request for a cost estimate may be submitted to the e- mail or address noted 
+above for the costs associated with the reproduction of bid documents.  Procurement and Contracts will attempt 
+to provide all Open Records requests with electronic copies when possible. 
+  
+Requests will not be fulfilled until payment has been received. 
+  
+
+Event ID:  EVT0010848 
+Page 15 
+ 
+Documents will be sent via First Class Mail.  If requested, they may be sent via express mail services at the 
+expense of the requester. 
+ 
+A Tabsheet may be requested for the bid event listed by emailing tabsheets@ks.gov  or by calling 785-296-
+2376.  All other information falls under the Open Records Act and will need to be requested through the 
+Department of Administration's Office of the Chief Counsel, https://admin.ks.gov/offices/chief-counsel.  
+1.17. Disclosure of Proposal Content and Proprietary Information 
+All proposals become the property of the State of Kansas.  The Open Records Act (K.S.A. 45- 215 et seq) of the 
+State of Kansas requires public information be placed in the public domain at the conclusion of the selection 
+process, and be available for examination by all interested parties.  (http://www.admin.ks.gov/offices/chief-
+counsel/kansas-open-records-act/kansas-open-records-act-procurement-and-contracts)  No proposals shall be 
+disclosed until after a contract award has been issued.  The State reserves the right to destroy all proposals if 
+the RFP is withdrawn, a contract award is withdrawn, or in accordance with Kansas law.  Late Technical and/or 
+Cost proposals will be retained unopened in the file and not receive consideration or may be returned to the 
+bidder. 
+ 
+Trade secrets or proprietary information legally recognized as such and protected by law may be requested to 
+be withheld if clearly labeled "Proprietary" on each individual page and provided as separate from the main 
+proposal.  Pricing information is not considered proprietary and the bidder's entire proposal response package 
+will not be considered proprietary.   
+ 
+All information requested to be handled as "Proprietary" shall be submitted separately from the main proposal 
+and clearly labeled, in a separate envelope or clipped apart from all other documentation. The bidder shall 
+provide detailed written documentation justifying why this material should be considered "Proprietary".   The 
+Office of Procurement and Contracts reserves the right to accept, amend or deny such requests for maintaining 
+information as proprietary in accordance with Kansas law. 
+ 
+The State of Kansas does not guarantee protection of any information which is not submitted as required.  
+1.18. Exceptions 
+By submission of a response, the bidder acknowledges and accepts all terms and conditions of the RFP unless 
+clearly avowed and wholly documented in a separate section of the Technical Proposal to be entitled:  
+"Exceptions". 
+1.19. Notice of Award 
+An award is made on execution of the written contract by all parties.   
+1.20. News Releases 
+Only the State is authorized to issue news releases relating to this bid event, its evaluation, award and/or 
+performance of the resulting contract. 
+
+Event ID:  EVT0010848 
+Page 16 
+ 
+2. Proposal Response 
+2.1. Submission of Proposals 
+Bidders will submit proposals either electronically or by courier, but not both*  
+ 
+Bid proposals submitted via email will include the following action items: 
+ 
+• Bids submitted via email will be sent to procurement@ks.gov by the due date and time. Subject Line of 
+email must contain EVT0010848 and your company name. 
+ 
+• A Technical Proposal, including the signed Event Details document, applicable literature, and other 
+supporting documents, in Microsoft® Word, Excel or searchable PDF®. 
+ 
+• A Cost Proposal, in Microsoft® Word, Excel or searchable PDF®. 
+ 
+• The technical proposal file must be named “EVT0010848-Company Name-Technical Proposal” and the 
+cost proposal file must be named “EVT0010848-Company Name-Cost Proposal”. 
+ 
+It is the bidder's responsibility to ensure bids are received by the closing date and time.   Delays in email delivery 
+shall not excuse late bid submissions. Max email file size is 20MB, several files can be submitted but must 
+be labeled accordingly (example: Technical 1 of 3, Costs 2 of 3, Proprietary 3 of 3 etc.)  All descriptions 
+must also contain the required information as listed above. 
+ 
+Bid proposals submitted via courier will include the following action items: 
+ 
+• One (1) electronic / software version(s) of the technical and cost proposals are required.   
+ 
+• Both the Technical and Cost Proposals shall be on separate flash drives, in Microsoft® Word, Excel or 
+searchable PDF®.   
+ 
+• If asked to submit multiple copies of the proposals, they shall be submitted in a separate sealed 
+envelope or container separate from each other. The outside shall be identified clearly as "Cost 
+Proposal" or "Technical Proposal" with the Bid Event ID number and closing date.  
+ 
+Bidder's proposal, sealed securely in an envelope or other container, shall be received no later than 2:00 p.m., 
+Central Time, on the closing date, addressed as follows: 
+ 
+Kansas Department of Administration 
+Procurement and Contracts 
+Proposal: EVT0010848 
+Closing Date: July 28, 2026, 2:00 PM CST 
+900 SW Jackson Street, Room 1001 North 
+Topeka, KS 66612-1286 
+ 
+It is the bidder's responsibility to ensure bids are received by the closing date and time. Delays in mail delivery 
+or any other means of transmittal, including couriers or agents of the issuing entity shall not excuse late bid 
+submissions. 
+ 
+Faxed or telephoned proposals are not acceptable unless otherwise specified.  
+ 
+Proposals received prior to the closing date shall be kept secured and sealed until closing. The State shall not 
+be responsible for the premature opening of a proposal or for the rejection of a proposal that was not received 
+prior to the closing date because it was not properly identified on the outside of the envelope or container. Late 
+Technical and/or Cost proposals will be retained unopened in the file and not receive consideration or may be 
+returned to the bidder. 
+  
+
+Event ID:  EVT0010848 
+Page 17 
+ 
+2.2. Proposal Format 
+Bidders are instructed to prepare their Technical Proposal following the same sequence as this RFP.  
+2.3. Transmittal Letter 
+All bidders shall respond to the following statements: 
+ 
+(a) the bidder is the prime contractor and identifying all subcontractors; 
+(b) the bidder is a corporation or other legal entity; 
+(c) no attempt has been made or will be made to induce any other person or firm to submit or not to submit a 
+proposal; 
+(d) the bidder does not discriminate in employment practices with regard to race, color, religion, age (except as 
+provided by law), sex, marital status, political affiliation, national origin or disability;  
+(e) no cost or pricing information has been included in the transmittal letter or the Technical Proposal;  
+(f) the bidder presently has no interest, direct or indirect, which would conflict with the performance of services 
+under this contract and shall not employ, in the performance of this contract, any person having a conflict;  
+(g) the person signing the proposal is authorized to make decisions as to pricing quoted and has not 
+participated, and will not participate, in any action contrary to the above statements;  
+(h) whether there is a reasonable probability that the bidder is or will be associated with any parent, affiliate or 
+subsidiary organization, either formally or informally, in supplying any service or furnishing any supplies or 
+equipment to the bidder which would relate to the performance of this contract.  If the statement is in the 
+affirmative, the bidder is  required to submit with the proposal, written certification and authorization from the 
+parent, affiliate or subsidiary organization granting the State and/or the federal government the right to examine 
+any directly pertinent books, documents, papers and records involving such transactions related to the contract.  
+Further, if at any time after a proposal is submitted, such an association arises, the bidder will obtain a similar 
+certification and authorization and failure to do so will constitute grounds for termination for cause of the 
+contract at the option of the State; 
+(i) bidder agrees that any lost or reduced federal matching money resulting from unacceptable performance in a 
+contractor task or responsibility defined in the RFP, contract or modification shall be accompanied by reductions 
+in state payments to Contractor; and 
+(j) the bidder has not been retained, nor has it retained a person to solicit or secure a state contract on an 
+agreement or understanding for a commission, percentage, brokerage or contingent fee, except for retention of 
+bona fide employees or bona fide established commercial selling agencies maintained by the bidder for the 
+purpose of securing business.   
+ 
+For breach of this provision, the Committee shall have the right to reject the proposal, terminate the contract for 
+cause and/or deduct from the contract price or otherwise recover the full amount of such commission, 
+percentage, brokerage or contingent fee or other benefit. 
+2.4. Bidder Information 
+The bidder must include a narrative of the bidder's corporation and each subcontractor if any.  The narrative 
+shall include the following: 
+ 
+(a) date established; 
+(b) ownership (public, partnership, subsidiary, etc.); 
+(c) number of personnel, full and part time, assigned to this project by function and job title;  
+(d) resources assigned to this project and the extent they are dedicated to other matters;  
+(e) organizational chart; 
+(f) financial statement may be required. 
+2.5. Qualifications 
+A description of the bidder's qualifications and experience providing the requested or similar service shall be 
+submitted with the Technical Proposal.  The bidder must be an established firm recognized for its capacity to 
+perform.  The bidder must have sufficient personnel to meet the deadlines specified in the bid event . 
+2.6. Experience 
+All bidders must have a minimum of five (5) years continuous active participation in the applicable industry, 
+providing equipment/services comparable in size and complexity to those specified herein.  
+  
+
+Event ID:  EVT0010848 
+Page 18 
+ 
+2.7. Timeline 
+A timeline for implementing services must be submitted with the bid. 
+2.8. Methodology 
+Bidders shall submit with the bid, a detailed explanation of the methodology for implementing services.  
+2.9. References 
+Provide three (3) references who have purchased similar items or services from the bidder in the last five 
+year(s).  References shall show firm name, contact person, address, e-mail address and phone number.  
+Bidder's employees and the buying agency shall not be shown as references.  
+2.10. Bidder Contracts 
+Bidders must include with their RFP response, a copy of any contracts, agreements, licenses, warranties, etc. 
+that the bidder would propose to incorporate into the contract generated from this Bid Event.   (State of Kansas 
+form DA-146a remains a mandatory requirement in all contracts.) 
+2.11. Technical Literature 
+All Technical Proposals shall include specifications and technical literature sufficient to allow the State to 
+determine that the equipment/services meet(s) all requirements.  If a requirement is not addressed in the 
+technical literature, it must be supported by additional documentation and included with the bid.  Proposals 
+without sufficient technical documentation may be rejected. 
+2.12. Unit Pricing 
+Each item required by the bid must be individually priced (i.e. priced per single unit) and be able to be ordered 
+individually. 
+2.13. Equipment 
+All proposed equipment, equipment options, and hardware expansions must be identified by manufacturer and 
+model number and descriptive literature of such equipment must be submitted with the bid response.  
+2.14. Procurement Card (P-Card) 
+Many State Agencies use a State of Kansas Procurement Card (currently Visa) in lieu of a state warrant to pay 
+for certain purchases.  No additional charges will be allowed for using the P-Card.  Bidders shall indicate on the 
+Event Details document if they will accept the Procurement Card for payment. 
+
+Event ID:  EVT0010848 
+Page 19 
+ 
+3. Terms and Conditions 
+3.1. Contract 
+The successful bidder will be required to enter into a written contract with the State.  The contractor agrees to 
+accept the provisions of Form DA 146a (Contractual Provisions Attachment), which is incorporated into all 
+contracts with the State and is incorporated into this bid event. 
+3.2. Contract Documents 
+This bid event, any amendments, the response and any response amendments of the Contractor, and the State 
+of Kansas DA-146a (Contractual Provision Attachment) shall be incorporated into the written contract, which 
+shall compose the complete understanding of the parties. 
+ 
+In the event of a conflict in terms of language among the documents, the following order of precedence shall 
+govern: 
+ 
+• Form DA 146a; 
+• written modifications to the executed contract; 
+• written contract signed by the parties; 
+• the Bid Event documents, including any and all amendments; and 
+• Contractor's written offer submitted in response to the Bid Event as finalized. 
+3.3. Captions 
+The captions or headings in this contract are for reference only and do not define, describe, extend, or limit the 
+scope or intent of this contract. 
+3.4. Definitions 
+A glossary of common procurement terms is available at http://admin.ks.gov/offices/procurement -and-contracts, 
+under the "Procurement Forms" link. 
+3.5. Contract Formation 
+No contract shall be considered to have been entered into by the State until all statutorily required signatures 
+and certifications have been rendered and a written contract has been signed by the contractor.  
+3.6. Statutes 
+Each and every provision of law and clause required by law to be inserted in the contract shall be deemed to be 
+inserted herein and the contract shall be read and enforced as though it were included herein.  If through 
+mistake or otherwise any such provision is not inserted, or is not correctly inserted, then on the application of 
+either party the contract shall be amended to make such insertion or correction.  
+3.7. Governing Law 
+This contract shall be governed by the laws of the State of Kansas and shall be deemed executed in Topeka, 
+Shawnee County, Kansas. 
+3.8. Jurisdiction 
+The parties shall bring any and all legal proceedings arising hereunder in the State of Kansas District Court of 
+Shawnee County, unless otherwise specified and agreed upon by the State of Kansas.  Contractor waives 
+personal service of process, all defenses of lack of personal jurisdiction and forum non conveniens.  The 
+Eleventh Amendment of the United States Constitution is an inherent and incumbent protection with the State of 
+Kansas and need not be reserved, but prudence requires the State to reiterate that nothing related to this 
+Agreement shall be deemed a waiver of the Eleventh Amendment. 
+3.9. Mandatory Provisions 
+The provisions found in Contractual Provisions Attachment (DA 146a) are incorporated by reference and made 
+a part of this contract. 
+  
+
+Event ID:  EVT0010848 
+Page 20 
+ 
+3.10. Termination for Cause 
+The Director of Purchases may terminate this contract, or any part of this contract, for cause under any one of 
+the following circumstances: 
+ 
+• the Contractor fails to make delivery of goods or services as specified in this contract;  
+• the Contractor provides substandard quality or workmanship; 
+• the Contractor fails to perform any of the provisions of this contract, or  
+• the Contractor fails to make progress as to endanger performance of this contract in accordance with its 
+terms. 
+ 
+The Director of Purchases shall provide Contractor with written notice of the conditions endangering 
+performance.  If the Contractor fails to remedy the conditions within ten (10) days from the receipt of the notice 
+(or such longer period as State may authorize in writing), the Director of Purchases shall issue the Contractor 
+an order to stop work immediately.  Receipt of the notice shall be presumed to have occurred within three (3) 
+days of the date of the notice. 
+3.11. Termination for Convenience 
+The Director of Purchases may terminate performance of work under this contract in whole or in part whenever, 
+for any reason, the Director of Purchases shall determine that the termination is in the best interest of the State 
+of Kansas.  In the event that the Director of Purchases elects to terminate this contract pursuant to this 
+provision, it shall provide the Contractor written notice at least 30 days prior to the termination date.  The 
+termination shall be effective as of the date specified in the notice.  The Contractor shall continue to perform 
+any part of the work that may have not been terminated by the notice. 
+3.12. Rights and Remedies 
+If this contract is terminated, the State, in addition to any other rights provided for in this contract, may require 
+the Contractor to transfer title and deliver to the State in the manner and to the extent directed, any completed 
+materials.  The State shall be obligated only for those services and materials rendered and accepted prior to the 
+date of termination. 
+ 
+In the event of termination, the Contractor shall receive payment prorated for that portion of the contract period 
+services were provided to or goods were accepted by State subject to any offset by State for actual damages 
+including loss of federal matching funds.  
+ 
+The rights and remedies of the State provided for in this contract shall not be exclusive and are in addition to 
+any other rights and remedies provided by law. 
+3.13. Debarment of State Contractors 
+Any Contractor who defaults on delivery or does not perform in a satisfactory manner as defined in this Contract 
+may be barred for a period up to three (3) years, pursuant to KSA 75-37,103, or have their work evaluated for 
+pre-qualification purposes pursuant to K.S.A. 75-37,104. 
+3.14. Antitrust 
+If the Contractor elects not to proceed with performance under any such contract with the State, the Contractor 
+assigns to the State all rights to and interests in any cause of action it has or may acquire under the anti -trust 
+laws of the United States and the State of Kansas relating to the particular products or services purchased or 
+acquired by the State pursuant to this contract. 
+3.15. Breach 
+Waiver or any breach of any contract term or condition shall not be deemed a waiver of any prior or subsequent 
+breach. No contract term or condition shall be held to be waived, modified, or deleted except by a written 
+instrument signed by the parties thereto. 
+ 
+If any contract term or condition or application thereof to any person(s) or circumstances is held invalid, such 
+invalidity shall not affect other terms, conditions, or applications which can be given effect without the invalid 
+term, condition or application.  To this end the contract terms and conditions are severable.  
+
+Event ID:  EVT0010848 
+Page 21 
+ 
+3.16. Hold Harmless 
+The Contractor shall indemnify the State against any and all loss or damage to the extent arising out of the 
+Contractor's negligence in the performance of services under this contract and for infringement of any copyright 
+or patent occurring in connection with or in any way incidental to or arising out of the occupancy, use, service, 
+operations or performance of work under this contract. 
+ 
+The State shall not be precluded from receiving the benefits of any insurance the Contractor may carry which 
+provides for indemnification for any loss or damage to property in the Contractor's custody and control, where 
+such loss or destruction is to state property.  The Contractor shall do nothing to prejudice the State's right to 
+recover against third parties for any loss, destruction or damage to State property.  
+3.17. Force Majeure 
+The Contractor shall not be held liable if the failure to perform under this contract arises out of causes beyond 
+the control of the Contractor.  Causes may include, but are not limited to, acts of nature, fires, tornadoes, 
+quarantine, strikes other than by Contractor's employees, and freight embargoes.  
+3.18. Assignment 
+The Contractor shall not assign, convey, encumber, or otherwise transfer its rights or duties under this contract 
+without the prior written consent of the State.  State may reasonably withhold consent for any reason.  
+ 
+This contract may terminate for cause in the event of its assignment, conveyance, encumbrance or other 
+transfer by the Contractor without the prior written consent of the State. 
+3.19. Third Party Beneficiaries 
+This contract shall not be construed as providing an enforceable right to any third party.  
+3.20. Waiver 
+Waiver of any breach of any provision in this contract shall not be a waiver of any prior or subsequent breach.  
+Any waiver shall be in writing and any forbearance or indulgence in any other form or manner by State shall not 
+constitute a waiver. 
+3.21. Injunctions 
+Should Kansas be prevented or enjoined from proceeding with the acquisition before or after contract execution 
+by reason of any litigation or other reason beyond the control of the State, Contractor shall not be entitled to 
+make or assert claim for damage by reason of said delay. 
+3.22. Staff Qualifications 
+The Contractor shall warrant that all persons assigned by it to the performance of this contract shall be 
+employees of the Contractor (or specified Subcontractor) and shall be fully qualified to perform the work 
+required.  The Contractor shall include a similar provision in any contract with any Subcontractor selected to 
+perform work under this contract. 
+ 
+Failure of the Contractor to provide qualified staffing at the level required by the contract specifications may 
+result in termination of this contract or damages. 
+3.23. Subcontractors 
+The Contractor shall be the sole source of contact for the contract.  The State will not subcontract any work 
+under the contract to any other firm and will not deal with any subcontractors.  The Contractor is totally 
+responsible for all actions and work performed by its subcontractors.  All terms, conditions and requirements of 
+the contract shall apply without qualification to any services performed or goods provided by any subcontractor.  
+3.24. Independent Contractor 
+Both parties, in the performance of this contract, shall be acting in their individual capacity and not as agents, 
+employees, partners, joint ventures or associates of one another.  The employees or agents of one party shall 
+not be construed to be the employees or agents of the other party for any purpose whatsoever.  
+ 
+The Contractor accepts full responsibility for payment of unemployment insurance, workers compensation, 
+social security, income tax deductions and any other taxes or payroll deductions required by law for its 
+employees engaged in work authorized by this contract. 
+
+Event ID:  EVT0010848 
+Page 22 
+ 
+3.25. Worker Misclassification 
+The Contractor and all lower tiered subcontractors under the Contractor shall properly classify workers as 
+employees rather than independent contractors and treat them accordingly for purposes of workers' 
+compensation insurance coverage, unemployment taxes, social security taxes, and income tax withholding.  
+Failure to do so may result in contract termination. 
+3.26. Immigration and Reform Control Act of 1986 (IRCA) 
+All contractors are expected to comply with the Immigration and Reform Control Act of 1986 (IRCA), as may be 
+amended from time to time.  This Act, with certain limitations, requires the verification of the employment status 
+of all individuals who were hired on or after November 6, 1986, by the Contractor as well as any subcontractor 
+or sub-contractors.  The usual method of verification is through the Employment Verification (I -9) Form. 
+ 
+With the submission of this bid, the Contractor hereby certifies without exception that such Contractor has 
+complied with all federal and state laws relating to immigration and reform.   Any misrepresentation in this 
+regard or any employment of persons not authorized to work in the United States constitutes a material breach 
+and, at the State's option, may subject the contract to termination for cause and any applicable damages.  
+ 
+Unless provided otherwise herein, all contractors are expected to be able to produce for the State any 
+documentation or other such evidence to verify Contractor's IRCA compliance with any provision, duty, 
+certification or like item under the contract. 
+ 
+Contractor will provide a copy of a signed Certification Regarding Immigration Reform and Control Form 
+(http://admin.ks.gov/docs/default-source/ofpm/procurement-contracts/irca.doc?sfvrsn=6) with the technical 
+proposal. 
+3.27. Proof of Insurance 
+Upon request, the Contractor shall present an affidavit of Worker's Compensation, Public Liability, and Property 
+Damage Insurance to Procurement and Contracts. 
+3.28. Conflict of Interest 
+The Contractor shall not knowingly employ, during the period of this contract or any extensions to it, any 
+professional personnel who are also in the employ of the State and providing services involving this contract or 
+services similar in nature to the scope of this contract to the State.  Furthermore, the Contractor shall not 
+knowingly employ, during the period of this contract or any extensions to it, any state employee who has 
+participated in the making of this contract until at least two years after his/her termination of employment with 
+the State. 
+3.29. Nondiscrimination and Workplace Safety 
+The Contractor agrees to abide by all federal, state and local laws, and rules and regulations prohibiting 
+discrimination in employment and controlling workplace safety.  Any violations of applicable laws or rules or 
+regulations may result in termination of this contract. 
+3.30. Confidentiality 
+The Contractor may have access to private or confidential data maintained by State to the extent necessary to 
+carry out its responsibilities under this contract.  Contractor must comply with all the requirements of the Kansas 
+Open Records Act (K.S.A. 45-215 et seq.) in providing services under this contract.  Contractor shall accept full 
+responsibility for providing adequate supervision and training to its agents and employees to ensure compliance 
+with the Act.  No private or confidential data collected, maintained or used in the course of performance of this 
+contract shall be disseminated by either party except as authorized by statute, either during the period of the 
+contract or thereafter.  Contractor agrees to return any or all data furnished by the State promptly at the request 
+of State in whatever form it is maintained by Contractor.  On the termination or expiration of this contract, 
+Contractor shall not use any of such data or any material derived from the data for any purpose and, where so 
+instructed by State, shall destroy or render it unreadable. 
+3.31. Environmental Protection 
+The Contractor shall abide by all federal, state and local laws, and rules and regulations regarding the 
+protection of the environment.  The Contractor shall report any violations to the applicable governmental 
+agency.  A violation of applicable laws or rule or regulations may result in termination of this contract for cause.  
+
+Event ID:  EVT0010848 
+Page 23 
+ 
+3.32. Care of State Property 
+The Contractor shall be responsible for the proper care and custody of any state owned personal tangible 
+property and real property furnished for Contractor's use in connection with the performance of this contract.  
+The Contractor shall reimburse the State for such property's loss or damage caused by the Contractor, except 
+for normal wear and tear. 
+3.33. Prohibition of Gratuities 
+Neither the Contractor nor any person, firm or corporation employed by the Contractor in the performance of 
+this contract shall offer or give any gift, money or anything of value or any promise for future reward or 
+compensation to any State employee at any time. 
+3.34. Retention of Records 
+Unless the State specifies in writing a different period of time, the Contractor agrees to preserve and make 
+available at reasonable times all of its books, documents, papers, records and other evidence involving 
+transactions related to this contract for a period of five (5) years from the date of the expiration or termination of 
+this contract. 
+ 
+Matters involving litigation shall be kept for one (1) year following the termination of litigation, including all 
+appeals, if the litigation exceeds five (5) years. 
+  
+The Contractor agrees that authorized federal and state representatives, including but not limited to, personnel 
+of the using agency; independent auditors acting on behalf of state and/or federal agencies shall have access 
+to and the right to examine records during the contract period and during the five (5) year post contract period.  
+Delivery of and access to the records shall be within five (5) business days at no cost to the state.  
+3.35. Off-Shore Sourcing 
+If, during the term of the contract, the Contractor or subcontractor plans to move work previously performed in 
+the United States to a location outside of the United States, the Contractor shall immediately notify the 
+Procurement and Contracts and the respective agency in writing, indicating the desired new location, the nature 
+of the work to be moved and the percentage of work that would be relocated. The Director of Purchases, with 
+the advice of the respective agency, must approve any changes prior to work being relocated.  Failure to obtain 
+the Director's approval may be grounds to terminate the contract for cause.  
+3.36. On-Site Inspection 
+Failure to adequately inspect the premises shall not relieve the Contractor from furnishing without additional 
+cost to the State any materials, equipment, supplies or labor that may be required to carry out the intent of this 
+Contract.   
+3.37. Indefinite Quantity Contract 
+This is an open-ended contract between the Contractor and the State to furnish an undetermined quantity of a 
+good or service in a given period of time.  The quantities ordered will be those actually required during the 
+contract period, and the Contractor will deliver only such quantities as may be ordered.  No guarantee of 
+volume is made.   An estimated quantity based on past history or other means may be used as a guide.  
+3.38. Prices 
+Prices shall remain firm for the entire contract period and subsequent renewals. Prices shall be net delivered, 
+including all trade, quantity and cash discounts.  Any price reductions available during the contract period shall 
+be offered to the State of Kansas.  Failure to provide available price reductions may result in termination of the 
+contract for cause. 
+3.39. Payment 
+Payment Terms are Net 30 days.  Payment date and receipt of order date shall be based upon K.S.A. 75-
+6403(b).  This Statute requires state agencies to pay the full amount due for goods or services on or before the 
+30th calendar day after the date the agency receives such goods or services or the bill for the goods and 
+services, whichever is later, unless other provisions for payment are agreed to in writing by the Contractor and 
+the state agency. NOTE:  If the 30th calendar day noted above falls on a Saturday, Sunday, or legal holiday, 
+the following workday will become the required payment date. 
+ 
+Payments shall not be made for costs or items not listed in this contract. 
+
+Event ID:  EVT0010848 
+Page 24 
+ 
+ 
+Payment schedule shall be on a frequency mutually agreed upon by both the agency and the Contractor.  
+3.40. Invoices 
+Each purchase order must be individually invoiced.  Invoices shall be forwarded to the using agency in 
+duplicate and shall state the following: 
+ 
+• date of invoice. 
+• date of shipment (or completion of work); 
+• purchase order number and contract number; 
+• itemization of all applicable charges; and 
+• net amount due. 
+ 
+3.41. Accounts Receivable Set-Off Program 
+If, during the course of this contract the Contractor is found to owe a debt to the State of Kansas, a state 
+agency, municipality, or the federal government, agency payments to the Contractor may be intercepted / setoff 
+by the State of Kansas.  Notice of the setoff action will be provided to the Contractor.  Pursuant to K.S.A. 75-
+6201 et seq, Contractor shall have the opportunity to challenge the validity of the debt.  The Contractor shall 
+credit the account of the agency making the payment in an amount equal to the funds intercepted.   
+ 
+K.S.A. 75-6201 et seq. allows the Director of Accounts & Reports to setoff funds the State of Kansas owes 
+Contractors against debts owed by the Contractors to the State of Kansas, state agencies, municipalities, or the 
+federal government.  Payments setoff in this manner constitute lawful payment for services or goods received. 
+The Contractor benefits fully from the payment because its obligation is reduced by the amount subject to 
+setoff. 
+3.42. Federal, State and Local Taxes 
+Unless otherwise specified, the contracted price shall include all applicable federal, state and local taxes.  The 
+Contractor shall pay all taxes lawfully imposed on it with respect to any product or service delivered in 
+accordance with this Contract.  The State of Kansas is exempt from state sales or use taxes and federal excise 
+taxes for direct purchases.  These taxes shall not be included in the contracted price.  Upon request, the State 
+shall provide to the Contractor a certificate of tax exemption. 
+ 
+The State makes no representation as to the exemption from liability of any tax imposed by any governmental 
+entity on the Contractor. 
+3.43. Shipping and F.O.B. Point 
+Unless otherwise specified, prices shall be F.O.B. DESTINATION, PREPAID AND ALLOWED (included in the 
+price bid), which means delivered to a state agency's receiving dock or other designated point as specified in 
+this contract or subsequent purchase orders without additional charge.  Shipments shall be made in order to 
+arrive at the destination at a satisfactory time for unloading during receiving hours.  
+3.44. Deliveries 
+All orders shall be shipped within seven (7) days ARO, clearly marked with the purchase order number. If 
+delays in delivery are anticipated, the Contractor shall immediately notify the ordering agency of the revised 
+delivery date or partial delivery date. The order may be canceled if delivery time is unsatisfactory. The 
+Contractor shall inform Procurement and Contracts of any supply or delivery problems. Continued delivery 
+problems may result in termination of the contract for cause.   
+3.45. Charge Back Clause 
+If the Contractor fails to deliver the product within the delivery time established by the contract, the State 
+reserves the right to purchase the product from the open market and charge back the difference between 
+contract price and open market price to the Contractor. 
+3.46. Debarment of State Contractors 
+Any Contractor who defaults on delivery or does not perform in a satisfactory manner as defined in this 
+Agreement may be barred for up to a period of three (3) years, pursuant to K.S.A. 75- 37,103, or have its work 
+evaluated for pre-qualification purposes.  Contractor shall disclose any conviction or judgment for a criminal or 
+
+Event ID:  EVT0010848 
+Page 25 
+ 
+civil offense of any employee, individual or entity which controls a company or organization or will perform work 
+under this Agreement that indicates a lack of business integrity or business honesty.  This includes (1) 
+conviction of a criminal offense as an incident to obtaining or attempting to obtain a public or private contract or 
+subcontract or in the performance of such contract or subcontract; (2) conviction under state or federal statutes 
+of embezzlement, theft, forgery, bribery, falsification or destruction of records, receiving stolen property; (3) 
+conviction under state or federal antitrust statutes; and (4) any other offense to be so serious and compelling as 
+to affect responsibility as a state contractor.  For the purpose of this section, an individual or entity shall be 
+presumed to have control of a company or organization if the individual or entity directly or indirectly, or acting 
+in concert with one or more individuals or entities, owns or controls 25 percent or more of its equity, or 
+otherwise controls its management or policies.  Failure to disclose an offense may result in the termination of 
+the contract. 
+3.47. Materials and Workmanship 
+The Contractor shall perform all work and furnish all supplies and materials, machinery, equipment, facilities, 
+and means, necessary to complete all the work required by this Contract, within the time specified, in 
+accordance with the provisions as specified. 
+ 
+The Contractor shall be responsible for all work put in under these specifications and shall make good, repair 
+and/or replace, at the Contractor's own expense, as may be necessary, any defective work, material, etc., if in 
+the opinion of agency and/or Procurement and Contracts said issue is due to imperfection in material, design, 
+workmanship or Contractor fault. 
+3.48. Industry Standards 
+If not otherwise provided, materials or work called for in this contract shall be furnished and performed in 
+accordance with best established practice and standards recognized by the contracted industry and comply 
+with all codes and regulations which shall apply. 
+3.49. Implied Requirements 
+All products and services not specifically mentioned in this contract, but which are necessary to provide the 
+functional capabilities described by the specifications, shall be included. 
+3.50. Submission of the Bid 
+Submission of the bid will be considered presumptive evidence that the bidder is conversant with local facilities 
+and difficulties, the requirements of the documents and of pertinent State and/or local codes, state of labor and 
+material markets, and has made due allowances in the proposal for all contingencies.  Later claims for labor, 
+work, materials, equipment, and tax liability required for any difficulties encountered which could have been 
+foreseen will not be recognized and all such difficulties shall be properly taken care of by Contractor at no 
+additional cost to the State of Kansas. 
+3.51. New Materials, Supplies or Equipment 
+Unless otherwise specified, all materials, supplies or equipment offered by the Contractor shall be new, unused 
+in any regard and of most current design.  All materials, supplies and equipment shall be first class in all 
+respects.  Seconds or flawed items will not be acceptable.  All materials, supplies or equipment shall be suitable 
+for their intended purpose and, unless otherwise specified, fully assembled and ready for use on delivery . 
+3.52. Inspection 
+The State reserves the right to reject, on arrival at destination, any items which do not conform with 
+specification of the Contract. 
+3.53. Acceptance 
+No contract provision or use of items by the State shall constitute acceptance or relieve the Contractor of 
+liability in respect to any expressed or implied warranties. 
+3.54. Ownership 
+All data, forms, procedures, software, manuals, system descriptions and work flows developed or accumulated 
+by the Contractor under this contract shall be owned by the using agency. The Contractor may not release any 
+materials without the written approval of the using agency. 
+
+Event ID:  EVT0010848 
+Page 26 
+ 
+3.55. Information/Data 
+Any and all information/data required to be provided at any time during the contract term shall be made 
+available in a format as requested and/or approved by the State. 
+3.56. Certification of Materials Submitted 
+The Bid document, together with the specifications set forth herein and all data submitted by the Contractor to 
+support their response including brochures, manuals, and descriptions covering the operating characteristics of 
+the item(s) proposed, shall become a part of the contract between the Contractor and the State of Kansas. Any 
+written representation covering such matters as reliability of the item(s), the experience of other users, or 
+warranties of performance shall be incorporated by reference into the contract. 
+3.57. Transition Assistance 
+In the event of contract termination or expiration, Contractor shall provide all reasonable and necessary 
+assistance to State to allow for a functional transition to another vendor. 
+3.58. Integration 
+This contract, in its final composite form, shall represent the entire agreement between the parties and shall 
+supersede all prior negotiations, representations or agreements, either written or oral, between the parties 
+relating to the subject matter hereof.  This Agreement between the parties shall be independent of and have no 
+effect on any other contracts of either party. 
+3.59. Modification 
+This contract shall be modified only by the written agreement and approval of the parties.  No alteration or 
+variation of the terms and conditions of the contract shall be valid unless made in writing and signed by the 
+parties.  Every amendment shall specify the date on which its provisions shall be effective.  
+3.60. Severability 
+If any provision of this contract is determined by a court of competent jurisdiction to be invalid or unenforceable 
+to any extent, the remainder of this contract shall not be affected and each provision of this contract shall be 
+enforced to the fullest extent permitted by law. 
+3.61. Award 
+Award will be by line item or group total, whichever is in the best interest of the State of Kansas.  
+
+Event ID:  EVT0010848 
+Page 27 
+ 
+4. SPECIFICATIONS 
+ 
+Definitions/Acronym List 
+Term Description 
+Application Application refers to the web-based platform which will collect, store, report, 
+calculate and track all applicable data. (Also “system”) 
+After Action 
+Report 
+A document detailing the strengths, weaknesses, and lessons learned from a 
+disaster response or emergency exercise. With the goal to identify improvements 
+for future preparedness, response, and recovery efforts by analyzing what 
+happened, what went well, and what needs fixing. 
+BCHS KDHE Bureau of Community Health Systems – Preparedness Section 
+EHR 
+Electronic Health Record systems are used by hospitals and medical providers 
+to manage patient care, medications, treatments, quality management and 
+outcomes reporting. 
+ICS 
+Incident Command System is a standardized, flexible framework for managing 
+emergencies and planned events, integrating facilities, personnel, procedures, 
+and communications into a common structure for effective command, control, 
+and coordination across different agencies and jurisdictions, ensuring clarity, 
+safety, and efficient resource use during any incident, from small spills to large 
+disasters. 
+KDHE Kansas Department of Health and Environment 
+RFP Request for Proposal  
+User A User is a person staffed at the state or local health entity that will have access 
+to use the features laid out within each application. 
+Background/History 
+BCHS provides funding and training opportunities to local public health agencies, healthcare partners, emergency 
+management personnel, and emergency medical service providers to enhance the level of emergency preparedness 
+through the state. Additionally, BCHS facilitates emergency response planning and provides coordination and support 
+during execution of emergency response plans. 
+ 
+BCHS utilizes a cloud application to collect, track, and share data between local entities and KDHE. This provides near 
+real-time visibility into the availability of health care resources, including numbers of beds and locations of specialized 
+care. Access to this system is provided for state administrative personnel, as well as personnel associated with 
+participating facilities and resources. 
+ 
+A cloud-based ICS application is used to coordinate incident response activities at local and regional levels across the 
+state of Kansas from planning to execution. Access to this platform enables public health agencies, healthcare partners, 
+and other emergency response personnel to track and coordinate response activities using data- driven decision-making. 
+ 
+  
+
+Event ID:  EVT0010848 
+Page 28 
+ 
+ Scope of Work 
+In Scope Proposals 
+BCHS seeks proposals from qualified vendors for the implementation of a cloud-based application or applications to 
+support the data management and incident command functions described in Background/History. Submitted proposals 
+must address both of the following key functional areas: 
+ 
+ Incident Management – a scalable electronic incident command system (ICS) that supports planning for, 
+responding to and recovering from emergency incidents. The system must adhere to the National Incident 
+Management System (NIMS) and the National Response Framework and adapted for public health and 
+healthcare use.  
+ 
+ Bed Availability and Resource Management – A statewide electronic healthcare facility resource management 
+platform as a data store that captures various, customizable essential elements of information (EEI), organize 
+situational awareness views and reports collating the data in a variety of ways (by location, by pre- set region, 
+by state, etc.), and create incidents and incident notifications via email and SMS.   
+ 
+Offers must respond to both project components 1) Incident Management and 2) Bed Availability and Resource 
+Management. 
+ 
+Out of Scope Proposals 
+The collection of patient data and patient movement/tracking are not part of this RFP. No Protected Health Information will 
+be accessible through the applications.  
+ 
+Outputs and System Requirements 
+Key functional requirements are outlined in Functional Requirements Section. The successful vendor will submit a 
+proposal specifying how they will provide incident management and/or bed availability and resource management system 
+application(s) that will meet BCHS program requirements.  
+ 
+ 
+Project Management and Communication  
+The vendor must provide a point of contact for technical assistance and ongoing monthly meetings with BCHS program 
+staff for the duration of the contract. Additionally, a help desk or technical support contact must be available 24/7.  
+  
+
+Event ID:  EVT0010848 
+Page 29 
+ 
+Functional Requirements 
+ Incident Management Areas Requirements 
+ 
+Table Instructions 
+• Reference # – Requirement identifier number that must be referenced by KDHE and Vendor throughout the RFP 
+process. 
+• Requirement Description – Describes the key functionality elements BCHS is looking for in the proposed 
+application.  
+• Description of Service – Vendors shall use this space to identify the capacity to meet the requirement identified .  
+ 
+ 
+A – Access 
+Reference  Requirement Description Description of Service  
+A1 
+The application must be accessible and fully functional using 
+any web-capable device, including tablets, smartphones, and 
+laptops. 
+ 
+A2 
+The application must be accessible and fully functional with 
+the current versions of at least one of the following web 
+browsers: Microsoft Edge, Google Chrome, Apple Safari, or 
+Mozilla Firefox. 
+ 
+A3 
+The application must support users from state, local, and 
+regional levels and conduct cross-sector data collection and 
+information sharing. 
+ 
+A4 The application shall not have per-seat/per-use license fees 
+and be able to support 5,000 concurrent users.  
+A5 
+Application Availability—The application must be available 24 
+hours a day, 7 days a week, 365 days a year, with at least a 
+99.95% uptime (excluding scheduled application 
+maintenance). 
+ 
+A6 
+The application must not require any software to be 
+downloaded onto user machines to function properly. 
+Solutions that require the installation of client software will 
+not be considered. 
+ 
+ 
+ 
+B – Security/Monitoring Requirements 
+Reference  Requirement Description Description of Service  
+B1 
+The application shall allow authorized administrators to view 
+users’ access status and be able to terminate current 
+connections as needed. 
+ 
+B2 The application must support role-based access controls.  
+B3 
+The application’s role-based access controls must allow 
+discrete authorization for read/write, editing, and deletion 
+permissions. 
+ 
+B4 Local system administrators shall be able to assign user 
+roles and privileges to user accounts.  
+
+Event ID:  EVT0010848 
+Page 30 
+ 
+B5 The application must support segregation of data access 
+privileges based on user role.  
+B6 
+The application shall allow authorized administrators to 
+create new healthcare facility accounts and new user 
+accounts related to that healthcare facility. 
+ 
+B7 The application must require all users to login using a unique 
+ID and password.  
+B8 
+The application must require Multi-Factor Authentication 
+(MFA) for all users, including administrators and staff, upon 
+every login attempt to the system. 
+ 
+B9 Must be able to provide full audit logs for authentication 
+events upon request.  
+B10 
+Per the Data Security Attachment, Contractor shall ensure 
+that all AGENCY Production and Non-Production Data 
+remains in the United States of America. Contractor shall 
+further ensure no Production or Non-Production Data is 
+accessed by Contractor employees, contractors, or any 
+other authorized individual located outside of the United 
+States.  
+ 
+ 
+ 
+ 
+C – User Interface Requirements 
+Reference  Requirement Description Description of Service  
+C1 Ability to export reports in Excel or Comma-Separated Value 
+(CSV) formats.  
+C2 
+The application includes a Federal Emergency Management 
+Agency-compatible After-Action Report that is completed and 
+downloaded. 
+ 
+C4 
+The application shall provide the ability to create incidents, 
+manage multiple incidents simultaneously, and store, query 
+and view historical data associated with an incident. 
+ 
+C5 
+Application has a distinct user administration section. A 
+system administrator must be able to easily 
+add/change/inactivate/remove users.  
+ 
+C6 Each user shall have a distinct access profile.   
+C7 Application shall provide access to a test/demo environment 
+for system testing and user training.  
+C8 Application shall allow Hazard Vulnerability Assessment to be 
+completed and downloadable.  
+  
+
+Event ID:  EVT0010848 
+Page 31 
+ 
+Bed Availability and Resource Management Project Area Requirements 
+ 
+Table Instructions 
+• Reference # – Requirement identifier number that must be referenced by KDHE and Vendor throughout the RFP 
+process. 
+• Requirement Description – Describes the key functionality elements BCHS is looking for in the proposed 
+application.  
+• Description of Service – Vendors shall use this space to identify the capacity to meet the requirement identified.     
+ 
+D – Access Requirements 
+Reference  Requirement Description Description of Service  
+D1 
+The application must be accessible and fully functional 
+using any web-capable device including tablets, smart 
+phones, and laptops. 
+ 
+D2 
+The application must be accessible and fully functional with 
+the current versions of at least one of the following web 
+browsers: Microsoft Edge, Google Chrome, Apple Safari, or 
+Mozilla Firefox. 
+ 
+D3 
+The application must support users from state, local and 
+regional levels and conduct cross-sector data collection and 
+information sharing 
+ 
+D4 The application shall not have per seat/per use license fees 
+and be able to support 2,000 concurrent users.  
+D6 
+Application Availability—The application must be available 
+24 hours a day, 7 days a week, 365 days a year, with at 
+least a 99.95% uptime (excluding scheduled application 
+maintenance). 
+ 
+D7 
+The application must not require any software to be 
+downloaded onto user machines to function properly. 
+Solutions that require installation of client software will not 
+be considered. 
+ 
+ 
+E – Security/Monitoring Requirements 
+Referenc
+e  Requirement Description Description of Service  
+E1 
+The application shall allow authorized administrators to 
+view users access status and be able to terminate current 
+connections as needed. 
+ 
+E2 The application must support role-based access controls.  
+E3 
+The application’s role-based access controls must allow 
+discrete authorization for read/write, editing, and deletion 
+permission. 
+ 
+E4 Local system administrators shall be able to assign user 
+roles and privileges to user accounts.  
+E5 The application must support segregation of data access 
+privileges based on user role.  
+
+Event ID:  EVT0010848 
+Page 32 
+ 
+E6 
+The application shall allow authorized administrators to 
+create new healthcare facility accounts and new user 
+accounts related to that healthcare facility. 
+ 
+E7 The application must require all users to login using a 
+unique ID and password.  
+E8 
+The application must require Multi-Factor Authentication 
+(MFA) for all users, including administrators and staff, upon 
+every login attempt to the system. 
+ 
+E9 Must be able to provide full audit logs for authentication 
+events upon request.  
+E10 
+Per the Data Security Attachment, Contractor shall ensure 
+that all AGENCY Production and Non-Production Data 
+remains in the United States of America. Contractor shall 
+further ensure no Production or Non-Production Data is 
+accessed by Contractor employees, contractors, or any 
+other authorized individual located outside of the United 
+States.  
+ 
+ 
+ 
+F – User Interface Requirements 
+Reference Requirement Description Description of Service  
+F2 Ability to export reports to Excel or Comma-Separated 
+Value (CSV).  
+F3 The application shall have the ability to batch upload/update 
+user data.  
+F4 
+Application has a distinct user administration section. A 
+system administrator must be able to easily 
+add/change/inactivate/remove users.  
+ 
+F5 Each user shall have a distinct access profile.  
+F6 Application shall provide access to a test/demo environment 
+for system testing and user training.  
+F7 
+Application has the ability for system administrators to enter 
+a “switch to user view”. Temporarily allowing administrators 
+to be in the system as the user and troubleshoot issues. 
+ 
+F8 Application shall allow the system administrators to create 
+and configure resource and status views.  
+F9 Applications shall allow users the ability to make personal 
+resource and status views.  
+F10 The facility account includes a detailed snapshot of facility 
+contacts, resource availability, and other data points.  
+F11 
+Application shall provide the ability to create ad-hoc and 
+standard event prompts to collect facilities point-in-time 
+data. 
+ 
+ 
+G – Add-On Functionality 
+Reference  Requirement Description Description of Service  
+G1 
+The application provides API support to automate the import 
+of bed availability data from Hospital Electronic Health 
+Record (EHR) information. 
+ 
+
+ 
+Deliverables (Vendor to complete for RFP) 
+Timeline 
+In response to this RFP, the Bidder will provide an estimated timeline for completion of the following:  
+• Coordinate pilot testing of web-based application in demo environment with BCHS. 
+• Move web-based application to production and provide technical assistance to BCHS for onboarding end users.  
+• Provide ongoing technical assistance to KDHE staff. Provide end-user training.  
+• Provide ongoing web-based application maintenance and support. 
+ 
+Technical Proposal 
+The bidder’s technical proposal shall address all items mentioned in Functional Requirements Section. In the proposal 
+response, please complete the tables in section three to include how you propose to meet the specifications of this 
+section.  
+The bidder will review the Kansas Department of Health and Environment’s Data Security Attachment.  
+The bidder’s technical proposal will include the following completed documents:  
+• Cloud Service Provider Questionnaire  
+• Security Questionnaire 
+• Architecture Document 
+ 
+Timeline 
+The bidder is to complete the items below and submit them in the Technical Proposal. We realize these are estimates. 
+Proposals must include a timeline for implementation.  
+ 
+ 
+ 
+Deliverable 
+Target Date 
+(X months/X business days 
+after final contract 
+signature) 
+Complete application specifications  
+Web-based application developed for pilot testing  
+Web application training for BCHS  
+Application moved to production and provided technical assistance 
+to KDHE 
+ 
+Onboarding of end users   
+Go-Live date  
+ 
+State Resources to be Provided  
+The BCHS Preparedness Section staff will serve as domain administrator(s) within the system.  
+ 
+  
+
+ 
+Event ID:  EVT0010848 
+Page 34 
+ 
+ 
+Kansas Department of Health and Environment 
+Data Security Attachment 
+ 
+The following provisions apply to all successful bidders providing goods and/or services to Kansas Department of Health 
+and Environment (“AGENCY”) under this Data Security Attachment. These provisions are incorporated into the Contract 
+between the Contractor and AGENCY. By submitting a bid, the Contractor confirms that it can comply with, and will be 
+bound by, these provisions and any other applicable terms and conditions in the solicitation.  
+ 
+1. General Statements.  
+a. Contractor acknowledges that it receives and/or has access to AGENCY computers, communication systems, 
+data, and/or networks for the purposes set forth in the Contract.  Contractor agrees to ensure that any information 
+or data required to be delivered pursuant the Contract shall be delivered through systems and infrastructure 
+approved by AGENCY and shall be consistent with industry best practices pertaining to security.  If any data is 
+made available or accessible to Contractor, its employees, agents, or contractors, pertaining to AGENCY’s 
+business or financial affairs, or to AGENCY’s projects or transactions, Contractor will not store, copy, analyze, 
+monitor, or otherwise use that data except for the purposes set forth in the Contract for the benefit of AGENCY.   
+b. Subject to any other express agreement between the Parties with respect to the Contract, Contractor has 
+implemented and will maintain appropriate technical and organizational measures, internal controls, and 
+information security routines intended to protect AGENCY’s data, services, and infrastructure in its environments 
+or under its control against accidental, unauthorized or unlawful access, disclosure, alteration, loss, or destruction, 
+as set out below.   
+c. To the extent AGENCY’s data includes personal data, the implementation of and compliance with these 
+measures and any additional security measures set out herein are designed to provide an appropriate level of 
+security in respect of the processing of the personal data and shall at all times comply fully with all applicable 
+laws, regulations, and government orders relating to Restricted- Use Information and data privacy with respect to 
+any such data that Contractor receives or has access to under the Contract or in connection with the performance 
+of any services for AGENCY.  Contractor will otherwise protect Restricted- Use Information and will not use, 
+disclose, or transfer across borders such Restricted-Use Information.    
+d. Contractor shall, at all times, remain compliant with the privacy and security requirements mandated by federal, 
+state and local laws and regulations.  Specifically, Contractor will fully comply with all Kansas statutes, 
+regulations, and policies including the requirements in:  
+i. K.S.A 75-7244.   
+ii. S.B. 291 as published in Session Laws as published in Session Laws 2024, ch. 95, eff. July 1, 2024  
+iii. Applicable Kansas IT policies and standards adopted under the authority of the Kansas Information 
+Technology Executive Council (ITEC), including 7000 Series “Security”  
+2. Definitions. 
+a. “Accepted Working Condition” (AWC) is the condition of the application in the Production Environment after the 
+initial use of that application in the Production Environment.  
+b. “Authorized Personnel” means Contractor’s employees who have a need to know or otherwise access 
+Restricted-Use Information to enable Contractor to perform its obligations under this Contractor.  
+c. “Change Request” (CR) is any activity that alters the objectives, deliverables, requirements, basic architecture, 
+cost or schedule of the service, solution, or interface system; or an activity that creates an impact/change to a 
+current application in production, software configuration, or hardware configuration.  An agency CR is defined 
+as any change within the original scope of work and specifications. Any alteration of the original bid’s scope of 
+work or specifications must originate through the Office of Procurement. 
+d. “Contract” is the legal agreement between AGENCY and the Contractor to which this document is incorporated 
+into.   
+
+ 
+Event ID:  EVT0010848 
+Page 35 
+ 
+ 
+e. “Criminal Justice Information Services” (CJIS) is data provided to AGENCY by the Federal Bureau of 
+Investigation or the Kansas Bureau of Investigation that includes sensitive information about criminal activities, 
+investigations, and individuals involved in the criminal justice system.  CJIS data shall include but is not limited 
+to: (1) biometric data; (2) identity history data; (3) biographic data; and (4) case history data.  
+f. “Cybersecurity Incident” shall have the meaning ascribed to it in 75-7244.  
+g. “Data Center” shall mean a facility physically located in the United States of America where the servers, 
+software, and/or hardware parts of Contractor’s service are located in. 
+h. “Data Security Incident” means a situation where Aggregator reasonably believes that there has been (1) the 
+loss or misuse (by any means) of Restricted-Use Information, (2) the inadvertent, unauthorized and/or unlawful 
+processing, corruption, modification, transfer, sale or rental of Restricted- Use Information; (3) any other act or 
+omission that compromises the security, confidentiality, or integrity of Restricted- Use Information or (4) any 
+breach of any data protection requirements in relation to the processing of Restricted- Use Information by 
+Contractor any current or former employees of Contractor. 
+i. “Destroy” means shredding, permanently erasing and deleting, degaussing, or otherwise modifying Restricted 
+Use Information in paper, electronic, or other means so as to make it unreadable, unreconstructible, and 
+indecipherable. 
+j. “Information Security Incident” includes Data Security Incident and Cybersecurity Incident as defined in this 
+Attachment.  Information Security Incident does not include unsuccessful access attempts or similar events 
+that do not compromise the security or privacy of the Supplier’s systems, including pings, port scans, denial of 
+service attacks, and other network attacks on firewalls or networked systems.  
+k. “Information System” is a set of components, including hardware, software, data, people, and processes, that 
+work together to collect, store, process, and distribute information. 
+l. “Non-Production Data” is data used for testing, development, or training, and not for live business operations 
+or real users.  Non- Production Data includes but is not limited to anonymized or sample data that does not 
+contain Restricted-Use Information.  
+m. “Personal Financial Information” (PFI) is any non- public personally identifiable financial information that an 
+entity collects about an individual in order to provide a financial product or service.  
+n. “Personally Identifiable Information” (PII) is any information that can be used on its own or with other 
+information to identify or locate a single person.  PII shall include but not be limited to a person’s social security 
+number (SSN), passport number, driver's license number, taxpayer identification number, patient identification 
+number, and financial account or credit card number. 
+o. “Production Data” is any data, including but not limited to information, figures, statistics, records, documents, or 
+results, derived directly or indirectly from a Production Environment.  This may include data from a 
+development environment where it originates from or current/historic data from a Production Environment.  
+p. “Production Environment” is the operational environment in which a software application or system is deployed 
+and used by end users to perform their intended tasks.  
+q. “Protected Health Information” (PHI) is any information, in any form or medium, held or transmitted, about 
+health status, provision of health care, or payment for health care that is created or collected by a covered 
+entity or the business associates of a covered identity and can be linked to a specific individual.  
+r. “Restricted-Use Information” (RUI) includes CJIS, PFI, PII, and PHI as defined in this Attachment.  
+s. “Vulnerability Scan” is the process of identifying weaknesses in information system components that could be 
+used to compromise networks, systems, databases, or applications. Vulnerability scanning includes but is not 
+limited to scanning for patch levels, scanning for functions, ports, protocols, and services that should not be 
+accessible to users or devices, and scanning for improperly configured or incorrectly operating information flow 
+control mechanisms. 
+
+ 
+Event ID:  EVT0010848 
+Page 36 
+ 
+ 
+ 
+3. Security Governance.  
+a. Security Awareness and Training.  Contractor shall maintain an effective information security awareness, training, 
+and education program, informing all employees, subcontractors, and other relevant parties of their information 
+security obligations.  Contractor shall have an information security policy that is communicated to and available to 
+its staff. Contractor shall ensure that employees and subcontractors involved in the Contract maintain a requisite 
+level of competence in the relevant information security systems technology.  Determination of requisite level of 
+competence shall be in AGENCY’s discretion and shall satisfy the following minimum standards:  
+i. Contractor’s information security systems awareness training must meet the minimum requirements for IT 
+security procedures and State of Kansas, Kansas Information Technology Executive Council (ITEC), Office of 
+Information Technology Services (OITS) and AGENCY policies, statutes and standards including ITEC 7000 
+Series.   
+ii. At the execution of the Contract and, thereafter, upon receipt of any written request by AGENCY, Contractor 
+shall provide Contractor’s information security policy, evidence of the security awareness, training, and 
+education program to AGENCY, and a letter warranting all of Contractor’s employees, and any other 
+individuals acting on behalf of Contractor or under Contractor’s direction, successfully completed Health 
+Insurance Portability and Accountability Act (HIPAA) and IT security awareness training prior to accessing 
+AGENCY data.  The letter shall also provide details of the of topics the training employees have completed.   
+If Contractor’s training does not meet the requisite level of competence requirements as determined by AGENCY, 
+employees of the vendor will be required to complete the AGENCY Vendor IT Security Training before access is 
+granted to AGENCY data. 
+b. Security Roles and Responsibilities.  If providing a service, solution, software, data hosting, or an interface to 
+AGENCY, Contractor shall:  
+i. Define, and document roles and responsibilities related to information security for the service, solution, 
+software, data hosting, or interface;  
+ii. Implement user identification and access controls designed to limit access to users in accordance with the 
+principles of least privilege; 
+iii. Ensure that all personnel with physical or logical access to the service, solution, software, data hosting, or 
+interface will receive industry standard annual security awareness training;  
+iv. Maintain documentation regarding roles and responsibilities related to information security for the service, 
+solution, software, or interface and review and update this document at least once per year; and  
+v. At the execution of the Contract and, thereafter, upon receipt of any written request by AGENCY, Contractor 
+shall provide such documentation to AGENCY. 
+c. Change Management.  Contractor shall ensure that all changes to proposed services, solutions, or interfaces are 
+authorized according to change management policies. Contractor will maintain the service, solution, or interface in 
+the AWC with respect to the version of all related hardware/software that may affect the service, solution, or 
+interface.  Contractor is not obligated to upgrade service, solution, or interface to meet upgrades of any 
+hardware/software made by AGENCY unless a CR is completed.  All project deliverables formally approved or 
+baselined will be governed by a change management request to be approved by the Parties. Contractor will 
+maintain a development environment that will allow them to provide modifications to the service, solution, or 
+interface as demonstrated in the AWC.  An impact analysis and other testing shall be conducted before software 
+is installed or changes are put in production. Results of the impact analysis and testing shall be orderly 
+documented. 
+ 
+
+ 
+Event ID:  EVT0010848 
+Page 37 
+ 
+ 
+4. Physical & Environmental Security.   Contractor shall support physical and environmental security measures, 
+including securing data on a secure server, in locked data cabinets within a secure facility located within the United 
+States of America.  Contractor shall adhere to the following:  
+a. All AGENCY data must be contained in secure, environmentally controlled Data Centers located in the United 
+States of America.  Data Centers shall be owned, operated, and controlled by Contractor.  If the Data Center is 
+not owned, operated, and controlled by Contractor (including leased facilities), then Contractor must receive 
+AGENCY approval in writing for Contractor’s use of alternate Data Centers.  Contractor will identify and notify 
+AGENCY of the locations of all Data Centers used to host AGENCY data.  Contractor shall ensure that all 
+AGENCY data is always stored, processed, and maintained within the United States of America.  Contractor shall 
+further ensure that no AGENCY Data is accessed by Contractor’s employees, contractors, or any other 
+individuals under Contractor’s control from outside of the United States.    
+b. Data Centers must implement physical environmental controls that mitigate or prevent damage from water, fire, 
+temperature, and humidity for Information Systems that process, store, or transmit RUI.  Contractor must ensure 
+sufficient power protection is available for critical Information Systems to perform an orderly shutdown.  
+c. Contractor must restrict physical access to Data Centers that process, store, or transmit RUI to Authorized 
+Personnel only. Contractor must maintain a list, which shall be reviewed and updated as user access privileges 
+change or at least annually, of all Authorized Personnel with physical access to Data Centers that process, store, 
+or transmit RUI.  Contractor must require Authorized Personnel to authenticate themselves prior to entry to Data 
+Centers that process, store or transmit RUI.  If Contractor allows visitors to Data Centers that process, store or 
+transmit RUI, then visitors must always be escorted by Authorized Personnel.  Contractor must log all visitor 
+access to Data Centers that process, store or transmit RUI. 
+5. Data Security & Management. 
+a. Contractor shall at all times implement and maintain physical, electronic and organizational security measures in 
+accordance with the best practices and highest industry standards to protect AGENCY’s data, materials, and any 
+deliverables against any unauthorized access, use, destruction, loss, disclosure, or improper alteration.  
+b. Contractor shall ensure Contractor’s Data Center and/or cloud environment is secure with industry standard 
+encryption techniques that meets all legal requirements for data stored at rest and in transit. Contractor shall 
+ensure Secure Socket Layers (SSL) configuration per industry best practices, session, and port management.  
+c. Contractor shall ensure that external connections incorporated into the Data Center and/or cloud have appropriate 
+security controls including industry standard intrusion detection and countermeasures that will detect and 
+terminate any unauthorized activity prior to entering the firewall maintained by Contractor.  Contractor shall 
+ensure that the Data Center will utilize industry standard firewalls regulating all data entering the internal data 
+network from any external source which will enforce secure connections between internal and external systems 
+and will permit only authorized data to pass through. 
+d. Contractor shall utilize industry standard malware protection, incorporating both signature and non- signature-
+based detection mechanisms, on all systems with access to AGENCY data.  Contractor shall ensure that malware 
+protection will be centrally managed and receive regular automatic updates to malicious code protection 
+mechanisms and data files.  
+e. Contractor shall ensure that any service, software, solution, data hosting, or an interface is capable of auditing the 
+following events: (1) successful and unsuccessful account logon events; (2) account management events; (3) 
+object access; (4) policy change; (5) privilege functions; (6) process tracking and system events; (7) all 
+administrator activity; (8) authentication checks; (9) authorization check; (10) data deletions; (11) data access; 
+(12) data changes; and (13) permission changes.   
+f. Contractor shall ensure that the service, software, solution, data hosting, or interface employs automated 
+mechanisms to centrally review, analyze and correlate audit and log records from multiple components of the 
+service, software, solution, data hosting, or an interface to support organizational processes for investigation, 
+alerting and response to suspicious activities.  Contractor shall ensure that the service, software, solution, data 
+hosting, or interface supports exporting of log files to AGENCY for review and analysis.  
+
+ 
+Event ID:  EVT0010848 
+Page 38 
+ 
+ 
+g. Contractor will maintain a complete asset inventory of its infrastructure, network, applications, and cloud 
+environments. Contractor will also maintain an inventory of all its media on which AGENCY’s data is stored.  
+Access to the inventories of such media will be restricted to that Parties’ Authorized Personnel.  
+h. Contractor shall provide and maintain a backup of AGENCY data that can be recovered in an orderly and timely 
+manner within a predefined frequency consistent with recovery time and recovery point objectives. Contractor 
+shall store a daily incremental and weekly full back backup of AGENCY’s data within the United States of 
+America.  Contractor will maintain a disaster recovery plan. At the execution of the Contract and upon written 
+request by AGENCY, Contractor shall provide such plan to AGENCY. 
+i. Contractor shall implement a contingency plan designed to maintain the access to AGENCY data and to prevent 
+the unintended destruction or loss of data. The contingency plan should provide a predefined frequency, 
+consistent with recovery time and recovery point objectives for disaster recovery and archival purposes of 
+AGENCY data at a secure facility located within the United States of America.  
+j. Contractor shall ensure that all AGENCY Production Data remains in the United States of America. Contractor 
+shall further ensure no Production Data is accessed by Contractor employees, contractors, or any other 
+authorized individual located outside of the United States.  
+k. Contractor shall ensure that all AGENCY Non- Production Data remains in the United States of America. 
+Contractor shall further ensure no Non-Production Data is accessed by Contractor employees, contractors, or any 
+other authorized individual located outside of the United States.  
+l. If applicable, upon completion, termination, or expiration of the Contract, or at the request of AGENCY, Contractor 
+shall promptly return all media supplied by AGENCY, accompanied by a letter which certifies all private and/or 
+confidential data and software supplied by AGENCY have been removed from all Contractor’s equipment, files, 
+and backup.  Contractor shall also dispose of any data in accordance with Paragraph 8.  
+m. In the event the Contractor ceases doing business, dissolves, ceases to provide all services as defined  in the 
+Contract, makes a general assignment for benefit of creditors, has a receiver appointed for any reason, suffers a 
+foreclosure, attachment or levy on any significant business assets, admits its inability to pay debts as they mature 
+or becomes the debtor in any bankruptcy proceeding, the Parties agree to enter into a separate statement of work 
+at a negotiated rate for all work performed in connection with a data migration project to migrate AGENCY’s data.  
+Both Parties agree to negotiation of the separate statement of work in good faith.  Should Contractor fail to abide 
+by the terms of this paragraph and not enter a separate statement of work, AGENCY reserves the right to obtain 
+all of AGENCY’s data that AGENCY or its affiliates have created, store, uploaded, and or modified within thirty 
+(30) days of notification and at no cost to AGENCY.   
+6. Data Privacy. 
+a. Contractor will implement and maintain a written information security program that contains appropriate 
+security measures to safeguard the RUI of AGENCY’s data that the Contractor receives, stores, 
+maintains, processes, or otherwise accesses in connection with the provision of services hereunder.  
+b. Contractor shall not disclose to any other person, firm, or corporation or entity (other than to AGENCY) or 
+use for  its own benefit, except as provided in the Contract, any data and/or confidential information it 
+receives from AGENCY. Contractor shall return any and all data furnished by AGENCY and its affiliates 
+within 30 days of the request of AGENCY in  whatever form(s) it is maintained by Contractor. On the 
+termination of the Contract, Contractor will not use any of such data or any material derived from the data 
+for any purpose and will destroy such data or material except as otherwise expressly stated by this 
+attachment or the Contract.  In the event Contractor discloses any of AGENCY’s proprietary and/or RUI, 
+AGENCY may immediately terminate the Contract and pursue legal action recourse.  The restrictions and 
+obligations contained herein shall continue in perpetuity from the date of the Contract unless AGENCY 
+provides a written release to Contractor.  
+c. Except to the extent the information is proven to be publicly known through no breach or  
+misappropriation, and except to the extent a statute, rule or regulation requires AGENCY to make 
+information publicly available, all software, documentation, interfaces and other components of the 
+
+ 
+Event ID:  EVT0010848 
+Page 39 
+ 
+ 
+service provided by Contractor is confidential information of Contractor, and may not be disclosed or used 
+by AGENCY, except solely for its own internal business purposes. 
+7. Information Security Incidents.  
+a. Contractor shall maintain an incident response program that implements incident handling for information security 
+incidents that includes preparation, detection and analysis, containment, eradication, and recovery 
+processes.  The incident response program must have the capability to support automated mechanisms for 
+supporting incident handling processes.    
+b. Contractor is responsible for all Information Security Incidents that is processed by, or on behalf of, Contractor.  
+Contractor shall immediately notify AGENCY (within twelve hours) in writing whenever Contractor reasonably 
+believes that there has been an Information Security Incident.  After providing such notice, Contractor will 
+investigate the Information Security Incident, and immediately take all necessary steps to eliminate or contain any 
+exposure of RUI and keep AGENCY advised of the status of such Information Security Incident and all matters 
+related thereto.  Contractor further agrees to provide, at Contractor’s sole cost, reasonable assistance and 
+cooperation requested by AGENCY, in the furtherance of any correction, remediation, or investigation of any such 
+Information Security Incident and/or the mitigation of any damage, including any notification required by law or 
+that AGENCY may determine appropriate to send to individuals impacted or potentially impacted by the 
+Information Security Incident.  In addition, within a reasonable time frame of identifying or being informed of an 
+Information Security Incident, Contractor shall develop a plan and submit to AGENCY for review a plan that 
+reduces the likelihood of a recurrence of such Information Security Incident.   
+c. Contractor agrees to adhere to all Information Security Incident reporting in accordance with K.S.A. 75- 7244, 
+including utilizing the Incident Reporting Form on the Kansas Office of Information Technology Services website.   
+8. Destruction of Data.   Unless otherwise specified in the Contract, Contractor agrees that upon termination of the 
+Contract or upon request by AGENCY, Contractor shall erase, destroy, and render unrecoverable all AGENCY and 
+AGENCY affiliate data and certify in writing that these actions have been completed within a time frame 
+communicated to Contractor by an authorized agent of AGENCY.  At a minimum, media sanitization is to be 
+performed according to the standards enumerated by the National Institute of Standards, Guidelines for Media 
+Sanitization Special Publication 800- 88r1.  Records of all sanitizations involving AGENCY data shall maintained for 
+five (5) years.   In the case that any data must be retained for Federal Reporting purposes beyond the termination of 
+the Contract, the Parties shall arrange for the proper transfer, storage, archiving and schedule for deletion of such 
+data. 
+9. Vulnerability Scans & Security Audit.   
+a. Contractor shall conduct Vulnerability Scans  on networks, systems, databases, or applications that create, 
+maintain, process, transmit, or store data hosting AGENCY RUI on a regular basis (no less than every thirty 
+days).  Contractor shall perform quarterly Vulnerability Scans using an Intrusion Detection System (IDS) and 
+Intrusion Prevention System (IPS) and shall provide AGENCY with the results of those scans.    
+b. If a Vulnerability Scan identifies vulnerabilities in Contractor’s networks, systems, databases, or applications, 
+Contractor is expected to remediate them or, in the rare cases where that is not possible, implement approved 
+and documented compensating controls to reduce risk. In cases where a vulnerability introduces heightened risk 
+to data exposure, AGENCY may disconnect, disable and/or block the device from accessing AGENCY systems 
+until remediation or risk mitigation takes place. 
+c. Contractor shall ensure performance of a security audit at least once annually.    
+10. Generative AI.  Contractor shall comply with the State of Kansas Generative Artificial Intelligence (AI) Policy 
+(Memorandum No. P8200.00).   
+a. Contractor shall ensure that responses generated from generative AI outputs shall be reviewed by knowledgeable 
+human operators for accuracy, appropriateness, privacy, and security before being acted upon or disseminated.  
+
+ 
+Event ID:  EVT0010848 
+Page 40 
+ 
+ 
+b. Contractor shall ensure RUI or any other confidential AGENCY data shall not be utilized in generative AI queries 
+or for building or training proprietary generative AI programs unless explicitly approved by AGENCY with 
+consultation from the Chief Information Security Officer.   
+c. At the execution of the Contract, Contractor shall disclose Contractor’s utilization of generative AI or integrations 
+with Generative AI platforms.  Contractor shall immediately notify AGENCY of any updates to Contractor’s 
+systems that would change Contractor’s use of generative AI.  If Contractor is utilizing Generative AI to build 
+software explicitly for the State of Kansas, Contractor must demonstrate positive control over all data input into 
+the system. Contractor shall annotate all usage of software code generated by generative AI.  
+11. AGENCY Audit.  In addition to any documents outlined in this Appendix,  upon AGENCY’s reasonable written request 
+with no less than thirty (30) days’ notice during the term of the Contract, the Contractor agrees to cooperate and assist 
+AGENCY with information security audits regarding the Contractor’s compliance with the terms and conditions 
+regarding information security hereunder. This cooperation shall include, but not be limited to:  
+a. Providing evidence of certification, policies, training and awareness program, and compliance related to 
+information security;  
+b. Making available to AGENCY the Contractor’s Service and Organization Controls (SOC) 2;  
+c. Making available to AGENCY the Contractor’s NIST 800-53; 
+d. Making available to AGENCY an executive summary of the Contractor’s most recent information security tests, 
+including remedial actions taken;  
+e. Providing evidence of a comprehensive continuous monitoring program encompassing all systems with access to 
+AGENCY data; and 
+f. Permitting AGENCY to review the Contractor’s information security program, including results of vulnerability 
+scanning.  
+ 
+  
+
+ 
+Event ID:  EVT0010848 
+Page 41 
+ 
+ 
+Name of Vendor 
+Cloud Service Provider Questionnaire 
+ 
+1. Does the Cloud Service Provider (CSP) have a secure environment, federally authorized to at least the standards of 
+confidentiality and integrity from the Moderate FIPS-199 level to store records containing Personal Identifiable 
+Information (PII)? 
+ 
+2. Does the Cloud provider have the ability to alter Terms of Service or contracts without the express written consent of 
+the customer agency? 
+ 
+3. Will the ownership of data remain under the sole ownership of the State of Kansas at all times? 
+ 
+4. Will backup information be returned to the State of Kansas in the event the contract is ended or the Cloud provider 
+files for bankruptcy? 
+ 
+5. Is there a documented process to address the removal and control of agency information upon the termination of the 
+contract between the agency and the cloud provider? 
+ 
+6. Can the cloud provider utilize any data stored on their systems for any purpose outside agency use? 
+ 
+7. Does the contract contain language to restrict the sharing of privacy data with any entity not explicitly authorized in 
+the contract? 
+ 
+8. Does the contract contain language to restrict the storage, transfer, or processing of privacy data to only facilities that 
+fall under the legal jurisdiction of the United States? 
+ 
+9. What controls are in place to prevent the misuse of data by those having access? 
+ 
+10. Does the cloud provider allow for access to data as permitted under current federal and Kansas law to both authorized 
+federal agencies and individuals wishing to verify their own PII? 
+ 
+11. While the data is with the cloud provider, what are the requirements for determining if the data is sufficiently 
+accurate, relevant, timely, and complete to ensure fairness in making determinations? 
+ 
+12. Describe what privacy training is provided and who is responsible for protecting the privacy rights of the users of the 
+cloud? 
+ 
+13. How does the cloud provider facilitate response to Kansas Open Records Act (KORA) / Federal Open Information 
+Act (FOIA) / subpoena requests? 
+ 
+14. Is there a complete and documented process to report and handle breaches? 
+ 
+15. Describe the process that the CSP will use to report, within 1-hour, any potential privacy or security breaches to the 
+agency regardless of whether the breach was intentional or inadvertent. 
+ 
+16. Describe the specific redress actions that the agency can take against the cloud provider in the event of a breach. 
+
+ 
+Event ID:  EVT0010848 
+Page 42 
+ 
+ 
+Security Questionnaire 
+ 
+Instructions for Completing the Web-Enabled Application Security Questionnaire 
+Vendor will complete this questionnaire by responding to all questions to the best of their ability. 
+ 
+ 
+Web-Enabled Application Security Questionnaire for:  Vendor Name    Date:      /      /                         
+Physical Security- involves the security of the physical devices, which includes the ability to control access to such 
+hardware.  
+# Question Response 
+1 What are the hardware components 
+and where are they physically located? 
+ 
+2 Who has access to the physical 
+components? 
+ 
+3 Are the environmental controls 
+adequate (i.e., smoke and water 
+detection, fire prevention)? 
+ 
+4 What UPS is being used and what 
+characteristics does it have? 
+ 
+User Security- addresses the ability to ensure that the user accessing data and systems is in fact who they say they are 
+and that they have access only to those resources to which they are authorized. Functions that are involved in this issue 
+include identification, authentication, and authorization of the individual, as well as non-repudiation and audit. 
+# Question Response 
+5 How are users identified to the 
+systems? 
+ 
+6 What unique form of identification do 
+they have (UserID) ?  
+ 
+7 Who administers the UserIDs?   
+8 How are inactive users removed, by 
+whom, and how timely? 
+ 
+9 How are users authenticated to the 
+system (passwords, smart cards, 
+biometrics)? 
+ 
+10 If passwords are used, what are the 
+specific password rules (minimum 
+length, character makeup, aging, etc)?  
+ 
+11 How is assurance provided that the 
+information received has not been 
+altered? 
+ 
+
+ 
+Event ID:  EVT0010848 
+Page 43 
+ 
+ 
+Web-Enabled Application Security Questionnaire for:  Vendor Name    Date:      /      /                         
+12 How is assurance provided that the 
+reputed sender is indeed the one who 
+sent it?  
+ 
+13 What levels of system access are there?  
+14 Who determines and maintains?  
+15 What audit trails are maintained to 
+enable reconstruction and/or review of 
+operations performed on systems? 
+ 
+16 How are they protected so users can 
+not change them? 
+ 
+17 How often are they reviewed and by 
+whom?  
+ 
+Application Security- concerns the built-in security features of the application itself. 
+# Question Response 
+18 What security features are built into the 
+application? 
+ 
+19 How specifically do the security 
+features work? 
+ 
+20 If the application communicates to 
+other systems, how does that happen? 
+(i.e.. web server to database server).  
+ 
+21 Has auto complete  = off  been set 
+for all input fields on applications using 
+IE 5.0 or above.? 
+ 
+22 What information is logged for each 
+transaction? (The minimum is userID, 
+IP Address, and time and date stamp) 
+ 
+23 Where is the logging information 
+stored?  
+ 
+24 Does the application use session tokens 
+that are custom created or default from 
+a Vendor, i.e.. Microsoft? (All session 
+tokens shall be user unique, non -
+predictable, and resistant to reverse 
+engineering.)   
+ 
+25 Does the application store any cookies 
+on client machines? If so, what are 
+they? 
+ 
+
+ 
+Event ID:  EVT0010848 
+Page 44 
+ 
+ 
+Web-Enabled Application Security Questionnaire for:  Vendor Name    Date:      /      /                         
+26 Are cookies checked for validity when 
+returned back to the server?  
+ 
+27 Are sessions and/or cookies destroyed 
+when the user logs out of the 
+application? 
+ 
+28 Does the application require re -
+authentication for critical user actions 
+such as money transfer? 
+ 
+29 What security controls are built around 
+files where userIDs, passwords, Pins, 
+etc are stored? 
+ 
+30 Are all authentication events (logging 
+in, logging –out, failed logins, etc.) 
+logged? 
+ 
+31 Are all administrative events (account 
+management actions, enabling or 
+disabling logging, etc.) logged? 
+ 
+32 Are logs written so only new records 
+can be added, and existing records not 
+overwritten or deleted? 
+ 
+33 What client -side data validation is 
+done? 
+ 
+34 What data validation is done on the 
+server side? (this shall be done even if 
+it is redundant to cursory validation 
+performed on the client side). 
+ 
+35 How is editing done to prohibit generic 
+meta-
+characters from being present in 
+input data?  
+ 
+36 Are all database queries constructed 
+with parameterized stored procedures 
+to prevent SQL injection? 
+ 
+37 Can any variables be used in script? If 
+yes, how are they protected to prevent 
+direct OS Commands attacks? 
+ 
+38 What scripting language is being used? 
+Has it been checked for vulnerabilities 
+and have they been addressed?  
+ 
+39 Does the application do security 
+checking after UTF -8 decoding is 
+completed?  
+ 
+
+ 
+Event ID:  EVT0010848 
+Page 45 
+ 
+ 
+Web-Enabled Application Security Questionnaire for:  Vendor Name    Date:      /      /                         
+40 Have all comments been removed for 
+any code passed to the browser? 
+ 
+41 Can users see any debugging 
+information on the client?  
+ 
+42 Have all sample, test and unused files 
+been removed from the production 
+system? 
+ 
+43 Are pages with personal data cached?  
+44 Are forms submissions done using a 
+POST request rather than a GET? 
+ 
+45 Does IUSR and/or network services 
+need write permissions to any folders?  
+If so, which ones and why? 
+ 
+46 Does IUSR and/or Network Service 
+need read and/or write access to the 
+registry beyond the defaults? 
+ 
+47 Does your application require any 
+shared folders? 
+ 
+48 Are all your connection string 
+information(passwords & user names) 
+stored in the registry and not in the 
+application? 
+ 
+49 Does your application need parental 
+paths on in the IIS server? 
+ 
+50 Does your application use stored 
+procedures for database interaction? 
+ 
+51 Do you follow ADA guidelines in your 
+presentation layers of your application? 
+ 
+52 Does your application require any 3rd 
+party software that is not a standard 
+part of our Microsoft operating system? 
+ 
+53 Does your web application adhere to a 
+three layer architecture (Presentation, 
+Business and Data)? 
+ 
+System Security-involves the analysis of the overall operating systems and software used to support the applications 
+software. 
+# Question Response 
+54 What research has been done for 
+known security vulnerabilities? 
+ 
+
+ 
+Event ID:  EVT0010848 
+Page 46 
+ 
+ 
+Web-Enabled Application Security Questionnaire for:  Vendor Name    Date:      /      /                         
+55 Who installs Vendor- supplied security 
+upgrades and patches? Are we up -to-
+date? 
+ 
+56 Have unnecessary services been 
+removed or disabled? 
+ 
+57 Has debugging mode on any web 
+server been turned off for production?  
+ 
+58 Are default accounts disabled and 
+passwords changed from defaults?  
+ 
+59 Does the data base user have limited 
+abilities in being only able to run stored 
+procedures or select?  
+ 
+ 
+ 
+ 
+Data Security-encompasses both physically protecting the application data from unauthorized access as well as loss of 
+data through mechanical/electrical failure or viruses 
+# Question Response 
+60 Is Authentication used at all times 
+when accessing or making changes to 
+data to ensure confidentiality? 
+ 
+61 Is at least 128 -bit encryption used for 
+any data transmitted over public 
+networks?  
+ 
+62 Are all FTP transmissions of data over 
+insecure channels encrypted using PGP 
+software? 
+ 
+63 Is auditing activated and all access to 
+data logged? 
+ 
+64 What are the backup and archive 
+procedures that will be used?  
+ 
+65 What are the offsite storage 
+requirements of backups and archives? 
+ 
+66 Are backups encrypted if highly 
+sensitive data is involved? 
+ 
+67 What virus control software and 
+detection procedures will be used to 
+protect the data? 
+ 
+
+ 
+Event ID:  EVT0010848 
+Page 47 
+ 
+ 
+Web-Enabled Application Security Questionnaire for:  Vendor Name    Date:      /      /                         
+68 How is privacy maintained to ensure 
+that customer’s personal data collected 
+from electronic transmissions is 
+protected from unauthorized 
+transmissions?  
+ 
+Network Security-.includes the physical/electrical links between the Desktop Client and the Host computer 
+# Question Response 
+69 What documents show the network 
+environment with a diagram that shows 
+all links and component parts? 
+ 
+70 How is the LAN isolated from any 
+network-connected device that does 
+not have a valid business relationship 
+with resources on the LAN? 
+ 
+71 Are firewalls used between the LAN and 
+the Internet to prevent untrusted 
+networks from accessing the LAN? 
+ 
+72 If public access to a server in the 
+internal LAN is required, has the server 
+been put on a separate LAN segment 
+behind the firewall device typically 
+referred to as the DMZ? 
+ 
+73 Have intrusion detection systems been 
+installed? 
+ 
+74 How are they monitored for 
+unauthorized access? 
+ 
+Security Administration- involves the administration of the overall security plan 
+# Question Response 
+75 Who are the security administrators for 
+the application? 
+ 
+76 What functions do they provide?  
+77 How are users provided with userIDs 
+and passwords?  
+ 
+78 Are passwords restricted from being 
+distributed by telephone or unsecured 
+electronic mail?   
+ 
+79 How are unusual incidents handled?  
+
+ 
+Event ID:  EVT0010848 
+Page 48 
+ 
+ 
+Web-Enabled Application Security Questionnaire for:  Vendor Name    Date:      /      /                         
+80 Have all employees or users of the 
+application been instructed to exercise 
+caution to prevent the release of 
+sensitive details to unauthorized 
+sources?  
+ 
+Database Security:  involves the connections to the database 
+# Question Response 
+81 Do you pass SQL query information or 
+hierarchy paths via the request objects? 
+ 
+82 Does your application use server side  
+validation for sensitive, financial, or 
+authorization information input before 
+disseminating, writing, updating or 
+allowing access to the application or 
+database? 
+ 
+ 
+
+ 
+Event ID:  EVT0010848 
+Page 49 
+ 
+ 
+Architecture Document 
+Vendor Name 
+Date 
+1. Introduction 
+1.1. Add Text. 
+2. Architecture Overview 
+2.1. Add Text. 
+2.2. Add diagram. 
+3. Architectural Layers 
+3.1. Add Text. 
+3.2. Add diagram. 
+4. Logical Architecture 
+4.1. Add text. 
+4.2. Add diagram. 
+5. Deployment Architecture 
+5.1. Add text. 
+5.2. Add diagram. 
+6. Disconnected Operations 
+6.1. Add text. 
+6.2. Add diagram. 
+7. Security 
+7.1. Add text. 
+7.2. Add diagram. 
+8. Microsoft Enterprise Library 
+8.1. Add text. 
+9. Operational Considerations 
+9.1. Add text. 
+ 
+
+ 
+Event ID:  EVT0010848 
+Page 50 
+ 
+ 
+5. COST SHEET 
+ 
+Contractor Name:    
+ 
+ 
+Cost proposals must be submitted separately from the Technical Proposal, unless otherwise specified. Bidders must 
+complete the below cost proposal. The format and structure of the cost proposal is intended to allow for a 
+quantitatively comparable evaluation among bidders. Deviation from the format or structure of this Cost Proposal may 
+result in Bidder's proposal being deemed non-responsive. 
+ 
+This RFP is contingent upon the availability of state or federal funds and may be terminated by thirty (30) day advance 
+written notice by the Director of Purchases. 
+ 
+A. Implementation Costs through Go-Live Date. 
+ 
+Please provide a fixed price. The lines are to coincide with the deliverables/timeline schedule submitted in the 
+Technical Proposal. The item may be a fixed cost. Please include a cost breakdown, including the additional cost 
+for the requested add-on functionality. 
+ 
+Item  Line-Item Cost 
+Incident Management Functional Requirements  
+Bed Availability and Resource Management Functional 
+Requirements 
+ 
+G1 Add-on API functionality  
+TOTAL COST:  
+ 
+ 
+B. Annual Costs for the remainder of the five-year contract period. Include cost for annual license and support fee.  
+ 
+Annual costs Year 1 Year 2 Year 3 Year 4 Year 5 
+Incident Management 
+Functional Requirements 
+     
+Bed Availability and Resource 
+Management Functional 
+Requirements 
+     
+G1 Add-on API functionality      
+ TOTAL COST:       
+ 
+ 
+ 
+
+ 
+Event ID:  EVT0010848 
+Page 51 
+ 
+ 
+6. Contractual Provisions Attachment 
+DA-146a Rev. 07/19 
+6.1. Important 
+The parties agree that the following provisions are hereby incorporated into the contract to which it is attached 
+and made a part thereof, said contract being the date of final signature.  
+6.2. Terms Herein Controlling Provisions 
+It is expressly agreed that the terms of each and every provision in this attachment shall prevail and control 
+over the terms of any other conflicting provision in any other document relating to and a part of the contract in 
+which this attachment is incorporated. Any terms that conflict or could be interpreted to conflict with this 
+attachment are nullified. 
+6.3. Kansas Law and Venue 
+This contract shall be subject to, governed by, and construed according to the laws of the State of Kansas, and 
+jurisdiction and venue of any suit in connection with this contract shall reside only in courts located in the State 
+of Kansas. 
+6.4. Termination Due to Lack of Funding Appropriation 
+If, in the judgment of the Director of Accounts and Reports, Department of Administration, sufficient funds are 
+not appropriated to continue the function performed in this agreement and for the payment of the charges 
+hereunder, State may terminate this agreement at the end of its current fiscal year. State agrees to give written 
+notice of termination to contractor at least thirty (30) days prior to the end of its current fiscal year and shall give 
+such notice for a greater period prior to the end of such fiscal year as may be provided in this contract, except 
+that such notice shall not be required prior to ninety (90) days before the end of such fiscal year. Contractor 
+shall have the right, at the end of such fiscal year, to take possession of any equipment provided State under 
+the contract. State will pay to the contractor all regular contractual payments incurred through the end of such 
+fiscal year, plus contractual charges incidental to the return of any such equipment. Upon termination of the 
+agreement by State, title to any such equipment shall revert to contractor at the end of the State's current fiscal 
+year. The termination of the contract pursuant to this paragraph shall not cause any penalty to be charged to 
+the agency or the contractor. 
+6.5. Disclaimer of Liability 
+No provision of this contract will be given effect that attempts to require the State of Kansas or its agencies to 
+defend, hold harmless, or indemnify any contractor or third party for any acts or omissions. The liability of the 
+State of Kansas is defined under the Kansas Tort Claims Act (K.S.A. 75-6101, et seq.). 
+6.6. Anti-Discrimination Clause 
+The contractor agrees: (a) to comply with the Kansas Act Against Discrimination (K.S.A. 44 1001, et seq.) and 
+the Kansas Age Discrimination in Employment Act (K.S.A. 44-1111, et seq.) and the applicable provisions of 
+the Americans With Disabilities Act (42 U.S.C. 12101, et seq.) (ADA), and Kansas Executive Order No. 19- 02, 
+and to not discriminate against any person because of race, color, gender, sexual orientation, gender identity or 
+expression, religion, national origin, ancestry, age, military or veteran status, disability status, marital or family 
+status, genetic information, or political affiliation that is unrelated to the person's ability to reasonably perform 
+the duties of a particular job or position; (b) to include in all solicitations or advertisements for employees, the 
+phrase "equal opportunity employer"; (c) to comply with the reporting requirements set out at K.S.A. 44- 1031 
+and K.S.A. 44-1116; (d) to include those provisions in every subcontract or purchase order so that they are 
+binding upon such subcontractor or vendor; (e) that a failure to comply with the reporting requirements of (c) 
+above or if the contractor is found guilty of any violation of such acts by the Kansas Human Rights Commission, 
+such violation shall constitute a breach of contract and the contract may be cancelled, terminated or 
+suspended, in whole or in part, by the contracting state agency or the Kansas Department of Administration; (f) 
+Contractor agrees to comply with all applicable state and federal anti-discrimination laws and regulations; (g) 
+Contractor agrees all hiring must be on the basis of individual merit and qualifications, and discrimination or 
+harassment of persons for the reasons stated above is prohibited; and (h) if it is determined that the contractor 
+has violated the provisions of any portion of this paragraph, such violation shall constitute a breach of contract 
+and the contract may be canceled, terminated, or suspended, in whole or in part, by the contracting state 
+agency or the Kansas Department of Administration. 
+
+ 
+Event ID:  EVT0010848 
+Page 52 
+ 
+ 
+6.7. Acceptance of Contract 
+This contract shall not be considered accepted, approved or otherwise effective until the statutorily required 
+approvals and certifications have been given. 
+6.8. Arbitration, Damages, Warranties 
+Notwithstanding any language to the contrary, no interpretation of this contract shall find that the State or its 
+agencies have agreed to binding arbitration, or the payment of damages or penalties. Further, the State of 
+Kansas and its agencies do not agree to pay attorney fees, costs, or late payment charges beyond those 
+available under the Kansas Prompt Payment Act (K.S.A. 75-6403), and no provision will be given effect that 
+attempts to exclude, modify, disclaim or otherwise attempt to limit any damages available to the State of 
+Kansas or its agencies at law, including but not limited to, the implied warranties of merchantability and fitness 
+for a particular purpose. 
+6.9. Representative's Authority to Contract 
+By signing this contract, the representative of the contractor thereby represents that such person is duly 
+authorized by the contractor to execute this contract on behalf of the contractor and that the contractor agrees 
+to be bound by the provisions thereof. 
+6.10. Responsibility for Taxes 
+The State of Kansas and its agencies shall not be responsible for, nor indemnify a contractor for, any federal, 
+state or local taxes which may be imposed or levied upon the subject matter of this contract.  
+6.11. Insurance 
+The State of Kansas and its agencies shall not be required to purchase any insurance against loss or damage 
+to property or any other subject matter relating to this contract, nor shall this contract require them to establish a 
+"self-insurance" fund to protect against any such loss or damage. Subject to the provisions of the Kansas Tort 
+Claims Act (K.S.A. 75-6101, et seq.), the contractor shall bear the risk of any loss or damage to any property in 
+which the contractor holds title. 
+6.12. Information 
+No provision of this contract shall be construed as limiting the Legislative Division of Post Audit from having 
+access to information pursuant to K.S.A. 46-1101, et seq. 
+6.13. The Eleventh Amendment 
+"The Eleventh Amendment is an inherent and incumbent protection with the State of Kansas and need not be 
+reserved, but prudence requires the State to reiterate that nothing related to this contract shall be deemed a 
+waiver of the Eleventh Amendment." 
+6.14. Campaign Contributions / Lobbying 
+Funds provided through a grant award or contract shall not be given or received in exchange for the making of 
+a campaign contribution. No part of the funds provided through this contract shall be used to influence or 
+attempt to influence an officer or employee of any State of Kansas agency or a member of the Legislature 
+regarding any pending legislation or the awarding, extension, continuation, renewal, amendment or modification 
+of any government contract, grant, loan, or cooperative agreement. 

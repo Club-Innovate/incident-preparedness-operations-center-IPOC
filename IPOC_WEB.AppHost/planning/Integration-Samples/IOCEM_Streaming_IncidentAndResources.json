@@ -1,0 +1,36 @@
+{
+  "sourceSystem": "State-Hospital-Exchange",
+  "correlationId": "1f4ae5a8-3cca-4fb1-b2f4-6f852ce0d3a3",
+  "occurredUtc": "2026-06-24T14:20:00Z",
+  "incident": {
+    "incidentNumber": "INC-2026-0624-001",
+    "incidentName": "Regional Respiratory Surge",
+    "incidentTypeCode": "PublicHealth",
+    "severityCode": "Major",
+    "incidentStatusCode": "Active",
+    "situationSummary": "Regional bed pressure increasing in eastern corridor."
+  },
+  "resources": [
+    {
+      "locationId": 101,
+      "resourceTypeCode": "VENT",
+      "resourceTypeName": "Ventilator",
+      "quantityTotal": 40,
+      "quantityAvailable": 18,
+      "quantityCommitted": 20,
+      "quantityOutOfService": 2
+    }
+  ],
+  "bedSnapshots": [
+    {
+      "locationId": 101,
+      "bedCategoryCode": "ICU",
+      "staffedBedsTotal": 42,
+      "bedsAvailable": 7,
+      "bedsOccupied": 31,
+      "bedsUnavailable": 4,
+      "isolationCapableBeds": 12,
+      "surgeBedsPotential": 8
+    }
+  ]
+}

@@ -1,0 +1,280 @@
+{
+  "resourceType": "Bundle",
+  "id": "iocem-bed-capacity-mixed-quality",
+  "type": "collection",
+  "timestamp": "2026-07-10T13:29:53.5141308Z",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Location",
+        "id": "iocem-location-111",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/StructureDefinition/Location"
+          ]
+        },
+        "identifier": [
+          {
+            "system": "https://kdhe.ks.gov/iocem/location-id",
+            "value": "111"
+          },
+          {
+            "system": "urn:oid:2.16.840.1.113883.4.6",
+            "value": "KS-FAC-111"
+          }
+        ],
+        "status": "active",
+        "name": "Emporia Medical Center",
+        "telecom": [
+          {
+            "system": "phone",
+            "value": "785-555-0111",
+            "use": "work"
+          }
+        ],
+        "address": {
+          "line": [
+            "111 Main Campus Dr"
+          ],
+          "use": "work",
+          "country": "US",
+          "type": "physical",
+          "postalCode": "66801",
+          "city": "Emporia",
+          "state": "KS"
+        },
+        "position": {
+          "longitude": -96.1817,
+          "latitude": 38.4039
+        },
+        "managingOrganization": {
+          "display": "Kansas Health Preparedness Network"
+        }
+      }
+    },
+    {
+      "resource": {
+        "name": "Broken Identifier Facility",
+        "identifier": [
+          {
+            "system": "https://kdhe.ks.gov/iocem/location-id",
+            "value": "ABC-112"
+          }
+        ],
+        "id": "iocem-location-112",
+        "resourceType": "Location"
+      }
+    },
+    {
+      "resource": {
+        "name": "Missing Identifier Facility",
+        "id": "iocem-location-113",
+        "resourceType": "Location"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "HealthcareService",
+        "id": "iocem-bed-icu-111",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/StructureDefinition/HealthcareService"
+          ]
+        },
+        "active": true,
+        "providedBy": {
+          "display": "Facility 111",
+          "reference": "Location/iocem-location-111"
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "ICU",
+                "system": "https://kdhe.ks.gov/iocem/bed-category",
+                "display": "ICU"
+              },
+              {
+                "code": "31",
+                "system": "http://terminology.hl7.org/CodeSystem/service-category",
+                "display": "Specialist Medical Service"
+              }
+            ]
+          }
+        ],
+        "specialty": [
+          {
+            "coding": [
+              {
+                "code": "394592004",
+                "system": "http://snomed.info/sct",
+                "display": "Critical care medicine"
+              }
+            ]
+          }
+        ],
+        "type": [
+          {
+            "coding": [
+              {
+                "code": "57",
+                "system": "http://terminology.hl7.org/CodeSystem/service-type",
+                "display": "Intensive care"
+              }
+            ]
+          }
+        ],
+        "name": "Bed Capacity - ICU",
+        "comment": "Operational bed census feed for emergency coordination.",
+        "extension": [
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/staffedBedsTotal",
+            "valueInteger": 28
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/bedsAvailable",
+            "valueInteger": 5
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/bedsOccupied",
+            "valueInteger": 21
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/bedsUnavailable",
+            "valueInteger": 2
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/isolationCapableBeds",
+            "valueInteger": 10
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/surgeBedsPotential",
+            "valueInteger": 6
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "providedBy": {
+          "reference": "Location/iocem-location-111"
+        },
+        "extension": [
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/staffedBedsTotal",
+            "valueInteger": 20
+          }
+        ],
+        "id": "iocem-bed-missing-category-111",
+        "resourceType": "HealthcareService"
+      }
+    },
+    {
+      "resource": {
+        "providedBy": {
+          "reference": "Location/non-existent-location"
+        },
+        "extension": [
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/bedsAvailable",
+            "valueInteger": 4
+          }
+        ],
+        "id": "iocem-bed-unresolved-location",
+        "resourceType": "HealthcareService",
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "https://kdhe.ks.gov/iocem/bed-category",
+                "code": "MEDSURG"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "HealthcareService",
+        "id": "iocem-bed-medsurg-111",
+        "meta": {
+          "profile": [
+            "http://hl7.org/fhir/StructureDefinition/HealthcareService"
+          ]
+        },
+        "active": true,
+        "providedBy": {
+          "display": "Facility 111",
+          "reference": "Location/iocem-location-111"
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "code": "MEDSURG",
+                "system": "https://kdhe.ks.gov/iocem/bed-category",
+                "display": "MEDSURG"
+              },
+              {
+                "code": "31",
+                "system": "http://terminology.hl7.org/CodeSystem/service-category",
+                "display": "Specialist Medical Service"
+              }
+            ]
+          }
+        ],
+        "specialty": [
+          {
+            "coding": [
+              {
+                "code": "394592004",
+                "system": "http://snomed.info/sct",
+                "display": "Critical care medicine"
+              }
+            ]
+          }
+        ],
+        "type": [
+          {
+            "coding": [
+              {
+                "code": "57",
+                "system": "http://terminology.hl7.org/CodeSystem/service-type",
+                "display": "Intensive care"
+              }
+            ]
+          }
+        ],
+        "name": "Bed Capacity - MEDSURG",
+        "comment": "Operational bed census feed for emergency coordination.",
+        "extension": [
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/staffedBedsTotal",
+            "valueInteger": 36
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/bedsAvailable",
+            "valueInteger": 8
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/bedsOccupied",
+            "valueInteger": 25
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/bedsUnavailable",
+            "valueInteger": 3
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/isolationCapableBeds",
+            "valueInteger": 9
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/surgeBedsPotential",
+            "valueInteger": 7
+          }
+        ]
+      }
+    }
+  ]
+}

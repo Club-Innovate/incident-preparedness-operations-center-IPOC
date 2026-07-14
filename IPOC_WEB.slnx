@@ -1,0 +1,11 @@
+<Solution>
+  <Project Path="frontend/frontend.esproj">
+    <Build />
+    <Deploy />
+  </Project>
+  <Project Path="IPOC_WEB.AppHost/IPOC_WEB.AppHost.csproj" />
+  <Project Path="IPOC_WEB.Server/IPOC_WEB.Server.csproj" />
+  <Project Path="IPOC_WEB.StreamingIngestor/IPOC_WEB.StreamingIngestor.csproj">
+    <Build Solution="Debug|*" Project="false" />
+  </Project>
+</Solution>

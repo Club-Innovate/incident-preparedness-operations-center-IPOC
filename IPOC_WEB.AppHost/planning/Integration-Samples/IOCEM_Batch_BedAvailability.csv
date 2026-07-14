@@ -1,0 +1,5 @@
+LocationId,BedCategoryCode,StaffedBedsTotal,BedsAvailable,BedsOccupied,BedsUnavailable,IsolationCapableBeds,SurgeBedsPotential,ReportedUtc,SourceSystem,CorrelationId
+101,ICU,42,7,31,4,12,8,2026-06-24T14:15:00Z,EHR-Hospital-A,5e7e6f89-c22d-4ce0-9d07-ec22f5cd93ab
+101,MEDSURG,90,28,55,7,10,12,2026-06-24T14:15:00Z,EHR-Hospital-A,5e7e6f89-c22d-4ce0-9d07-ec22f5cd93ab
+205,ICU,30,4,23,3,8,6,2026-06-24T14:16:00Z,EHR-Hospital-B,cf0ca3bd-74fc-4af3-8279-b04e5f96b442
+205,MEDSURG,70,19,45,6,9,10,2026-06-24T14:16:00Z,EHR-Hospital-B,cf0ca3bd-74fc-4af3-8279-b04e5f96b442

@@ -1,0 +1,165 @@
+Looking at the screenshot, the current left navigation is very lean:
+Dashboard 
+Incidents 
+Facilities 
+Reports 
+Alerts 
+For a state or federal Emergency Management / Public Health Incident Command platform, that simplicity is good, but you're missing several capabilities that incident managers expect during large-scale operations.
+Recommended Left Navigation Structure
+Core Operations
+1. Incident Workspace(keep as primary)
+Incident Overview 
+Objectives / IAP 
+Situation Status 
+Operational Periods 
+2. Operations
+Missions / Tasks 
+Assignment Tracking 
+Strike Teams / Task Forces 
+Field Operations Status 
+3. Resources
+Personnel 
+Equipment 
+Teams 
+Mutual Aid Requests 
+Resource Requests (ICS-213RR) 
+This becomes the operational heart of the system.
+Command & Coordination
+4. Planning
+Incident Action Plans (IAPs) 
+ICS Forms Library 
+Operational Period Planning Cycle 
+Objectives & Strategies 
+Federal/state users live in IAPs.
+5. Communications
+Contact Directory 
+Message Center 
+Radio Plans (ICS-205) 
+Notification Center 
+Chat / Collaboration 
+6. Situational Awareness
+Common Operating Picture (COP) 
+GIS Map 
+Weather 
+Threat Intelligence 
+Epidemiological Trends 
+External Feeds 
+This should be a first-class navigation item.
+Logistics / Support
+7. Logistics
+Supply Requests 
+Inventory 
+Staging Areas 
+Shelter Operations 
+Vendor Management 
+8. Finance & Administration
+Cost Tracking 
+Personnel Time 
+Procurement 
+Reimbursement 
+FEMA Cost Recovery 
+Especially important for reimbursement after disasters.
+Features That Would Truly Differentiate You
+The market already has products like WebEOC, Veoci, and Juvare.
+To stand apart, I'd focus on these:
+1. AI Incident Co-Pilot
+A built-in AI assistant trained on:
+ICS doctrine 
+State SOPs 
+Agency playbooks 
+Historical incidents 
+Examples:
+"Generate the next operational period objectives."
+"Summarize overnight changes."
+"Draft ICS-202, 203, and 204 from current operations."
+"Recommend resource ordering based on incident complexity."
+This alone could be a major differentiator.
+2. Dynamic Incident Maturity Model
+System automatically determines:
+Incident complexity level 
+Recommended staffing 
+Recommended EOC activation level 
+Recommended ICS organization expansion 
+Example:
+"Current incident indicators suggest transition from Type 4 to Type 3 incident."
+Very few platforms do this well.
+3. Automated NIMS Compliance Engine
+Real-time compliance scoring against:
+Federal Emergency Management Agency requirements 
+Department of Homeland Security doctrine 
+NIMS 
+State standards 
+Display:
+NIMS Compliance Score: 92%Missing:- Safety Officer not assigned- ICS-205 incomplete- Next Operational Period not established
+State agencies would love this.
+4. Cross-Jurisdiction Common Operating Picture
+Create a statewide/federal COP showing:
+County EOCs 
+State EOC 
+Tribal partners 
+Federal agencies 
+Hospitals 
+Labs 
+Shelters 
+National Guard assets 
+Users should instantly understand:
+"Who is doing what, where, and with what resources?"
+5. Predictive Analytics
+Examples:
+Public Health
+Predict:
+Hospital surge 
+PPE depletion 
+Epidemiological spread 
+Staffing shortages 
+Emergency Management
+Predict:
+Shelter occupancy 
+Fuel shortages 
+Resource exhaustion 
+Debris volume 
+6. Digital Planning P Cycle
+Most systems simply store documents.
+Instead, create a live operational planning cycle dashboard:
+Current Operational Period:0800-2000Next Planning Meeting:1400Tactics Meeting:1500Planning Meeting:1600IAP Approval:1800
+Auto-reminders and status tracking.
+7. Mission Dependency Graph
+Visualize:
+Mission A   ↓Road Clearance   ↓Power Restoration   ↓Hospital Reopening
+Leadership immediately sees cascading impacts.
+This is rare in emergency management systems.
+8. Resource Marketplace / Mutual Aid Exchange
+Statewide resource-sharing network:
+Counties post shortages 
+Neighboring jurisdictions offer assets 
+EMAC requests 
+National Guard requests 
+Federal requests 
+Think:
+"Uber + Marketplace for emergency resources."
+9. Executive Decision Dashboard
+Designed specifically for Governors, Agency Secretaries, and Unified Command.
+Only show:
+Top 5 risks 
+Top decisions awaiting approval 
+Life safety impacts 
+Resource gaps 
+Public messaging issues 
+No operational clutter.
+10. After Action & Lessons Learned Module
+Automatically capture:
+Decisions made 
+Resource timelines 
+Significant events 
+Costs 
+Outcomes 
+Generate:
+After Action Reports 
+Improvement Plans 
+Corrective Action tracking 
+with almost no manual work.
+If I were designing a next-generation State/Federal platform, my left navigation would be:
+DashboardCommon Operating PictureIncidentsOperationsPlanningResourcesCommunicationsLogisticsFacilitiesIntelligenceReportsAfter ActionAdministrationAlertsSettings
+The single biggest differentiator for 2026+ would be:
+An AI-driven Common Operating Picture that continuously summarizes the incident, predicts impacts, recommends actions, and automatically generates ICS products.
+That combination would position the platform as a next-generation incident management system rather than simply another incident tracking tool.

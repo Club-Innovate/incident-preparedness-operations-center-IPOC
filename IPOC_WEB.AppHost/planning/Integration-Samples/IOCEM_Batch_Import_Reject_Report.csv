@@ -1,0 +1,4 @@
+RowNumber,InterfaceType,SourceSystemCode,SourceMessageId,Outcome,Reason,RawData
+3,RESOURCE_STATUS,BATCH_IMPORT,batch-20260624-001,Rejected,"ResourceTypeCode 'VENTX' not found in res.ResourceType","101,VENTX,40,18,20,2,2026-06-24T14:15:00Z"
+6,BED_AVAILABILITY,BATCH_IMPORT,batch-20260624-001,Rejected,"LocationId 999999 does not map to org.Location","999999,ICU,42,7,31,4,12,8,2026-06-24T14:15:00Z"
+8,BED_AVAILABILITY,BATCH_IMPORT,batch-20260624-001,Rejected,"BedsAvailable + BedsOccupied + BedsUnavailable exceeds StaffedBedsTotal","101,ICU,20,10,9,5,2,3,2026-06-24T14:15:00Z"

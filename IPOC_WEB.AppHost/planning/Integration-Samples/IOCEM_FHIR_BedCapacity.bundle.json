@@ -1,0 +1,75 @@
+{
+  "resourceType": "Bundle",
+  "type": "collection",
+  "timestamp": "2026-06-24T14:20:00Z",
+  "entry": [
+    {
+      "resource": {
+        "resourceType": "Location",
+        "id": "iocem-location-101",
+        "identifier": [
+          {
+            "system": "https://kdhe.ks.gov/iocem/location-id",
+            "value": "101"
+          }
+        ],
+        "name": "Sample Medical Center East"
+      }
+    },
+    {
+      "resource": {
+        "resourceType": "HealthcareService",
+        "id": "iocem-bed-icu-101",
+        "providedBy": {
+          "reference": "Location/iocem-location-101"
+        },
+        "category": [
+          {
+            "coding": [
+              {
+                "system": "https://kdhe.ks.gov/iocem/bed-category",
+                "code": "ICU",
+                "display": "Intensive Care Unit"
+              }
+            ]
+          }
+        ],
+        "availability": [
+          {
+            "availableTime": [
+              {
+                "allDay": true
+              }
+            ]
+          }
+        ],
+        "extension": [
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/staffedBedsTotal",
+            "valueInteger": 42
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/bedsAvailable",
+            "valueInteger": 7
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/bedsOccupied",
+            "valueInteger": 31
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/bedsUnavailable",
+            "valueInteger": 4
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/isolationCapableBeds",
+            "valueInteger": 12
+          },
+          {
+            "url": "https://kdhe.ks.gov/fhir/StructureDefinition/surgeBedsPotential",
+            "valueInteger": 8
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "validatedUtc": "2026-07-12T14:39:26.8945082Z",
+  "apiBaseUrl": "https://localhost:7435",
+  "audience": "api://7a7111a7-26d8-424c-bcc5-7ae31dae3f1f",
+  "status": {
+    "statusCode": 200,
+    "payload": {
+      "enabled": false,
+      "running": false,
+      "lastRunStartedUtc": null,
+      "lastRunCompletedUtc": null,
+      "lastRunSucceeded": false,
+      "lastPacketEventCount": 0,
+      "lastPacketPath": null,
+      "lastError": null,
+      "lastTransportMode": null,
+      "lastTransportDestination": null,
+      "lastTransportArtifactId": null,
+      "lastTransportAttempts": 0,
+      "lastTransportSucceeded": false,
+      "nextRunUtc": null,
+      "intervalMinutes": 60,
+      "outputDirectory": "..\\..\\..\\executive-packets",
+      "provider": null,
+      "rollingDays": 30,
+      "windowHours": 720,
+      "bucketMinutes": 60,
+      "maxRetainedFiles": 180
+    }
+  },
+  "run": {
+    "skipped": false,
+    "statusCode": 200,
+    "payload": {
+      "succeeded": true,
+      "packetPath": "..\\..\\..\\executive-packets\\external-provider-executive-packet-20260712-143926.zip",
+      "transportMode": "None",
+      "transportDestination": null,
+      "transportArtifactId": "external-provider-executive-packet-20260712-143926.zip",
+      "transportAttempts": 0,
+      "transportSucceeded": true,
+      "sourceEventCount": 0,
+      "startedUtc": "2026-07-12T07:39:26.4749607-07:00",
+      "completedUtc": "2026-07-12T07:39:26.6573614-07:00",
+      "error": null
+    }
+  }
+}

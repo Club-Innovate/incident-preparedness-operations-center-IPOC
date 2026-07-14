@@ -1,0 +1,13 @@
+{
+  "resourceType": "Parameters",
+  "parameter": [
+    {
+      "valueString": "INVALID_ENVELOPE_DEMO",
+      "name": "source"
+    },
+    {
+      "valueString": "Intentional negative test payload: not a FHIR Bundle.",
+      "name": "note"
+    }
+  ]
+}

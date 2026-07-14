@@ -1,0 +1,5 @@
+LocationId,ResourceTypeCode,QuantityTotal,QuantityAvailable,QuantityCommitted,QuantityOutOfService,ReportedUtc,SourceSystem,CorrelationId
+101,VENT,40,18,20,2,2026-06-24T14:15:00Z,EHR-Hospital-A,5e7e6f89-c22d-4ce0-9d07-ec22f5cd93ab
+101,PPE,12000,8400,3200,400,2026-06-24T14:15:00Z,EHR-Hospital-A,5e7e6f89-c22d-4ce0-9d07-ec22f5cd93ab
+205,VENT,30,12,15,3,2026-06-24T14:16:00Z,EHR-Hospital-B,cf0ca3bd-74fc-4af3-8279-b04e5f96b442
+205,PPE,9500,7100,2000,400,2026-06-24T14:16:00Z,EHR-Hospital-B,cf0ca3bd-74fc-4af3-8279-b04e5f96b442
