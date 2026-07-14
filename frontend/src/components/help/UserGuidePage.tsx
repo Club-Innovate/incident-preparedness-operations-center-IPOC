@@ -150,7 +150,7 @@ const topics: GuideTopic[] = [
   {
     id: 'application-overview',
     title: 'Application overview',
-    intro: 'IPOC is an operational command platform for incident response, planning, logistics, finance/administration, and after-action improvement. This user guide explains how to use each page and section effectively.',
+    intro: 'Incident Preparedness Operations Center (IPOC) is an operational command platform for incident response, planning, logistics, finance/administration, and after-action improvement. This user guide explains how to use each page and section effectively.',
     keywords: ['application overview', 'ipoc', 'user guide', 'navigation', 'features', 'faq'],
     sections: [
       {
