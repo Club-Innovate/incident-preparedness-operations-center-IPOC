@@ -93,6 +93,8 @@ function runUiModernizationSmoke() {
   assert(reportingCardSource.includes('testId="reports-executive-brief-stage-assistant"'), 'Expected Reports executive brief AI staging action anchor.');
   assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-content"'), 'Expected Reports executive brief preview modal content anchor.');
   assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-export"'), 'Expected Reports executive brief preview export action anchor.');
+  assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-copy"'), 'Expected Reports executive brief preview modal copy action anchor.');
+  assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-stage-assistant"'), 'Expected Reports executive brief preview modal assistant staging action anchor.');
 
   assert(operationsCardSource.includes('ipoc-mission-cockpit'), 'Expected Operations card to adopt mission cockpit visual system.');
   assert(planningCardSource.includes('ipoc-mission-cockpit'), 'Expected Planning card to adopt mission cockpit visual system.');
@@ -116,10 +118,22 @@ function runUiModernizationSmoke() {
   assert(financeCardSource.includes('Open blockers'), 'Expected Finance playbook card blocker telemetry.');
   assert(afterActionCardSource.includes('Open blockers'), 'Expected After Action playbook card blocker telemetry.');
 
-  assert(operationsCardSource.includes('Playbook gates: Surge requires command brief + resource sync; Communications requires cadence confirmation; Dependency focus requires command brief.'), 'Expected Operations module playbook gate messaging.');
-  assert(planningCardSource.includes('Playbook gates: P-cycle kickoff requires planning brief; IAP package progression requires objective review; AI summary prep requires SITREP cadence validation and SITREP baseline.'), 'Expected Planning module playbook gate messaging.');
-  assert(financeCardSource.includes('Playbook gates: Cost recovery requires cost packet checkpoint; Procurement acceleration requires procurement checkpoint; Forecast prep requires admin follow-up checkpoint.'), 'Expected Finance module playbook gate messaging.');
-  assert(afterActionCardSource.includes('Playbook gates: AAR readiness requires closure baseline; corrective closure requires logged corrective actions; retrospective summary requires evidence signals.'), 'Expected After Action module playbook gate messaging.');
+  assert(operationsCardSource.includes('Operations command playbooks'), 'Expected Operations module playbook panel heading.');
+  assert(operationsCardSource.includes('Run surge playbook'), 'Expected Operations surge playbook action anchor.');
+  assert(operationsCardSource.includes('Run communications stabilization playbook'), 'Expected Operations communications playbook action anchor.');
+  assert(operationsCardSource.includes('Run dependency-focus playbook'), 'Expected Operations dependency-focus playbook action anchor.');
+  assert(planningCardSource.includes('Planning action playbooks'), 'Expected Planning module playbook panel heading.');
+  assert(planningCardSource.includes('Run P-cycle kickoff playbook'), 'Expected Planning P-cycle kickoff playbook action anchor.');
+  assert(planningCardSource.includes('Run IAP package progression playbook'), 'Expected Planning IAP package playbook action anchor.');
+  assert(planningCardSource.includes('Run AI summary preparation playbook'), 'Expected Planning AI summary playbook action anchor.');
+  assert(financeCardSource.includes('Finance/Admin action playbooks'), 'Expected Finance module playbook panel heading.');
+  assert(financeCardSource.includes('Run cost-recovery readiness playbook'), 'Expected Finance cost-recovery playbook action anchor.');
+  assert(financeCardSource.includes('Run procurement acceleration playbook'), 'Expected Finance procurement playbook action anchor.');
+  assert(financeCardSource.includes('Run predictive pressure preparation playbook'), 'Expected Finance predictive pressure playbook action anchor.');
+  assert(afterActionCardSource.includes('After Action action playbooks'), 'Expected After Action module playbook panel heading.');
+  assert(afterActionCardSource.includes('Run AAR readiness playbook'), 'Expected After Action AAR readiness playbook action anchor.');
+  assert(afterActionCardSource.includes('Run corrective closure playbook'), 'Expected After Action corrective closure playbook action anchor.');
+  assert(afterActionCardSource.includes('Run retrospective summary preparation playbook'), 'Expected After Action retrospective summary playbook action anchor.');
   assert(operationsCardSource.includes('Command brief'), 'Expected Operations gate status chip for command brief readiness.');
   assert(planningCardSource.includes('Planning brief'), 'Expected Planning gate status chip for planning brief readiness.');
   assert(financeCardSource.includes('Cost packet'), 'Expected Finance gate status chip for cost packet readiness.');

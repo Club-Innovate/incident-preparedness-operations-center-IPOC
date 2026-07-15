@@ -2285,6 +2285,25 @@ function ReportingWorkspaceCard({
             </Button>
             <Button
               size="sm"
+              variant="outline-secondary"
+              onClick={() => { void copyExecutiveDecisionBriefToClipboard(); }}
+              data-testid="reports-executive-brief-preview-copy"
+            >
+              Copy brief
+            </Button>
+            <Button
+              size="sm"
+              variant="outline-info"
+              onClick={() => {
+                stageExecutiveDecisionBriefForAssistant();
+                setExecutiveBriefPreviewOpen(false);
+              }}
+              data-testid="reports-executive-brief-preview-stage-assistant"
+            >
+              Stage to assistant
+            </Button>
+            <Button
+              size="sm"
               variant="primary"
               onClick={() => {
                 exportExecutiveDecisionBrief();
