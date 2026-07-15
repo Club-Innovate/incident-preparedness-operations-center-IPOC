@@ -332,14 +332,18 @@ const topics: GuideTopic[] = [
               'Use baseline capture action to set the current trend comparison timestamp.',
               'Review recommendation queue and confidence values in pending approvals section.',
               'Use export action to download executive decision brief markdown package with trend deltas, recommendation decision state, and attributed decision log appendix.',
+              'Use copy action when command leadership needs immediate clipboard-ready brief content for chat/email workflows.',
+              'Use AI stage action to prefill Assistant with the brief and generate command summary plus ICS-ready objectives.',
             ],
             expectedOutcomes: [
               'Leadership receives a concise decision brief with trend-delta context and prioritized recommendations.',
               'Command teams can archive consistent brief artifacts across reporting cycles with operator-attributed decision context.',
+              'Operators can hand off the same brief directly into AI Incident Co-Pilot without retyping context.',
             ],
             commonPitfalls: [
               'Skipping baseline capture can reduce interpretability of delta metadata across cycles.',
               'Exporting before filter validation can produce a brief for unintended operational scope.',
+              'Staging to Assistant without opening Assistant afterward leaves the prompt queued but not yet submitted.',
             ],
             callout: {
               tone: 'warning',

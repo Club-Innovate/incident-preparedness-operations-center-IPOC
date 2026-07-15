@@ -75,6 +75,7 @@ const REPORT_CANVAS_PANE_OPEN_KEY = 'ipoc.reports.canvasPaneExpanded';
 const REPORT_FILTER_PRESET_SCOPE = 'reports-linked-filter-presets-v1';
 const REPORT_APPROVAL_DECISIONS_SCOPE = 'reports-pending-approval-decisions-v1';
 const REPORT_DECISION_HISTORY_SCOPE = 'reports-pending-approval-decision-history-v1';
+const REPORT_ASSISTANT_PREFILL_PROMPT_KEY = 'ipoc.agent.prefillPrompt';
 
 type ReportFilterPreset = {
   id: string;
@@ -1169,10 +1170,10 @@ function ReportingWorkspaceCard({
     setComparisonRightGroup(comparisonLeftValue);
   };
 
-  const exportExecutiveDecisionBrief = () => {
+  const buildExecutiveDecisionBriefPackage = () => {
     if (pendingApprovalRows.length === 0) {
       onNotify?.('No recommendation rows available for executive decision brief export.', 'warning');
-      return;
+      return null;
     }
 
     const generatedUtc = new Date().toISOString();
@@ -1238,9 +1239,56 @@ function ReportingWorkspaceCard({
       '- Capture final decisions in pending approval workflow for auditability.',
     ].join('\n');
 
-    const blob = new Blob([narrative], { type: 'text/markdown;charset=utf-8;' });
+    return {
+      narrative,
+      recommendationCount: recommendationBundle.length,
+    };
+  };
+
+  const exportExecutiveDecisionBrief = () => {
+    const briefPackage = buildExecutiveDecisionBriefPackage();
+    if (!briefPackage) {
+      return;
+    }
+
+    const blob = new Blob([briefPackage.narrative], { type: 'text/markdown;charset=utf-8;' });
     downloadBlob(blob, 'reports-executive-decision-brief', 'md');
-    onNotify?.(`Executive decision brief exported with ${recommendationBundle.length} recommendation bundle item(s).`, 'success');
+    onNotify?.(`Executive decision brief exported with ${briefPackage.recommendationCount} recommendation bundle item(s).`, 'success');
+  };
+
+  const copyExecutiveDecisionBriefToClipboard = async () => {
+    const briefPackage = buildExecutiveDecisionBriefPackage();
+    if (!briefPackage) {
+      return;
+    }
+
+    if (!window.navigator.clipboard || typeof window.navigator.clipboard.writeText !== 'function') {
+      onNotify?.('Clipboard copy is unavailable in this browser context. Export the markdown brief instead.', 'warning');
+      return;
+    }
+
+    try {
+      await window.navigator.clipboard.writeText(briefPackage.narrative);
+      onNotify?.('Executive decision brief copied to clipboard.', 'success');
+    } catch {
+      onNotify?.('Unable to copy executive decision brief to clipboard.', 'danger');
+    }
+  };
+
+  const stageExecutiveDecisionBriefForAssistant = () => {
+    const briefPackage = buildExecutiveDecisionBriefPackage();
+    if (!briefPackage) {
+      return;
+    }
+
+    const assistantPrompt = [
+      'Use this executive decision brief to produce an AI Incident Co-Pilot command summary, priority actions, and an ICS-ready objective draft.',
+      '',
+      briefPackage.narrative,
+    ].join('\n');
+
+    localStorage.setItem(REPORT_ASSISTANT_PREFILL_PROMPT_KEY, assistantPrompt);
+    onNotify?.('Executive decision brief staged for AI Incident Co-Pilot. Open Assistant and submit when ready.', 'info');
   };
 
   const stampExecutiveDeltaBaseline = () => {
@@ -2176,6 +2224,22 @@ function ReportingWorkspaceCard({
                     onClick={exportExecutiveDecisionBrief}
                     variant="outline-primary"
                     testId="reports-executive-brief-export"
+                  />
+                  <IconActionButton
+                    iconClassName="bi bi-clipboard"
+                    tooltip="Copy executive decision brief markdown content to clipboard"
+                    ariaLabel="Copy executive decision brief to clipboard"
+                    onClick={() => { void copyExecutiveDecisionBriefToClipboard(); }}
+                    variant="outline-secondary"
+                    testId="reports-executive-brief-copy"
+                  />
+                  <IconActionButton
+                    iconClassName="bi bi-robot"
+                    tooltip="Stage executive decision brief as a prefilled prompt for AI Incident Co-Pilot"
+                    ariaLabel="Stage executive decision brief for AI Incident Co-Pilot"
+                    onClick={stageExecutiveDecisionBriefForAssistant}
+                    variant="outline-info"
+                    testId="reports-executive-brief-stage-assistant"
                   />
                 </div>
               </Card.Body>
