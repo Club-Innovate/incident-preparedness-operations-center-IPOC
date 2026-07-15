@@ -332,6 +332,7 @@ const topics: GuideTopic[] = [
               'Use baseline capture action to set the current trend comparison timestamp.',
               'Review recommendation queue and confidence values in pending approvals section.',
               'Use preview action to validate executive markdown narrative before distribution.',
+              'Confirm preview quality checklist badges (baseline, recommendations, decision history) before distribution.',
               'Inside preview, use Copy brief or Stage to assistant for fast command handoff without leaving Reports.',
               'Use export action to download executive decision brief markdown package with trend deltas, recommendation decision state, and attributed decision log appendix.',
               'Use copy action when command leadership needs immediate clipboard-ready brief content for chat/email workflows.',
@@ -341,6 +342,7 @@ const topics: GuideTopic[] = [
               'Leadership receives a concise decision brief with trend-delta context and prioritized recommendations.',
               'Command teams can archive consistent brief artifacts across reporting cycles with operator-attributed decision context.',
               'Operators can hand off the same brief directly into AI Incident Co-Pilot without retyping context.',
+              'Latest generated brief remains available after refresh for continuity when recommendation rows are temporarily sparse.',
             ],
             commonPitfalls: [
               'Skipping baseline capture can reduce interpretability of delta metadata across cycles.',

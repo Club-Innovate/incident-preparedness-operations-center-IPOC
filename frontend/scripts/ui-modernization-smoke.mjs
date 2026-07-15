@@ -92,9 +92,12 @@ function runUiModernizationSmoke() {
   assert(reportingCardSource.includes('testId="reports-executive-brief-copy"'), 'Expected Reports executive brief copy action anchor.');
   assert(reportingCardSource.includes('testId="reports-executive-brief-stage-assistant"'), 'Expected Reports executive brief AI staging action anchor.');
   assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-content"'), 'Expected Reports executive brief preview modal content anchor.');
+  assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-meta"'), 'Expected Reports executive brief preview metadata anchor.');
+  assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-quality-checklist"'), 'Expected Reports executive brief preview quality checklist anchor.');
   assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-export"'), 'Expected Reports executive brief preview export action anchor.');
   assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-copy"'), 'Expected Reports executive brief preview modal copy action anchor.');
   assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-stage-assistant"'), 'Expected Reports executive brief preview modal assistant staging action anchor.');
+  assert(reportingCardSource.includes('REPORT_EXECUTIVE_BRIEF_CACHE_LOCAL_KEY'), 'Expected Reports executive brief local cache key for persisted preview continuity.');
 
   assert(operationsCardSource.includes('ipoc-mission-cockpit'), 'Expected Operations card to adopt mission cockpit visual system.');
   assert(planningCardSource.includes('ipoc-mission-cockpit'), 'Expected Planning card to adopt mission cockpit visual system.');

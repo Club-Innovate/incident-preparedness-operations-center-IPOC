@@ -76,6 +76,7 @@ const REPORT_FILTER_PRESET_SCOPE = 'reports-linked-filter-presets-v1';
 const REPORT_APPROVAL_DECISIONS_SCOPE = 'reports-pending-approval-decisions-v1';
 const REPORT_DECISION_HISTORY_SCOPE = 'reports-pending-approval-decision-history-v1';
 const REPORT_ASSISTANT_PREFILL_PROMPT_KEY = 'ipoc.agent.prefillPrompt';
+const REPORT_EXECUTIVE_BRIEF_CACHE_LOCAL_KEY = 'ipoc.reports.executiveDecisionBriefCache.v1';
 
 type ReportFilterPreset = {
   id: string;
@@ -118,6 +119,17 @@ type ExecutiveDeltaSummary = {
 type ExecutiveDecisionBriefPackage = {
   narrative: string;
   recommendationCount: number;
+  generatedUtc: string;
+  hasBaseline: boolean;
+  hasDecisionHistory: boolean;
+};
+
+type ExecutiveDecisionBriefCache = {
+  narrative: string;
+  generatedUtc: string;
+  recommendationCount: number;
+  hasBaseline: boolean;
+  hasDecisionHistory: boolean;
 };
 
 type ReportDecisionHistoryEntry = {
@@ -212,6 +224,10 @@ function ReportingWorkspaceCard({
   const [executiveDeltaReferenceDateUtc, setExecutiveDeltaReferenceDateUtc] = useState<string | null>(null);
   const [executiveBriefPreviewOpen, setExecutiveBriefPreviewOpen] = useState(false);
   const [executiveBriefPreviewMarkdown, setExecutiveBriefPreviewMarkdown] = useState('');
+  const [executiveBriefPreviewGeneratedUtc, setExecutiveBriefPreviewGeneratedUtc] = useState<string | null>(null);
+  const [executiveBriefPreviewRecommendationCount, setExecutiveBriefPreviewRecommendationCount] = useState(0);
+  const [executiveBriefPreviewHasBaseline, setExecutiveBriefPreviewHasBaseline] = useState(false);
+  const [executiveBriefPreviewHasDecisionHistory, setExecutiveBriefPreviewHasDecisionHistory] = useState(false);
   const [reportFilterPresetName, setReportFilterPresetName] = useState('');
   const [reportFilterPresets, setReportFilterPresets] = useState<ReportFilterPreset[]>(() => {
     try {
@@ -664,6 +680,51 @@ function ReportingWorkspaceCard({
   useEffect(() => {
     localStorage.setItem(REPORT_CANVAS_PANE_OPEN_KEY, canvasPaneOpen ? 'true' : 'false');
   }, [canvasPaneOpen]);
+
+  useEffect(() => {
+    try {
+      const cached = localStorage.getItem(REPORT_EXECUTIVE_BRIEF_CACHE_LOCAL_KEY);
+      if (!cached) {
+        return;
+      }
+
+      const parsed = JSON.parse(cached) as Partial<ExecutiveDecisionBriefCache>;
+      if (typeof parsed.narrative !== 'string' || parsed.narrative.trim().length === 0) {
+        return;
+      }
+
+      setExecutiveBriefPreviewMarkdown(parsed.narrative);
+      setExecutiveBriefPreviewGeneratedUtc(typeof parsed.generatedUtc === 'string' ? parsed.generatedUtc : null);
+      setExecutiveBriefPreviewRecommendationCount(Number.isFinite(parsed.recommendationCount) ? Number(parsed.recommendationCount) : 0);
+      setExecutiveBriefPreviewHasBaseline(parsed.hasBaseline === true);
+      setExecutiveBriefPreviewHasDecisionHistory(parsed.hasDecisionHistory === true);
+    } catch {
+      // Ignore malformed local brief cache payloads.
+    }
+  }, []);
+
+  useEffect(() => {
+    if (executiveBriefPreviewMarkdown.trim().length === 0) {
+      localStorage.removeItem(REPORT_EXECUTIVE_BRIEF_CACHE_LOCAL_KEY);
+      return;
+    }
+
+    const cachePayload: ExecutiveDecisionBriefCache = {
+      narrative: executiveBriefPreviewMarkdown,
+      generatedUtc: executiveBriefPreviewGeneratedUtc ?? new Date().toISOString(),
+      recommendationCount: executiveBriefPreviewRecommendationCount,
+      hasBaseline: executiveBriefPreviewHasBaseline,
+      hasDecisionHistory: executiveBriefPreviewHasDecisionHistory,
+    };
+
+    localStorage.setItem(REPORT_EXECUTIVE_BRIEF_CACHE_LOCAL_KEY, JSON.stringify(cachePayload));
+  }, [
+    executiveBriefPreviewMarkdown,
+    executiveBriefPreviewGeneratedUtc,
+    executiveBriefPreviewRecommendationCount,
+    executiveBriefPreviewHasBaseline,
+    executiveBriefPreviewHasDecisionHistory,
+  ]);
 
   useEffect(() => {
     const loadServerTemplatePresets = async () => {
@@ -1249,7 +1310,18 @@ function ReportingWorkspaceCard({
     return {
       narrative,
       recommendationCount: recommendationBundle.length,
+      generatedUtc,
+      hasBaseline: Boolean(executiveDeltaReferenceDateUtc),
+      hasDecisionHistory: pendingApprovalDecisionHistoryRows.length > 0,
     };
+  };
+
+  const applyExecutiveBriefPreviewPackage = (briefPackage: ExecutiveDecisionBriefPackage) => {
+    setExecutiveBriefPreviewMarkdown(briefPackage.narrative);
+    setExecutiveBriefPreviewGeneratedUtc(briefPackage.generatedUtc);
+    setExecutiveBriefPreviewRecommendationCount(briefPackage.recommendationCount);
+    setExecutiveBriefPreviewHasBaseline(briefPackage.hasBaseline);
+    setExecutiveBriefPreviewHasDecisionHistory(briefPackage.hasDecisionHistory);
   };
 
   const exportExecutiveDecisionBrief = () => {
@@ -1258,6 +1330,7 @@ function ReportingWorkspaceCard({
       return;
     }
 
+    applyExecutiveBriefPreviewPackage(briefPackage);
     const blob = new Blob([briefPackage.narrative], { type: 'text/markdown;charset=utf-8;' });
     downloadBlob(blob, 'reports-executive-decision-brief', 'md');
     onNotify?.(`Executive decision brief exported with ${briefPackage.recommendationCount} recommendation bundle item(s).`, 'success');
@@ -1266,10 +1339,14 @@ function ReportingWorkspaceCard({
   const previewExecutiveDecisionBrief = () => {
     const briefPackage = buildExecutiveDecisionBriefPackage();
     if (!briefPackage) {
+      if (executiveBriefPreviewMarkdown.trim().length > 0) {
+        setExecutiveBriefPreviewOpen(true);
+        onNotify?.('Showing last generated executive brief from cache because no recommendations are currently available.', 'info');
+      }
       return;
     }
 
-    setExecutiveBriefPreviewMarkdown(briefPackage.narrative);
+    applyExecutiveBriefPreviewPackage(briefPackage);
     setExecutiveBriefPreviewOpen(true);
   };
 
@@ -1279,6 +1356,7 @@ function ReportingWorkspaceCard({
       return;
     }
 
+    applyExecutiveBriefPreviewPackage(briefPackage);
     if (!window.navigator.clipboard || typeof window.navigator.clipboard.writeText !== 'function') {
       onNotify?.('Clipboard copy is unavailable in this browser context. Export the markdown brief instead.', 'warning');
       return;
@@ -1298,6 +1376,7 @@ function ReportingWorkspaceCard({
       return;
     }
 
+    applyExecutiveBriefPreviewPackage(briefPackage);
     const assistantPrompt = [
       'Use this executive decision brief to produce an AI Incident Co-Pilot command summary, priority actions, and an ICS-ready objective draft.',
       '',
@@ -2277,6 +2356,23 @@ function ReportingWorkspaceCard({
             <Modal.Title className="small fw-semibold">Executive decision brief preview</Modal.Title>
           </Modal.Header>
           <Modal.Body>
+            <div className="small text-muted mb-2" data-testid="reports-executive-brief-preview-meta">
+              Generated: {executiveBriefPreviewGeneratedUtc ? new Date(executiveBriefPreviewGeneratedUtc).toLocaleString() : 'Unknown'} · Recommendations: {executiveBriefPreviewRecommendationCount}
+            </div>
+            <div className="small mb-2" data-testid="reports-executive-brief-preview-quality-checklist">
+              <div className="fw-semibold">Brief quality checklist</div>
+              <div className="d-inline-flex flex-wrap gap-1 mt-1">
+                <Badge bg={executiveBriefPreviewHasBaseline ? 'success' : 'warning'}>
+                  Baseline {executiveBriefPreviewHasBaseline ? 'captured' : 'missing'}
+                </Badge>
+                <Badge bg={executiveBriefPreviewRecommendationCount > 0 ? 'success' : 'warning'}>
+                  Recommendations {executiveBriefPreviewRecommendationCount > 0 ? 'included' : 'missing'}
+                </Badge>
+                <Badge bg={executiveBriefPreviewHasDecisionHistory ? 'success' : 'warning'}>
+                  Decision history {executiveBriefPreviewHasDecisionHistory ? 'included' : 'missing'}
+                </Badge>
+              </div>
+            </div>
             <pre className="small mb-0" style={{ whiteSpace: 'pre-wrap' }} data-testid="reports-executive-brief-preview-content">{executiveBriefPreviewMarkdown}</pre>
           </Modal.Body>
           <Modal.Footer>
