@@ -88,6 +88,11 @@ function runUiModernizationSmoke() {
   assert(reportingCardSource.includes('Report distribution profile (native analytics)'), 'Expected Reports native analytics distribution chart.');
   assert(reportingCardSource.includes('Severity distribution profile'), 'Expected Reports severity visualization profile.');
   assert(reportingCardSource.includes('Power BI is active for enterprise analytics'), 'Expected Reports Power BI/native fallback guidance.');
+  assert(reportingCardSource.includes('testId="reports-executive-brief-preview"'), 'Expected Reports executive brief preview action anchor.');
+  assert(reportingCardSource.includes('testId="reports-executive-brief-copy"'), 'Expected Reports executive brief copy action anchor.');
+  assert(reportingCardSource.includes('testId="reports-executive-brief-stage-assistant"'), 'Expected Reports executive brief AI staging action anchor.');
+  assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-content"'), 'Expected Reports executive brief preview modal content anchor.');
+  assert(reportingCardSource.includes('data-testid="reports-executive-brief-preview-export"'), 'Expected Reports executive brief preview export action anchor.');
 
   assert(operationsCardSource.includes('ipoc-mission-cockpit'), 'Expected Operations card to adopt mission cockpit visual system.');
   assert(planningCardSource.includes('ipoc-mission-cockpit'), 'Expected Planning card to adopt mission cockpit visual system.');

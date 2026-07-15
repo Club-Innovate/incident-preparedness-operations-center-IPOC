@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties, type DragEvent as ReactDragEvent } from 'react';
-import { Badge, Button, Card, Col, Form, Row } from 'react-bootstrap';
+import { Badge, Button, Card, Col, Form, Modal, Row } from 'react-bootstrap';
 import type { ColDef } from 'ag-grid-community';
 import { Area, AreaChart, Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Scatter, ScatterChart, Tooltip, XAxis, YAxis, ZAxis } from 'recharts';
 import IconActionButton from '../common/IconActionButton';
@@ -115,6 +115,11 @@ type ExecutiveDeltaSummary = {
   activityDelta: number;
 };
 
+type ExecutiveDecisionBriefPackage = {
+  narrative: string;
+  recommendationCount: number;
+};
+
 type ReportDecisionHistoryEntry = {
   incidentId: number;
   incidentNumber: string;
@@ -205,6 +210,8 @@ function ReportingWorkspaceCard({
   const [pendingApprovalRationales, setPendingApprovalRationales] = useState<Record<number, string>>({});
   const [pendingApprovalDecisionHistory, setPendingApprovalDecisionHistory] = useState<ReportDecisionHistoryEntry[]>([]);
   const [executiveDeltaReferenceDateUtc, setExecutiveDeltaReferenceDateUtc] = useState<string | null>(null);
+  const [executiveBriefPreviewOpen, setExecutiveBriefPreviewOpen] = useState(false);
+  const [executiveBriefPreviewMarkdown, setExecutiveBriefPreviewMarkdown] = useState('');
   const [reportFilterPresetName, setReportFilterPresetName] = useState('');
   const [reportFilterPresets, setReportFilterPresets] = useState<ReportFilterPreset[]>(() => {
     try {
@@ -1170,7 +1177,7 @@ function ReportingWorkspaceCard({
     setComparisonRightGroup(comparisonLeftValue);
   };
 
-  const buildExecutiveDecisionBriefPackage = () => {
+  const buildExecutiveDecisionBriefPackage = (): ExecutiveDecisionBriefPackage | null => {
     if (pendingApprovalRows.length === 0) {
       onNotify?.('No recommendation rows available for executive decision brief export.', 'warning');
       return null;
@@ -1254,6 +1261,16 @@ function ReportingWorkspaceCard({
     const blob = new Blob([briefPackage.narrative], { type: 'text/markdown;charset=utf-8;' });
     downloadBlob(blob, 'reports-executive-decision-brief', 'md');
     onNotify?.(`Executive decision brief exported with ${briefPackage.recommendationCount} recommendation bundle item(s).`, 'success');
+  };
+
+  const previewExecutiveDecisionBrief = () => {
+    const briefPackage = buildExecutiveDecisionBriefPackage();
+    if (!briefPackage) {
+      return;
+    }
+
+    setExecutiveBriefPreviewMarkdown(briefPackage.narrative);
+    setExecutiveBriefPreviewOpen(true);
   };
 
   const copyExecutiveDecisionBriefToClipboard = async () => {
@@ -2226,6 +2243,14 @@ function ReportingWorkspaceCard({
                     testId="reports-executive-brief-export"
                   />
                   <IconActionButton
+                    iconClassName="bi bi-eye"
+                    tooltip="Preview executive decision brief markdown before export"
+                    ariaLabel="Preview executive decision brief package"
+                    onClick={previewExecutiveDecisionBrief}
+                    variant="outline-secondary"
+                    testId="reports-executive-brief-preview"
+                  />
+                  <IconActionButton
                     iconClassName="bi bi-clipboard"
                     tooltip="Copy executive decision brief markdown content to clipboard"
                     ariaLabel="Copy executive decision brief to clipboard"
@@ -2246,6 +2271,31 @@ function ReportingWorkspaceCard({
             </Card>
           </Col>
         </Row>
+
+        <Modal show={executiveBriefPreviewOpen} onHide={() => setExecutiveBriefPreviewOpen(false)} size="lg" centered>
+          <Modal.Header closeButton>
+            <Modal.Title className="small fw-semibold">Executive decision brief preview</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <pre className="small mb-0" style={{ whiteSpace: 'pre-wrap' }} data-testid="reports-executive-brief-preview-content">{executiveBriefPreviewMarkdown}</pre>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button size="sm" variant="outline-secondary" onClick={() => setExecutiveBriefPreviewOpen(false)}>
+              Close
+            </Button>
+            <Button
+              size="sm"
+              variant="primary"
+              onClick={() => {
+                exportExecutiveDecisionBrief();
+                setExecutiveBriefPreviewOpen(false);
+              }}
+              data-testid="reports-executive-brief-preview-export"
+            >
+              Export brief
+            </Button>
+          </Modal.Footer>
+        </Modal>
 
         <Row className="g-2 mb-3">
           <Col md={12}>

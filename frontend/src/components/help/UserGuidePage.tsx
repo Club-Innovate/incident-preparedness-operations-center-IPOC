@@ -331,6 +331,7 @@ const topics: GuideTopic[] = [
               'Open Reports and locate the Executive decision brief package card.',
               'Use baseline capture action to set the current trend comparison timestamp.',
               'Review recommendation queue and confidence values in pending approvals section.',
+              'Use preview action to validate executive markdown narrative before distribution.',
               'Use export action to download executive decision brief markdown package with trend deltas, recommendation decision state, and attributed decision log appendix.',
               'Use copy action when command leadership needs immediate clipboard-ready brief content for chat/email workflows.',
               'Use AI stage action to prefill Assistant with the brief and generate command summary plus ICS-ready objectives.',
