@@ -354,6 +354,8 @@ import type {
   UpdateLookupValueRequest,
   UpdateResourceInventoryRequest,
   UpsertIncidentCommandAssignmentRequest,
+  IncidentCommandTransferLogEntry,
+  CreateIncidentCommandTransferRequest,
   UpsertUserReportPresetRequest,
   AcknowledgeRecipientRequest,
   EscalateNotificationRequest,
@@ -2101,6 +2103,39 @@ export async function upsertIncidentCommandAssignment(incidentId: number, reques
 
   if (!response.ok) {
     throw new Error(`Unable to assign command position (${response.status}).`);
+  }
+}
+
+export async function getIncidentCommandTransferLog(incidentId: number): Promise<IncidentCommandTransferLogEntry[]> {
+  const response = await fetchApi(`/api/v1/incidents/${incidentId}/command-transfer-log`, {
+    cache: 'no-store',
+  });
+
+  if (!response.ok) {
+    throw new Error(`Unable to load command transfer log (${response.status}).`);
+  }
+
+  const payload = await response.json() as unknown;
+  if (!Array.isArray(payload)) {
+    return [];
+  }
+
+  return payload
+    .map((item) => item as IncidentCommandTransferLogEntry)
+    .filter((item) => item && typeof item === 'object' && typeof item.incidentCommandAssignmentId === 'number');
+}
+
+export async function createIncidentCommandTransferLog(incidentId: number, request: CreateIncidentCommandTransferRequest): Promise<void> {
+  const response = await fetchApi(`/api/v1/incidents/${incidentId}/command-transfer-log`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(request),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Unable to create command transfer log entry (${response.status}).`);
   }
 }
 

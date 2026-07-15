@@ -36,6 +36,7 @@ import {
   exportExternalProviderHealthScorecardCsv,
   exportExternalProviderHealthScorecardJson,
   exportExternalProviderHealthExecutivePacketZip,
+  exportAuditEventsCsv,
   createAdminUser,
   getUserReportPresets,
   upsertUserReportPreset,
@@ -124,6 +125,25 @@ type AdminWorkspaceCardProps = {
   onSetNotificationStatusEnabled: (status: 'new' | 'acknowledged', enabled: boolean) => void;
 };
 
+type AdminSessionAuditPresetCache = {
+  eventCategory: string;
+  outcomeCode: string;
+  fromLocal: string;
+  toLocal: string;
+  preset: 'custom' | 'auth-failures-24h' | 'auth-success-24h' | 'all-last-7d';
+};
+
+type AdminUserBulkImportRun = {
+  executedUtc: string;
+  sourceSystemCode: string;
+  sourceMessageId: string;
+  updateExisting: boolean;
+  totalRows: number;
+  createdRows: number;
+  updatedRows: number;
+  failedRows: number;
+};
+
 type IcsHierarchyNode = {
   position: AdminIcsPosition;
   children: IcsHierarchyNode[];
@@ -161,6 +181,9 @@ function AdminWorkspaceCard({
   const WEATHER_DEFAULT_LOCAL_KEY = 'ipoc.weather.defaultLocation';
   const ADMIN_CACHE_USE_REDIS_LOCAL_KEY = 'ipoc.admin.cache.useRedis';
   const API_TIMING_DEBUG_LOCAL_KEY = 'ipoc.api.timing.debug';
+const ADMIN_AUDIT_PRESET_SCOPE = 'admin-audit-presets';
+const ADMIN_AUDIT_PRESET_NAME = 'session-admin-default';
+const ADMIN_USER_BULK_IMPORT_HISTORY_LOCAL_KEY = 'ipoc.admin.userBulkImportHistory';
   const DEFAULT_INTEGRATION_SAMPLES_HINT = '.\\data\\Integration-Samples';
   const DEFAULT_BATCH_RESOURCE_CSV_HINT = '.\\data\\Integration-Samples\\IOCEM_Batch_ResourceInventory.csv';
   const DEFAULT_BATCH_BED_CSV_HINT = '.\\data\\Integration-Samples\\IOCEM_Batch_BedAvailability.csv';
@@ -249,6 +272,20 @@ function AdminWorkspaceCard({
   const [adminUserBulkUpdateExisting, setAdminUserBulkUpdateExisting] = useState(false);
   const [adminUserBulkLoading, setAdminUserBulkLoading] = useState(false);
   const [adminUserBulkResult, setAdminUserBulkResult] = useState<DetailedImportBatchResult | null>(null);
+  const [adminUserBulkAuditExportLoading, setAdminUserBulkAuditExportLoading] = useState(false);
+  const [adminUserBulkImportHistory, setAdminUserBulkImportHistory] = useState<AdminUserBulkImportRun[]>(() => {
+    try {
+      const stored = localStorage.getItem(ADMIN_USER_BULK_IMPORT_HISTORY_LOCAL_KEY);
+      if (!stored) {
+        return [];
+      }
+
+      const parsed = JSON.parse(stored) as AdminUserBulkImportRun[];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  });
   const [adminLocations, setAdminLocations] = useState<AdminLocation[]>([]);
   const [adminLocationsLoading, setAdminLocationsLoading] = useState(false);
   const [adminLocationsSearch, setAdminLocationsSearch] = useState('');
@@ -380,6 +417,69 @@ function AdminWorkspaceCard({
           'Keep it concise and decision-oriented: current posture, risk signals, and recommended executive decisions.',
           summary,
         ].join('\n\n');
+    }
+  };
+
+  const applySessionAuditQuickPreset = (preset: 'auth-failures-24h' | 'auth-success-24h' | 'all-last-7d') => {
+    const now = new Date();
+    const start = new Date(now);
+
+    if (preset === 'all-last-7d') {
+      start.setDate(now.getDate() - 7);
+      setAdminSessionAuditEventCategory('');
+      setAdminSessionAuditOutcomeCode('');
+    } else {
+      start.setHours(now.getHours() - 24);
+      setAdminSessionAuditEventCategory('AUTHENTICATION');
+      setAdminSessionAuditOutcomeCode(preset === 'auth-failures-24h' ? 'FAILURE' : 'SUCCESS');
+    }
+
+    const toLocalDateTimeInput = (value: Date) => {
+      const local = new Date(value.getTime() - (value.getTimezoneOffset() * 60000));
+      return local.toISOString().slice(0, 16);
+    };
+
+    setAdminSessionAuditFromLocal(toLocalDateTimeInput(start));
+    setAdminSessionAuditToLocal(toLocalDateTimeInput(now));
+    setAdminSessionAuditPreset(preset);
+    onNotify('Session audit quick preset applied.', 'info');
+  };
+
+  const clearSessionAuditFilters = () => {
+    setAdminSessionAuditEventCategory('AUTHENTICATION');
+    setAdminSessionAuditOutcomeCode('');
+    setAdminSessionAuditFromLocal('');
+    setAdminSessionAuditToLocal('');
+    setAdminSessionAuditPreset('custom');
+    onNotify('Session audit filters reset to defaults.', 'info');
+  };
+
+  const handleExportAdminUserBulkAuditEvidence = async () => {
+    if (!isAuthenticated) {
+      onNotify('Sign in before exporting admin user bulk import audit evidence.', 'warning');
+      return;
+    }
+
+    try {
+      setAdminUserBulkAuditExportLoading(true);
+      const blob = await exportAuditEventsCsv({
+        eventCategory: 'ADMIN_USER_IMPORT',
+        pageSize: 500,
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `admin-user-import-audit-evidence-${new Date().toISOString().replace(/[:.]/g, '-')}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      onNotify('Admin user import audit evidence exported.', 'success');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unable to export admin user import audit evidence.';
+      onNotify(message, 'danger');
+    } finally {
+      setAdminUserBulkAuditExportLoading(false);
     }
   };
 
@@ -550,13 +650,24 @@ function AdminWorkspaceCard({
       );
       setAdminUserBulkResult(result);
 
+      const createdRows = result.createdRows ?? result.result.succeededRows;
+      const updatedRows = result.updatedRows ?? 0;
+      setAdminUserBulkImportHistory((current) => ([{
+        executedUtc: new Date().toISOString(),
+        sourceSystemCode: adminUserBulkSourceSystemCode.trim() || 'ADMIN_USER_IMPORT',
+        sourceMessageId: adminUserBulkSourceMessageId.trim(),
+        updateExisting: adminUserBulkUpdateExisting,
+        totalRows: result.result.totalRows,
+        createdRows,
+        updatedRows,
+        failedRows: result.result.failedRows,
+      }, ...current]).slice(0, 12));
+
       await handleLoadAdminUsers(1);
 
       if (result.result.failedRows > 0) {
         onNotify(`Bulk user import finished with ${result.result.failedRows} failed row(s).`, 'warning');
       } else {
-        const createdRows = result.createdRows ?? result.result.succeededRows;
-        const updatedRows = result.updatedRows ?? 0;
         onNotify(`Bulk user import completed: ${createdRows} created, ${updatedRows} updated.`, 'success');
       }
     } catch (error) {
@@ -753,6 +864,12 @@ function AdminWorkspaceCard({
   const [adminSessionsSearch, setAdminSessionsSearch] = useState('');
   const [adminSessionsPageNumber, setAdminSessionsPageNumber] = useState(1);
   const [adminSessionsTotalCount, setAdminSessionsTotalCount] = useState(0);
+  const [adminSessionAuditFromLocal, setAdminSessionAuditFromLocal] = useState('');
+  const [adminSessionAuditToLocal, setAdminSessionAuditToLocal] = useState('');
+  const [adminSessionAuditEventCategory, setAdminSessionAuditEventCategory] = useState('AUTHENTICATION');
+  const [adminSessionAuditOutcomeCode, setAdminSessionAuditOutcomeCode] = useState('');
+  const [adminSessionAuditExportLoading, setAdminSessionAuditExportLoading] = useState(false);
+  const [adminSessionAuditPreset, setAdminSessionAuditPreset] = useState<'custom' | 'auth-failures-24h' | 'auth-success-24h' | 'all-last-7d'>('custom');
   const [sessionTerminationReason, setSessionTerminationReason] = useState('');
   const [sessionImpersonationReason, setSessionImpersonationReason] = useState('');
   const [dispatchIncidentId, setDispatchIncidentId] = useState('');
@@ -807,6 +924,73 @@ function AdminWorkspaceCard({
   const [externalProviderScorecardExportLoading, setExternalProviderScorecardExportLoading] = useState(false);
   const [externalProviderExecutivePacketExportLoading, setExternalProviderExecutivePacketExportLoading] = useState(false);
 
+  useEffect(() => {
+    let isCancelled = false;
+
+    const applyCache = (cache: AdminSessionAuditPresetCache) => {
+      setAdminSessionAuditEventCategory(cache.eventCategory || 'AUTHENTICATION');
+      setAdminSessionAuditOutcomeCode(cache.outcomeCode || '');
+      setAdminSessionAuditFromLocal(cache.fromLocal || '');
+      setAdminSessionAuditToLocal(cache.toLocal || '');
+      setAdminSessionAuditPreset(cache.preset || 'custom');
+    };
+
+    const restoreSessionAuditPreset = async () => {
+      if (!isAuthenticated) {
+        return;
+      }
+
+      try {
+        const presets = await getUserReportPresets(ADMIN_AUDIT_PRESET_SCOPE);
+        const preset = presets.find((item) => item.presetName === ADMIN_AUDIT_PRESET_NAME) ?? presets[0] ?? null;
+        if (!preset || isCancelled) {
+          return;
+        }
+
+        const parsed = JSON.parse(preset.presetJson) as AdminSessionAuditPresetCache;
+        applyCache(parsed);
+      } catch {
+        // Use in-memory defaults when persisted audit preset is unavailable.
+      }
+    };
+
+    void restoreSessionAuditPreset();
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+
+    const payload: AdminSessionAuditPresetCache = {
+      eventCategory: adminSessionAuditEventCategory,
+      outcomeCode: adminSessionAuditOutcomeCode,
+      fromLocal: adminSessionAuditFromLocal,
+      toLocal: adminSessionAuditToLocal,
+      preset: adminSessionAuditPreset,
+    };
+
+    void upsertUserReportPreset(ADMIN_AUDIT_PRESET_SCOPE, {
+      presetName: ADMIN_AUDIT_PRESET_NAME,
+      presetJson: JSON.stringify(payload),
+    });
+  }, [
+    adminSessionAuditEventCategory,
+    adminSessionAuditOutcomeCode,
+    adminSessionAuditFromLocal,
+    adminSessionAuditToLocal,
+    adminSessionAuditPreset,
+    isAuthenticated,
+  ]);
+
+  useEffect(() => {
+    localStorage.setItem(ADMIN_USER_BULK_IMPORT_HISTORY_LOCAL_KEY, JSON.stringify(adminUserBulkImportHistory));
+  }, [adminUserBulkImportHistory]);
+
   const handleRefreshExternalProviderDiagnostics = async () => {
     try {
       setCopLiveOverlayDiagnosticsLoading(true);
@@ -832,6 +1016,48 @@ function AdminWorkspaceCard({
       onNotify(message, 'danger');
     } finally {
       setCopLiveOverlayDiagnosticsLoading(false);
+    }
+  };
+
+  const handleExportSessionAuditEvidence = async () => {
+    if (!isAuthenticated) {
+      onNotify('Sign in before exporting session/auth audit evidence.', 'warning');
+      return;
+    }
+
+    const normalizeLocalDateTime = (value: string): string | undefined => {
+      const trimmed = value.trim();
+      if (!trimmed) {
+        return undefined;
+      }
+
+      const parsedMs = Date.parse(trimmed);
+      return Number.isFinite(parsedMs) ? new Date(parsedMs).toISOString() : undefined;
+    };
+
+    try {
+      setAdminSessionAuditExportLoading(true);
+      const blob = await exportAuditEventsCsv({
+        eventCategory: adminSessionAuditEventCategory.trim() || undefined,
+        outcomeCode: adminSessionAuditOutcomeCode.trim() || undefined,
+        fromUtc: normalizeLocalDateTime(adminSessionAuditFromLocal),
+        toUtc: normalizeLocalDateTime(adminSessionAuditToLocal),
+        pageSize: 1000,
+      });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `admin-session-audit-evidence-${new Date().toISOString().replace(/[:.]/g, '-')}.csv`);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      onNotify('Session/auth audit evidence exported.', 'success');
+    } catch (error) {
+      const message = error instanceof Error ? error.message : 'Unable to export session/auth audit evidence.';
+      onNotify(message, 'danger');
+    } finally {
+      setAdminSessionAuditExportLoading(false);
     }
   };
 
@@ -3633,7 +3859,7 @@ function AdminWorkspaceCard({
                   Import multiple users in one operation and optionally assign roles per row using <code>roleCodes</code> separated by <code>|</code>.
                 </div>
 
-                <div className="row g-2">
+                <div className="row g-2 align-items-end">
                   <div className="col-md-8">
                     <Form.Group>
                       <Form.Label className="small mb-1"><LabelWithInfo text="User import CSV" info="Upload CSV with columns: displayName, emailAddress, userPrincipalName, entraObjectId, isActive, roleCodes. roleCodes supports pipe-delimited values such as SYSTEM_ADMIN|CONTRIBUTOR." /></Form.Label>
@@ -3707,6 +3933,17 @@ function AdminWorkspaceCard({
                       disabled={adminUserBulkLoading || !adminUserBulkCsvFile}
                       testId="admin-user-bulk-import-reject-report"
                     />
+                    <IconActionButton
+                      iconClassName="bi bi-shield-check"
+                      tooltip="Export admin user import audit evidence"
+                      ariaLabel="Export admin user import audit evidence"
+                      onClick={() => {
+                        void handleExportAdminUserBulkAuditEvidence();
+                      }}
+                      variant="outline-secondary"
+                      disabled={adminUserBulkLoading || adminUserBulkAuditExportLoading || !isAuthenticated}
+                      testId="admin-user-bulk-import-audit-export"
+                    />
                   </div>
                 </div>
 
@@ -3736,6 +3973,43 @@ function AdminWorkspaceCard({
                         />
                       </div>
                     )}
+                  </div>
+                )}
+
+                {adminUserBulkImportHistory.length > 0 && (
+                  <div className="small mt-3" data-testid="admin-user-bulk-import-history">
+                    <div className="fw-semibold mb-1">Recent bulk import runs</div>
+                    <div className="table-responsive">
+                      <table className="table table-sm mb-0">
+                        <thead>
+                          <tr>
+                            <th>Executed</th>
+                            <th>Source</th>
+                            <th>Message ID</th>
+                            <th className="text-end">Rows</th>
+                            <th className="text-end">Created</th>
+                            <th className="text-end">Updated</th>
+                            <th className="text-end">Failed</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {adminUserBulkImportHistory.map((run) => (
+                            <tr key={`${run.executedUtc}-${run.sourceSystemCode}-${run.sourceMessageId}`}>
+                              <td>{new Date(run.executedUtc).toLocaleString()}</td>
+                              <td>
+                                {run.sourceSystemCode}
+                                {run.updateExisting ? <div className="small text-muted">update-existing</div> : null}
+                              </td>
+                              <td>{run.sourceMessageId || 'N/A'}</td>
+                              <td className="text-end">{run.totalRows}</td>
+                              <td className="text-end">{run.createdRows}</td>
+                              <td className="text-end">{run.updatedRows}</td>
+                              <td className="text-end">{run.failedRows}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                   </div>
                 )}
               </Card.Body>
@@ -4231,6 +4505,118 @@ function AdminWorkspaceCard({
                   ariaLabel="Refresh active sessions"
                   onClick={() => void handleLoadAdminSessions()}
                   disabled={adminSessionsLoading || !isAuthenticated}
+                />
+              </div>
+            </div>
+
+            <div className="border rounded p-2 mb-3" data-testid="admin-session-audit-export-filters">
+              <div className="small fw-semibold mb-2">Session/auth audit evidence export</div>
+              <div className="d-flex flex-wrap gap-2 mb-2" data-testid="admin-session-audit-presets">
+                <Badge bg={adminSessionAuditPreset === 'auth-failures-24h' ? 'primary' : 'secondary'}>
+                  Auth failures 24h
+                </Badge>
+                <Badge bg={adminSessionAuditPreset === 'auth-success-24h' ? 'primary' : 'secondary'}>
+                  Auth success 24h
+                </Badge>
+                <Badge bg={adminSessionAuditPreset === 'all-last-7d' ? 'primary' : 'secondary'}>
+                  All events 7d
+                </Badge>
+              </div>
+              <div className="d-flex justify-content-end gap-2 mb-2">
+                <IconActionButton
+                  iconClassName="bi bi-exclamation-triangle"
+                  tooltip="Apply quick preset: authentication failures in last 24 hours"
+                  ariaLabel="Apply quick preset authentication failures in last 24 hours"
+                  onClick={() => applySessionAuditQuickPreset('auth-failures-24h')}
+                  disabled={adminSessionAuditExportLoading || adminSessionsLoading || !isAuthenticated}
+                  variant="outline-warning"
+                  testId="admin-session-audit-preset-failures"
+                />
+                <IconActionButton
+                  iconClassName="bi bi-check-circle"
+                  tooltip="Apply quick preset: authentication successes in last 24 hours"
+                  ariaLabel="Apply quick preset authentication successes in last 24 hours"
+                  onClick={() => applySessionAuditQuickPreset('auth-success-24h')}
+                  disabled={adminSessionAuditExportLoading || adminSessionsLoading || !isAuthenticated}
+                  variant="outline-success"
+                  testId="admin-session-audit-preset-success"
+                />
+                <IconActionButton
+                  iconClassName="bi bi-calendar-week"
+                  tooltip="Apply quick preset: all audit events in last 7 days"
+                  ariaLabel="Apply quick preset all audit events in last 7 days"
+                  onClick={() => applySessionAuditQuickPreset('all-last-7d')}
+                  disabled={adminSessionAuditExportLoading || adminSessionsLoading || !isAuthenticated}
+                  variant="outline-secondary"
+                  testId="admin-session-audit-preset-week"
+                />
+                <IconActionButton
+                  iconClassName="bi bi-arrow-counterclockwise"
+                  tooltip="Reset session audit filters to defaults"
+                  ariaLabel="Reset session audit filters to defaults"
+                  onClick={clearSessionAuditFilters}
+                  disabled={adminSessionAuditExportLoading || adminSessionsLoading || !isAuthenticated}
+                  variant="outline-secondary"
+                  testId="admin-session-audit-reset"
+                />
+              </div>
+              <div className="row g-2">
+                <div className="col-md-3">
+                  <Form.Group>
+                    <Form.Label className="small mb-1"><LabelWithInfo text="Audit category" info="Optional audit category filter used when exporting requestable session/auth evidence." /></Form.Label>
+                    <Form.Control
+                      value={adminSessionAuditEventCategory}
+                      onChange={(event) => setAdminSessionAuditEventCategory(event.target.value)}
+                      placeholder="AUTHENTICATION"
+                      data-testid="admin-session-audit-category"
+                    />
+                  </Form.Group>
+                </div>
+                <div className="col-md-3">
+                  <Form.Group>
+                    <Form.Label className="small mb-1"><LabelWithInfo text="Outcome code" info="Optional outcome filter (for example SUCCESS, FAILURE, WARNING)." /></Form.Label>
+                    <Form.Control
+                      value={adminSessionAuditOutcomeCode}
+                      onChange={(event) => setAdminSessionAuditOutcomeCode(event.target.value)}
+                      placeholder="SUCCESS"
+                      data-testid="admin-session-audit-outcome"
+                    />
+                  </Form.Group>
+                </div>
+                <div className="col-md-3">
+                  <Form.Group>
+                    <Form.Label className="small mb-1"><LabelWithInfo text="From (local)" info="Optional local datetime start boundary for exported session/auth audit events." /></Form.Label>
+                    <Form.Control
+                      type="datetime-local"
+                      value={adminSessionAuditFromLocal}
+                      onChange={(event) => setAdminSessionAuditFromLocal(event.target.value)}
+                      data-testid="admin-session-audit-from"
+                    />
+                  </Form.Group>
+                </div>
+                <div className="col-md-3">
+                  <Form.Group>
+                    <Form.Label className="small mb-1"><LabelWithInfo text="To (local)" info="Optional local datetime end boundary for exported session/auth audit events." /></Form.Label>
+                    <Form.Control
+                      type="datetime-local"
+                      value={adminSessionAuditToLocal}
+                      onChange={(event) => setAdminSessionAuditToLocal(event.target.value)}
+                      data-testid="admin-session-audit-to"
+                    />
+                  </Form.Group>
+                </div>
+              </div>
+              <div className="d-flex justify-content-end mt-2">
+                <IconActionButton
+                  iconClassName="bi bi-file-earmark-arrow-down"
+                  tooltip="Export requestable session/auth audit evidence CSV"
+                  ariaLabel="Export requestable session auth audit evidence CSV"
+                  onClick={() => {
+                    void handleExportSessionAuditEvidence();
+                  }}
+                  disabled={adminSessionAuditExportLoading || adminSessionsLoading || !isAuthenticated}
+                  variant="outline-secondary"
+                  testId="admin-session-audit-export"
                 />
               </div>
             </div>

@@ -60,7 +60,9 @@ public interface IIncidentQueryService
     Task<bool> UpdateIncidentObjectiveAsync(long incidentId, long incidentObjectiveId, UpdateIncidentObjectiveRequestDto request, CancellationToken cancellationToken);
     Task<IReadOnlyList<IcsPositionDto>> GetIcsPositionsAsync(CancellationToken cancellationToken);
     Task<IReadOnlyList<IncidentCommandAssignmentDto>> GetIncidentCommandAssignmentsAsync(long incidentId, CancellationToken cancellationToken);
+    Task<IReadOnlyList<IncidentCommandTransferLogEntryDto>> GetIncidentCommandTransferLogAsync(long incidentId, CancellationToken cancellationToken);
     Task UpsertIncidentCommandAssignmentAsync(long incidentId, UpsertIncidentCommandAssignmentRequestDto request, long assignedByUserId, CancellationToken cancellationToken);
+    Task UpsertIncidentCommandTransferAsync(long incidentId, CreateIncidentCommandTransferRequestDto request, long assignedByUserId, CancellationToken cancellationToken);
     Task<bool> RemoveIncidentCommandAssignmentAsync(long incidentId, int icsPositionId, CancellationToken cancellationToken);
     Task<bool> ActivateIncidentAsync(long incidentId, CancellationToken cancellationToken);
     Task<bool> CloseIncidentAsync(long incidentId, CancellationToken cancellationToken);
@@ -2552,6 +2554,94 @@ public sealed class IncidentQueryService : IIncidentQueryService
         }
     }
 
+    public async Task<IReadOnlyList<IncidentCommandTransferLogEntryDto>> GetIncidentCommandTransferLogAsync(long incidentId, CancellationToken cancellationToken)
+    {
+        const string sql = """
+            SELECT
+                a.IncidentCommandAssignmentId,
+                a.IncidentId,
+                a.IcsPositionId,
+                COALESCE(p.PositionCode, CONCAT('ICS-', CONVERT(varchar(16), a.IcsPositionId))) AS PositionCode,
+                COALESCE(p.PositionName, CONCAT('Position ', CONVERT(varchar(16), a.IcsPositionId))) AS PositionName,
+                COALESCE(p.IcsSection, 'Unassigned') AS IcsSection,
+                a.AssignedUserId,
+                u.DisplayName AS AssignedUserDisplayName,
+                a.AssignedContactId,
+                c.DisplayName AS AssignedContactName,
+                a.AgencyOrganizationId,
+                o.OrganizationName AS AgencyOrganizationName,
+                a.AssignedFromUtc,
+                a.AssignedToUtc,
+                a.AssignmentStatusCode,
+                a.Notes
+            FROM ic.IncidentCommandAssignment a
+            LEFT JOIN ref.IcsPosition p ON p.IcsPositionId = a.IcsPositionId
+            LEFT JOIN sec.AppUser u ON u.UserId = a.AssignedUserId
+            LEFT JOIN org.Contact c ON c.ContactId = a.AssignedContactId
+            LEFT JOIN org.Organization o ON o.OrganizationId = a.AgencyOrganizationId
+            WHERE a.IncidentId = @incidentId
+            ORDER BY a.AssignedFromUtc DESC, a.IncidentCommandAssignmentId DESC;
+            """;
+
+        var assignments = new List<IncidentCommandTransferLogEntryDto>();
+
+        try
+        {
+            await using var connection = new SqlConnection(_connectionString);
+            await connection.OpenAsync(cancellationToken);
+
+            await using var command = new SqlCommand(sql, connection)
+            {
+                CommandType = CommandType.Text,
+                CommandTimeout = 30,
+            };
+
+            command.Parameters.Add(new SqlParameter("@incidentId", SqlDbType.BigInt) { Value = incidentId });
+
+            await using var reader = await command.ExecuteReaderAsync(cancellationToken);
+
+            while (await reader.ReadAsync(cancellationToken))
+            {
+                assignments.Add(new IncidentCommandTransferLogEntryDto(
+                    reader.GetInt64(0),
+                    reader.GetInt64(1),
+                    reader.GetInt32(2),
+                    reader.GetString(3),
+                    reader.GetString(4),
+                    reader.GetString(5),
+                    reader.IsDBNull(6) ? null : reader.GetInt64(6),
+                    reader.IsDBNull(7) ? null : reader.GetString(7),
+                    reader.IsDBNull(8) ? null : reader.GetInt64(8),
+                    reader.IsDBNull(9) ? null : reader.GetString(9),
+                    reader.IsDBNull(10) ? null : reader.GetInt64(10),
+                    reader.IsDBNull(11) ? null : reader.GetString(11),
+                    ReadDateTimeOffset(reader, 12),
+                    ReadNullableDateTimeOffset(reader, 13),
+                    reader.GetString(14),
+                    reader.IsDBNull(15) ? null : reader.GetString(15)));
+            }
+
+            _logger.LogInformation("Retrieved {TransferCount} command transfer log rows for IncidentId {IncidentId}.", assignments.Count, incidentId);
+            return assignments;
+        }
+        catch (SqlException ex)
+        {
+            if (_degradedReadFallbackEnabled)
+            {
+                _logger.LogWarning(ex, "Database unavailable while retrieving command transfer log for IncidentId {IncidentId}. Returning empty list due to degraded read fallback.", incidentId);
+                return [];
+            }
+
+            _logger.LogError(ex, "Database error while retrieving command transfer log for IncidentId {IncidentId}.", incidentId);
+            throw;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error while retrieving command transfer log for IncidentId {IncidentId}.", incidentId);
+            throw;
+        }
+    }
+
     public async Task UpsertIncidentCommandAssignmentAsync(long incidentId, UpsertIncidentCommandAssignmentRequestDto request, long assignedByUserId, CancellationToken cancellationToken)
     {
         const string sql = """
@@ -2626,6 +2716,26 @@ public sealed class IncidentQueryService : IIncidentQueryService
             _logger.LogError(ex, "Unexpected error while upserting command assignment for IncidentId {IncidentId}, IcsPositionId {IcsPositionId}.", incidentId, request.IcsPositionId);
             throw;
         }
+    }
+
+    public async Task UpsertIncidentCommandTransferAsync(long incidentId, CreateIncidentCommandTransferRequestDto request, long assignedByUserId, CancellationToken cancellationToken)
+    {
+        var notes = string.Join(" | ", new[]
+        {
+            string.IsNullOrWhiteSpace(request.TransferSummary) ? null : $"Transfer: {request.TransferSummary.Trim()}",
+            string.IsNullOrWhiteSpace(request.CommandPostLocation) ? null : $"CommandPost: {request.CommandPostLocation.Trim()}"
+        }.Where(value => !string.IsNullOrWhiteSpace(value)));
+
+        await UpsertIncidentCommandAssignmentAsync(
+            incidentId,
+            new UpsertIncidentCommandAssignmentRequestDto(
+                request.IcsPositionId,
+                request.AssignedUserId,
+                request.AssignedContactId,
+                request.AgencyOrganizationId,
+                string.IsNullOrWhiteSpace(notes) ? null : notes),
+            assignedByUserId,
+            cancellationToken);
     }
 
     public async Task<bool> RemoveIncidentCommandAssignmentAsync(long incidentId, int icsPositionId, CancellationToken cancellationToken)

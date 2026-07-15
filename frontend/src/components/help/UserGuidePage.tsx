@@ -58,7 +58,7 @@ type UserGuidePageProps = {
 };
 
 const viewToTopic: Record<AppView, string> = {
-  dashboard: 'application-overview',
+  dashboard: 'dashboard-command-center',
   incidents: 'incidents-command-workspace',
   facilities: 'facilities-capacity-and-resources',
   reports: 'reporting-and-evidence',
@@ -76,6 +76,7 @@ const navGroups: NavGroup[] = [
     id: 'quickstarts',
     label: 'Quickstarts',
     topicIds: [
+      'dashboard-command-center',
       'operations-coordination-cockpit',
       'planning-cycle-command-board',
       'logistics-staging-operations-cockpit',
@@ -110,7 +111,7 @@ const navGroups: NavGroup[] = [
   {
     id: 'monitoring',
     label: 'Monitoring',
-    topicIds: ['security-compliance-audit-observability', 'common-operating-picture'],
+    topicIds: ['dashboard-command-center', 'security-compliance-audit-observability', 'common-operating-picture'],
   },
   {
     id: 'samples',
@@ -125,6 +126,7 @@ const navGroups: NavGroup[] = [
 ];
 
 const tocExpandedStateLocalStorageKey = 'ipoc.help.toc.expanded-state.v1';
+const icsPrintDensityLocalStorageKey = 'ipoc.help.ics.print-density.v1';
 
 const coreScenarioMilestones: string[] = [
   'Initiate an incident with validated location, severity, and command ownership.',
@@ -132,6 +134,161 @@ const coreScenarioMilestones: string[] = [
   'Configure administration controls (roles, locations, cache mode, ingestion, and governance defaults).',
   'Publish evidence-driven reports and close the loop through after-action corrective tracking.',
 ];
+
+const professionalRunbookChecklist: string[] = [
+  'Confirm focused incident, timeframe, and command objective before executing controls.',
+  'Capture operator attribution and timestamps for every high-impact action.',
+  'Validate data freshness and source completeness before decisions or exports.',
+  'Escalate unresolved blockers with owner, ETA, and fallback path.',
+  'Publish handoff summary with decisions, open risks, and next review cadence.',
+];
+
+const professionalCommonPitfalls: string[] = [
+  'Executing controls before scope validation creates inconsistent evidence and rework.',
+  'Skipping timestamped notes weakens audit readiness and incident reconstruction.',
+  'Treating advisory analytics as final decisions without command validation introduces risk.',
+  'Running exports with stale filters produces misleading artifacts for leadership and compliance.',
+];
+
+const professionalExpectedOutcomes: string[] = [
+  'Operators can execute module workflows with consistent, auditable decision quality.',
+  'Supervisors can review status, risks, and evidence without manual reconstruction.',
+  'Cross-functional teams maintain shared context from initiation through closeout.',
+];
+
+const professionalRunbookTutorial: string[] = [
+  'Set incident scope, operational period, and intended audience before making changes.',
+  'Run section controls in dependency order: detect, assess, assign, verify, then export/share.',
+  'Record command decisions with rationale and ownership at each transition point.',
+  'Perform a midpoint quality gate to validate freshness, ownership, and unresolved blocker states.',
+  'Close with a brief package containing outcomes, risks, and explicit next actions.',
+];
+
+const troubleshootingTutorial: string[] = [
+  'Validate user role, focused incident selection, and required prerequisites for the target action.',
+  'Check freshness indicators, feed-health signals, and recent admin changes that may affect behavior.',
+  'Reproduce the issue with exact timestamps, module path, and filter settings.',
+  'Capture corrective action and verify the fix in at least one downstream dependent module.',
+  'Document root cause and update runbook notes to prevent recurrence.',
+];
+
+function buildAudienceGuidanceTutorial(topicTitle: string): string[] {
+  return [
+    `Operator track: execute ${topicTitle} controls in checklist order and annotate every action with owner/time context.`,
+    `Supervisor track: review queue health, unresolved dependencies, and SLA risk before approving next-cycle posture.`,
+    `Executive track: consume a concise summary (top risks, decisions needed, resource asks) and confirm command intent for the next review window.`,
+  ];
+}
+
+function buildAudienceChecklist(topicTitle: string): string[] {
+  return [
+    `Operator: ${topicTitle} actions are owner-assigned and status-accurate.`,
+    'Supervisor: blockers and escalations are acknowledged with ETA and fallback path.',
+    'Executive: decision log includes rationale, priority, and expected operational impact.',
+  ];
+}
+
+function buildTopicDeepDiveLinks(topicTitle: string, topicId: string): GuideLink[] {
+  const moduleToken = topicTitle.toLowerCase();
+  return [
+    {
+      id: `${topicId}-advanced-runbook`,
+      title: `${topicTitle}: advanced operator runbook`,
+      kind: 'HOW-TO GUIDE',
+      detail: `Professional execution workflow for ${topicTitle} with quality gates, escalation discipline, and command handoff rigor.`,
+      prerequisites: [
+        `Operator has access to ${topicTitle} and the active incident scope is confirmed.`,
+        'Shift objective and review cadence are defined by command leadership.',
+      ],
+      tutorial: [...professionalRunbookTutorial, ...buildAudienceGuidanceTutorial(topicTitle)],
+      sectionChecklist: [...professionalRunbookChecklist, ...buildAudienceChecklist(topicTitle)],
+      expectedOutcomes: [...professionalExpectedOutcomes],
+      commonPitfalls: [...professionalCommonPitfalls],
+      callout: {
+        tone: 'info',
+        title: 'Audience-specific operating standard',
+        body: `Treat ${topicTitle} as an execution workspace with role-specific outputs: operator accuracy, supervisor control, and executive clarity.`,
+      },
+    },
+    {
+      id: `${topicId}-troubleshooting-playbook`,
+      title: `${topicTitle}: troubleshooting and quality control playbook`,
+      kind: 'REFERENCE',
+      detail: `Structured troubleshooting workflow for ${topicTitle} covering access, data quality, control behavior, and downstream impact validation.`,
+      prerequisites: [
+        'Issue report includes module path, timeframe, and user context.',
+        'Operator can reproduce behavior in a controlled workflow state.',
+      ],
+      tutorial: [...troubleshootingTutorial],
+      sectionChecklist: [
+        'Reproduction path documented with exact control sequence.',
+        'Root cause category identified (auth, data freshness, dependency, or workflow state).',
+        'Downstream module impact validated after fix.',
+      ],
+      expectedOutcomes: [
+        `Teams resolve ${moduleToken} issues faster with reproducible context and less rework.`,
+        'Post-incident reviews include root-cause clarity and prevention actions.',
+        'Operator, supervisor, and executive escalations carry the right level of detail for rapid decisions.',
+      ],
+      commonPitfalls: [
+        'Escalating without reproduction details or timestamps causes investigation churn.',
+        'Fixing symptoms in one control while leaving dependency-chain causes unresolved.',
+      ],
+      callout: {
+        tone: 'warning',
+        title: 'Root-cause first',
+        body: 'Do not close incidents on workaround success alone. Verify dependent workflows and recurrence controls.',
+      },
+    },
+    {
+      id: `${topicId}-automation-sample`,
+      title: `${topicTitle}: API integration and automation sample`,
+      kind: 'SAMPLE',
+      detail: `Example integration pattern for ${topicTitle} showing authenticated retrieval, validation, and normalized export payload construction.`,
+      tutorial: [
+        'Create typed DTOs for request filters, records, and export metadata.',
+        'Call module endpoint with explicit timeout and cancellation support.',
+        'Validate required fields (incident id, timestamps, owner/status) before persistence or export.',
+        'Transform records to a normalized artifact contract for reporting and archive workflows.',
+      ],
+      expectedOutcomes: [
+        `Development teams can extend ${topicTitle} workflows with reliable automation patterns.`,
+        'Exported artifacts stay consistent across operational and compliance workflows.',
+        'Audience-specific reporting views can be produced from the same normalized artifact contract.',
+      ],
+      codeSample: {
+        title: `${topicTitle} integration sample (.NET)` ,
+        language: 'csharp',
+        code: `public sealed record ModuleRecord(string IncidentId, DateTimeOffset TimestampUtc, string Owner, string Status);
+
+public static async Task<IReadOnlyList<ModuleRecord>> FetchModuleRecordsAsync(
+    HttpClient http,
+    string endpoint,
+    CancellationToken cancellationToken)
+{
+    using var response = await http.GetAsync(endpoint, cancellationToken);
+    response.EnsureSuccessStatusCode();
+
+    var payload = await response.Content.ReadFromJsonAsync<List<ModuleRecord>>(cancellationToken: cancellationToken)
+        ?? new List<ModuleRecord>();
+
+    return payload
+        .Where(item => !string.IsNullOrWhiteSpace(item.IncidentId)
+            && item.TimestampUtc != default
+            && !string.IsNullOrWhiteSpace(item.Owner)
+            && !string.IsNullOrWhiteSpace(item.Status))
+        .OrderByDescending(item => item.TimestampUtc)
+        .ToList();
+}`,
+      },
+      callout: {
+        tone: 'success',
+        title: 'Engineering quality note',
+        body: 'Prefer typed contracts, explicit validation, and deterministic sort order for reproducible artifacts.',
+      },
+    },
+  ];
+}
 
 function getCalloutClassName(tone: CalloutTone): string {
   switch (tone) {
@@ -144,6 +301,37 @@ function getCalloutClassName(tone: CalloutTone): string {
     default:
       return 'border-info-subtle bg-info-subtle';
   }
+}
+
+function IcsWorkflowScenarioDiagram() {
+  return (
+    <div className="ipoc-ics-diagram-rendered" data-testid="user-guide-ics-rendered-diagram">
+      <div className="ipoc-ics-diagram-track" data-testid="user-guide-ics-rendered-diagram-track">
+        <div className="ipoc-ics-diagram-node">
+          <div className="ipoc-ics-diagram-node-title">Scenario 1 · Small Incident</div>
+          <div className="ipoc-ics-diagram-node-body">Initial command, life-safety focus, lean cycle, transfer only if needed.</div>
+        </div>
+        <div className="ipoc-ics-diagram-arrow" aria-hidden="true">→</div>
+        <div className="ipoc-ics-diagram-node">
+          <div className="ipoc-ics-diagram-node-title">Scenario 2 · Multi-Agency Expansion</div>
+          <div className="ipoc-ics-diagram-node-body">Activate sections, run IAP loop cadence, enforce unified command controls.</div>
+        </div>
+        <div className="ipoc-ics-diagram-arrow" aria-hidden="true">→</div>
+        <div className="ipoc-ics-diagram-node">
+          <div className="ipoc-ics-diagram-node-title">Scenario 3 · Demobilization-Heavy Closeout</div>
+          <div className="ipoc-ics-diagram-node-body">Release resources, transfer unresolved actions, package closeout evidence.</div>
+        </div>
+      </div>
+      <div className="ipoc-ics-diagram-legend" data-testid="user-guide-ics-rendered-diagram-legend">
+        <Badge bg="light" text="dark">IC · Green</Badge>
+        <Badge bg="light" text="dark">Safety · Red</Badge>
+        <Badge bg="light" text="dark">Operations · Orange</Badge>
+        <Badge bg="light" text="dark">Planning · Blue</Badge>
+        <Badge bg="light" text="dark">Logistics · Violet</Badge>
+        <Badge bg="light" text="dark">Finance/Admin · Gray</Badge>
+      </div>
+    </div>
+  );
 }
 
 const topics: GuideTopic[] = [
@@ -332,8 +520,12 @@ const topics: GuideTopic[] = [
               'Use baseline capture action to set the current trend comparison timestamp.',
               'Review recommendation queue and confidence values in pending approvals section.',
               'Use preview action to validate executive markdown narrative before distribution.',
+              'Review exact Generated UTC metadata in preview when audit traceability requires precise artifact timestamp confirmation.',
               'Confirm preview quality checklist badges (baseline, recommendations, decision history) before distribution.',
+              'Use freshness badge to confirm brief recency and regenerate when marked stale.',
+              'Use Regenerate now in preview to refresh the brief from current recommendation data before sharing.',
               'Inside preview, use Copy brief or Stage to assistant for fast command handoff without leaving Reports.',
+              'Use clear-cache action when command policy requires removing locally cached brief content after handoff.',
               'Use export action to download executive decision brief markdown package with trend deltas, recommendation decision state, and attributed decision log appendix.',
               'Use copy action when command leadership needs immediate clipboard-ready brief content for chat/email workflows.',
               'Use AI stage action to prefill Assistant with the brief and generate command summary plus ICS-ready objectives.',
@@ -343,6 +535,7 @@ const topics: GuideTopic[] = [
               'Command teams can archive consistent brief artifacts across reporting cycles with operator-attributed decision context.',
               'Operators can hand off the same brief directly into AI Incident Co-Pilot without retyping context.',
               'Latest generated brief remains available after refresh for continuity when recommendation rows are temporarily sparse.',
+              'Cached continuity can be intentionally cleared by operators after sensitive handoff workflows.',
             ],
             commonPitfalls: [
               'Skipping baseline capture can reduce interpretability of delta metadata across cycles.',
@@ -353,6 +546,122 @@ const topics: GuideTopic[] = [
               tone: 'warning',
               title: 'Governance reminder',
               body: 'Executive brief recommendations are decision support artifacts and require command validation prior to execution.',
+            },
+          },
+          {
+            id: 'use-reports-aar-improvement-plan-export',
+            title: 'Use Reports AAR improvement plan export',
+            kind: 'HOW-TO GUIDE',
+            detail: 'Export an after-action improvement plan baseline with capability gaps, corrective actions, owner lanes, and target windows.',
+            prerequisites: [
+              'Reports filters are set to the incident scope to be reviewed in after-action sessions.',
+              'Decision queue and pending approval modules are populated for best corrective-action fidelity.',
+            ],
+            tutorial: [
+              'Open Reports and locate the executive reporting action rail.',
+              'Use AAR improvement plan export to generate a corrective-action baseline CSV.',
+              'Review capability gap and owner lane assignments before distributing to command sections.',
+              'Use the CSV artifact in post-incident review meetings and formal improvement-plan tracking workflows.',
+            ],
+            expectedOutcomes: [
+              'Command teams have a structured, repeatable improvement-plan artifact linked to current report signals.',
+              'After-action closeout includes explicit owner-lane corrective actions with target windows.',
+            ],
+            commonPitfalls: [
+              'Exporting without current filter validation can produce corrective actions for the wrong operational scope.',
+              'Treating the generated owner lanes as immutable assignments instead of command-reviewed planning baselines.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Governance reminder',
+              body: 'AAR improvement plan exports are decision-support baselines and should be validated by command leadership before final publication.',
+            },
+          },
+          {
+            id: 'use-reports-risk-timeline-replay-export',
+            title: 'Use Reports risk timeline replay export',
+            kind: 'HOW-TO GUIDE',
+            detail: 'Export risk-change timeline and incident replay rows to support after-action analytics and historical review workflows.',
+            prerequisites: [
+              'Reports filters are aligned to the incident window you want to replay.',
+              'Risk timeline chart has data or report scope is intentionally bounded for no-data evidence capture.',
+            ],
+            tutorial: [
+              'Open Reports and locate the Risk-change timeline card.',
+              'Review timeline signal shape and confirm it represents the intended reporting window.',
+              'Use the risk timeline export action to generate replay CSV artifact.',
+              'Attach artifact to after-action evidence package alongside executive brief and FEMA-compatible AAR export outputs.',
+            ],
+            expectedOutcomes: [
+              'Operators can export a repeatable timeline replay artifact from Reports without manual reconstruction.',
+              'After-action workflows gain stronger timestamped trend evidence for command review cycles.',
+            ],
+            commonPitfalls: [
+              'Exporting with stale filters can produce replay rows outside the intended incident scope.',
+              'Assuming timeline export is a replacement for command narrative rather than a supporting evidence artifact.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Operational reminder',
+              body: 'Timeline replay exports support post-incident analytics and should be reviewed with command context before final reporting decisions.',
+            },
+          },
+          {
+            id: 'use-reports-fema-compatible-aar-export',
+            title: 'Use Reports FEMA-compatible AAR/IP baseline export',
+            kind: 'HOW-TO GUIDE',
+            detail: 'Generate a FEMA-compatible after-action baseline CSV package from current report, decision, timeline, and HVA readiness context.',
+            prerequisites: [
+              'Reports filters are aligned to the operational period and incident scope for after-action review.',
+              'Decision queue and timeline visuals are populated for best baseline fidelity.',
+            ],
+            tutorial: [
+              'Open Reports and locate the Executive decision brief package command rail.',
+              'Use the FEMA-compatible AAR export action to generate the after-action baseline CSV artifact.',
+              'Confirm the artifact includes summary metrics, decision history, risk timeline, and HVA readiness sections.',
+              'Attach the exported artifact to command closeout and bid evidence workflows as required.',
+            ],
+            expectedOutcomes: [
+              'Command teams receive a structured after-action baseline artifact aligned to FEMA-compatible reporting posture.',
+              'RFP evidence workflows have an auditable, repeatable report export path for after-action packaging.',
+            ],
+            commonPitfalls: [
+              'Exporting before report filter validation can produce after-action context for the wrong window.',
+              'Treating the baseline export as final doctrine output without command review and supplemental narrative.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Governance reminder',
+              body: 'FEMA-compatible AAR/IP baseline exports support command documentation and require human validation before external submission.',
+            },
+          },
+          {
+            id: 'use-reports-hva-readiness-snapshot-export',
+            title: 'Use Reports HVA readiness snapshot export',
+            kind: 'HOW-TO GUIDE',
+            detail: 'Generate a command-ready Hazard Vulnerability Assessment baseline table and export it as CSV for RFP evidence workflows.',
+            prerequisites: [
+              'Reports filters are aligned to the incident scope and operational period to be evaluated.',
+              'Dashboard and decision queue data are available for current report scope.',
+            ],
+            tutorial: [
+              'Open Reports and locate the HVA readiness snapshot card under executive brief controls.',
+              'Review hazard probability and impact values generated from current severity, completeness, and governance signals.',
+              'Review mitigation baseline text to confirm it aligns with command doctrine and current shift posture.',
+              'Use the export action to download the HVA readiness snapshot CSV for bid/readiness evidence packaging.',
+            ],
+            expectedOutcomes: [
+              'Operators have a repeatable HVA-oriented readiness artifact generated from current report scope.',
+              'Command teams can attach a point-in-time hazard baseline to RFP and governance evidence bundles.',
+            ],
+            commonPitfalls: [
+              'Exporting without validating report filters may produce HVA artifacts for the wrong incident window.',
+              'Treating generated probability/impact values as final risk decisions without command validation.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Decision-support reminder',
+              body: 'HVA readiness output is advisory and should be reviewed by command leadership before external distribution.',
             },
           },
         ],
@@ -455,6 +764,113 @@ const topics: GuideTopic[] = [
               tone: 'warning',
               title: 'Human-in-the-loop requirement',
               body: 'AI briefing and ICS draft output are decision-support artifacts and must be reviewed by incident command before execution.',
+            },
+          },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'dashboard-command-center',
+    title: 'Dashboard Command Center',
+    intro: 'Unified command posture view for readiness, risk, queue pressure, and cross-module execution health.',
+    keywords: ['dashboard', 'kpi', 'readiness', 'monitoring', 'command posture'],
+    sections: [
+      {
+        id: 'dashboard-overview-group',
+        title: 'Overview and quickstart',
+        links: [
+          {
+            id: 'dashboard-quickstart',
+            title: 'Run dashboard command review cycle',
+            kind: 'QUICKSTART',
+            detail: 'Use the Dashboard as a command review board to assess readiness, identify drift, and trigger focused actions in downstream modules.',
+            prerequisites: [
+              'At least one active incident is visible in dashboard scope.',
+              'Command team agrees on review cadence (for example: every 30 minutes during surge).',
+            ],
+            tutorial: [
+              'Confirm the focused incident and reporting window before interpreting KPI cards.',
+              'Review readiness, workload pressure, and exception indicators in priority order.',
+              'Open high-risk cards and route actions to Operations, Planning, Logistics, or Finance work queues.',
+              'Validate that routed actions are owner-assigned and time-bounded in destination modules.',
+              'Capture a dashboard snapshot for shift handoff and command brief continuity.',
+            ],
+            sectionChecklist: [
+              'Focused incident and time window validated.',
+              'Top risk signals acknowledged with owners.',
+              'Cross-module actions routed and verified.',
+              'Snapshot captured for handoff evidence.',
+            ],
+            expectedOutcomes: [
+              'Command leadership maintains one-glance posture awareness without losing execution depth.',
+              'Teams reduce reaction delay by routing from signal to owner in a single review cycle.',
+            ],
+            commonPitfalls: [
+              'Reading aggregate KPIs without incident/timeframe validation leads to incorrect decisions.',
+              'Monitoring risk tiles without routing actions leaves operational posture unchanged.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Dashboard discipline',
+              body: 'The dashboard should trigger actions. Treat unresolved critical signals as command tasks, not informational widgets.',
+            },
+          },
+          {
+            id: 'dashboard-kpi-reference',
+            title: 'Interpret dashboard KPI and health signals',
+            kind: 'REFERENCE',
+            detail: 'Professional interpretation guide for KPI cards, trend deltas, confidence states, and escalation thresholds.',
+            tutorial: [
+              'Use trend direction and confidence together; avoid reacting to isolated single-point changes.',
+              'Classify each high-priority signal as Immediate action, Monitor, or Informational.',
+              'When confidence is low, validate source freshness before escalation.',
+              'Document decision rationale when suppressing an alert during high-pressure operations.',
+            ],
+            expectedOutcomes: [
+              'Supervisors make consistent escalation decisions across shifts.',
+              'False escalation rates decrease through confidence-aware triage.',
+            ],
+            callout: {
+              tone: 'info',
+              title: 'Signal interpretation guardrail',
+              body: 'Use at least two corroborating indicators before issuing high-impact command changes.',
+            },
+          },
+          {
+            id: 'dashboard-sample-kpi-normalization',
+            title: 'Sample KPI normalization helper for dashboard inputs',
+            kind: 'SAMPLE',
+            detail: 'Example TypeScript utility for normalizing dashboard KPI values before rendering risk bands and trend labels.',
+            tutorial: [
+              'Map raw telemetry into typed dashboard KPI contracts.',
+              'Clamp and normalize values to avoid out-of-range rendering behavior.',
+              'Apply deterministic status thresholds so command interpretation remains consistent.',
+            ],
+            codeSample: {
+              title: 'Dashboard KPI normalization sample (TypeScript)',
+              language: 'typescript',
+              code: `type KpiState = 'stable' | 'watch' | 'critical';
+
+type DashboardKpi = {
+  key: string;
+  value: number;
+  trendDelta: number;
+  state: KpiState;
+};
+
+export function normalizeKpi(key: string, rawValue: number, rawDelta: number): DashboardKpi {
+  const value = Number.isFinite(rawValue) ? Math.max(0, Math.min(100, rawValue)) : 0;
+  const trendDelta = Number.isFinite(rawDelta) ? rawDelta : 0;
+
+  const state: KpiState = value >= 80 ? 'critical' : value >= 60 ? 'watch' : 'stable';
+  return { key, value, trendDelta, state };
+}`,
+            },
+            callout: {
+              tone: 'success',
+              title: 'Consistency benefit',
+              body: 'Normalized KPI contracts reduce UI drift and improve comparability across incidents and shifts.',
             },
           },
         ],
@@ -802,6 +1218,69 @@ const topics: GuideTopic[] = [
               body: 'The first incident setup determines data quality and coordination quality for the entire lifecycle.',
             },
           },
+          {
+            id: 'incidents-ics-workflow-context-diagram',
+            title: 'Run the ICS workflow context model and role-color assignment standard',
+            kind: 'REFERENCE',
+            detail: 'Scenario-based ICS workflow for initial call-out, command transfer, IAP cycle, expansion, and demobilization with transcript-aligned role colors in assignment avatars.',
+            prerequisites: [
+              'Incident command positions are configured in the ICS command structure board.',
+              'At least one operational period exists for the active incident.',
+              'Command staff assignment workflow is available to set role ownership.',
+            ],
+            tutorial: [
+              'Use the ICS Command Structure grid to assign command roles and verify role-color avatar cues (IC=green, Safety=red, Operations=orange, Planning=blue, Logistics=violet, Finance/Admin=gray).',
+              'At initial call-out, identify immediate life safety actions and record the first command owner and command post context.',
+              'When command transfer is required, update assignment ownership and operational notes, then notify participating agencies in the communications workflow.',
+              'Build and approve an incident action plan for the operational period, execute tasks and resource actions, then evaluate and revise objectives in recurring command cycles.',
+              'As complexity expands, add operations/logistics/finance support and maintain span-of-control accountability through assignment and check-in updates.',
+              'At demobilization, confirm personnel accountability, close unresolved actions into day-to-day workflows, and publish closeout evidence artifacts.',
+            ],
+            callout: {
+              tone: 'success',
+              title: 'Workflow context diagram',
+              body: 'Use this multi-scenario diagram set for shift handoff and training to keep all agencies aligned on command transfer, planning cadence, expansion triggers, and demobilization closure.',
+            },
+            commonPitfalls: [
+              'Keeping expansion branches active after complexity has dropped causes avoidable coordination overhead.',
+              'Skipping transfer log updates during command-owner changes weakens audit and handoff continuity.',
+              'Demobilizing resources without explicit unresolved-action ownership causes post-incident drift.',
+            ],
+            sectionChecklist: [
+              'Selected scenario path matches incident complexity posture (small, expanded, or closeout-heavy).',
+              'Role coverage and transfer ledger entries are current before each command brief.',
+              'Demobilization package includes transfer evidence, SITREP baseline, and owner-confirmed follow-up actions.',
+              'Scenario narrative is briefing-ready for executives and responder shift handoffs.',
+            ],
+            expectedOutcomes: [
+              'Operators can present the right ICS scenario visually and narratively in under two minutes.',
+              'Command-transfer, IAP cadence, and demobilization accountability remain understandable at a glance.',
+              'User Guide section becomes export/presentation ready without additional restructuring.',
+            ],
+          },
+          {
+            id: 'incidents-ics-workflow-presentation-mode',
+            title: 'Use presentation mode for export-ready ICS briefings',
+            kind: 'HOW-TO GUIDE',
+            detail: 'Clean, export-friendly briefing layout for command presentations and print workflows with side-by-side scenario narratives.',
+            tutorial: [
+              'Open Topic detail mode and navigate to the ICS workflow context model section.',
+              'Use the scenario group (Small Incident, Multi-Agency Expansion, Demobilization-Heavy) as the visual lead on the left and the narrative summary on the right.',
+              'For executive briefs, read each scenario as trigger -> command actions -> decision gate -> closeout evidence.',
+              'Keep role-color legend visible during presentation so assignment interpretation remains immediate across agencies.',
+              'Export/print from browser using landscape orientation and include only this section for briefing packets.',
+            ],
+            sectionChecklist: [
+              'Scenario diagram and narrative summary are visible in one viewport for presenter flow.',
+              'Role-color legend is visible and aligned to current command board colors (Logistics violet).',
+              'Briefing script references transfer, planning cadence, expansion control, and demobilization accountability.',
+            ],
+            callout: {
+              tone: 'info',
+              title: 'Presentation layout standard',
+              body: 'Use a clean two-column briefing rhythm: left = diagram progression, right = scenario narrative and command decisions.',
+            },
+          },
         ],
       },
     ],
@@ -1007,6 +1486,68 @@ const topics: GuideTopic[] = [
             },
           },
           {
+            id: 'admin-session-audit-evidence-export',
+            title: 'Export session/auth audit evidence from Session Admin',
+            kind: 'HOW-TO GUIDE',
+            detail: 'Use Session Admin filters to export requestable authentication/session audit evidence CSV for compliance and governance workflows.',
+            prerequisites: [
+              'Administrator role with session administration access.',
+              'Session Admin tab is accessible in current environment.',
+            ],
+            tutorial: [
+              'Open Admin workspace and navigate to Session Admin tab.',
+              'Use quick presets for common export scenarios (auth failures 24h, auth success 24h, all events 7d) when appropriate.',
+              'Set optional audit category, outcome code, and local datetime boundaries.',
+              'Run session/auth audit export to generate filtered audit evidence CSV artifact.',
+              'Return later and confirm your last-used audit filter preset and boundaries are restored for continuity.',
+              'Attach exported evidence to access-review, audit-response, or compliance requests as needed.',
+            ],
+            expectedOutcomes: [
+              'Administrators can produce requestable filtered session/auth audit evidence directly from UI controls.',
+              'Compliance workflows gain traceable, repeatable evidence exports without manual query assembly.',
+            ],
+            commonPitfalls: [
+              'Using broad filters may produce oversized exports that are harder to triage for investigations.',
+              'Skipping date boundaries can return unrelated session/auth events outside the intended review window.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Evidence hygiene',
+              body: 'Record the applied filter values when exporting session/auth evidence so downstream reviewers can reproduce audit scope.',
+            },
+          },
+          {
+            id: 'admin-bulk-user-import-evidence-export',
+            title: 'Run admin bulk user import with audit evidence export',
+            kind: 'HOW-TO GUIDE',
+            detail: 'Import users from CSV, review rejects, and export audit evidence for requestable governance/compliance workflows.',
+            prerequisites: [
+              'Administrator role with user-management permissions.',
+              'CSV file prepared with required columns for bulk import.',
+            ],
+            tutorial: [
+              'Open Admin workspace and navigate to Bulk user import (CSV).',
+              'Optionally download template, then select CSV and configure source system/message identifiers.',
+              'Run import and review summary counts for created, updated, and failed rows.',
+              'Review recent bulk import run history to verify execution timestamp, source identifiers, and result counts.',
+              'If failures exist, export reject report and correct source data before rerun.',
+              'Export admin user import audit evidence CSV and attach it to compliance/request workflows.',
+            ],
+            expectedOutcomes: [
+              'Administrators can execute repeatable bulk-user provisioning and updates with explicit telemetry context.',
+              'Governance teams receive requestable audit evidence tied to admin user import operations.',
+            ],
+            commonPitfalls: [
+              'Skipping source system/message identifiers reduces traceability across repeated import runs.',
+              'Publishing import outcomes without audit evidence export can leave compliance packages incomplete.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Audit readiness reminder',
+              body: 'Always export and retain admin user import audit evidence after production-impacting bulk import runs.',
+            },
+          },
+          {
             id: 'admin-sample',
             title: 'Sample admin runbook',
             kind: 'SAMPLE',
@@ -1078,6 +1619,84 @@ const topics: GuideTopic[] = [
             expectedOutcomes: [
               'Audit reviewers can trace critical decisions to verifiable evidence.',
             ],
+          },
+          {
+            id: 'hipaa-hitrust-compliance-narrative',
+            title: 'HIPAA/HITRUST compliance narrative and control posture',
+            kind: 'COMPLIANCE',
+            detail: 'Comprehensive narrative for documenting HIPAA Security Rule and HITRUST-aligned operational controls, evidence, and review cadence.',
+            prerequisites: [
+              'Security ownership is assigned for administrative, technical, and operational controls.',
+              'Audit evidence export workflows are enabled for reporting and admin modules.',
+            ],
+            tutorial: [
+              'Document safeguard ownership across access control, audit logging, transmission protection, and incident response procedures.',
+              'Map IPOC operational controls to HIPAA Security Rule expectations (administrative, physical, and technical safeguards).',
+              'Track HITRUST-aligned control objectives with policy references, responsible owners, and evidence locations.',
+              'Use Reports and Session/Admin exports to produce evidence packets containing user/session activity, decision traceability, and correction workflows.',
+              'Run quarterly control attestations and annual policy reviews with documented remediation plans for open gaps.',
+            ],
+            sectionChecklist: [
+              'Access governance and least-privilege assignments are reviewed and approved on schedule.',
+              'Audit logs are retained per policy and can be exported by incident scope and timeframe.',
+              'Incident response and breach-notification playbooks are versioned and tested.',
+              'Policy exceptions include risk acceptance owner, timeline, and closure criteria.',
+            ],
+            expectedOutcomes: [
+              'Compliance teams can explain control intent, implementation, and evidence sources without ad hoc reconstruction.',
+              'External assessors receive a structured narrative linking policy, implementation, and operational artifacts.',
+            ],
+            commonPitfalls: [
+              'Claiming compliance posture without maintaining current evidence trails weakens audit defensibility.',
+              'Treating framework mappings as one-time work instead of a recurring governance cycle.',
+            ],
+            callout: {
+              tone: 'warning',
+              title: 'Assurance boundary',
+              body: 'Framework alignment guidance supports readiness. Formal compliance or certification status must be confirmed through your official governance and independent assessment process.',
+            },
+          },
+          {
+            id: 'hipaa-hitrust-evidence-package-sample',
+            title: 'Sample HIPAA/HITRUST evidence package structure',
+            kind: 'SAMPLE',
+            detail: 'Reference structure for organizing policy, technical, and operational evidence for assessment and audit workflows.',
+            tutorial: [
+              'Create evidence package sections for Access Control, Audit Controls, Integrity, Transmission Security, and Incident Response.',
+              'Attach module exports (reporting, session auth evidence, command-transfer artifacts) with owner and timestamp metadata.',
+              'Include control mapping worksheet with framework requirement, implementation note, and proof link.',
+              'Record open findings with risk rank, remediation owner, and target closure date.',
+            ],
+            codeSample: {
+              title: 'Compliance evidence manifest example (JSON)',
+              language: 'json',
+              code: `{
+  "assessmentWindow": "2026-Q1",
+  "frameworks": ["HIPAA-Security-Rule", "HITRUST-CSF"],
+  "controls": [
+    {
+      "id": "AC-01",
+      "name": "Least Privilege Access",
+      "owner": "Security Admin",
+      "evidence": [
+        "exports/session-auth-audit-2026-01.csv",
+        "exports/admin-role-assignment-review-2026-01.csv"
+      ],
+      "status": "implemented"
+    },
+    {
+      "id": "AU-02",
+      "name": "Audit Trail Retention",
+      "owner": "Platform Operations",
+      "evidence": [
+        "reports/decision-history-2026-01.md",
+        "reports/after-action-evidence-2026-01.csv"
+      ],
+      "status": "implemented"
+    }
+  ]
+}`,
+            },
           },
           {
             id: 'observability-reference',
@@ -1173,6 +1792,23 @@ const topics: GuideTopic[] = [
   },
 ];
 
+const topicsWithDeepDive: GuideTopic[] = topics.map((topic) => ({
+  ...topic,
+  sections: topic.sections.map((section, sectionIndex) => {
+    if (sectionIndex !== topic.sections.length - 1) {
+      return section;
+    }
+
+    return {
+      ...section,
+      links: [
+        ...section.links,
+        ...buildTopicDeepDiveLinks(topic.title, topic.id),
+      ],
+    };
+  }),
+}));
+
 function UserGuidePage({ initialView }: UserGuidePageProps) {
   const [searchText, setSearchText] = useState('');
   const [selectedTopicId, setSelectedTopicId] = useState(viewToTopic[initialView]);
@@ -1195,9 +1831,20 @@ function UserGuidePage({ initialView }: UserGuidePageProps) {
       return defaults;
     }
   });
+  const [icsPrintDensity, setIcsPrintDensity] = useState<'standard' | 'compact'>(() => {
+    const persisted = localStorage.getItem(icsPrintDensityLocalStorageKey);
+    return persisted === 'standard' ? 'standard' : 'compact';
+  });
   const groupButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
-  const topicsById = useMemo(() => Object.fromEntries(topics.map((topic) => [topic.id, topic])), []);
+  const topicsById = useMemo(() => Object.fromEntries(topicsWithDeepDive.map((topic) => [topic.id, topic])), []);
+
+  const sectionRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  const openTopic = (topicId: string) => {
+    setSelectedTopicId(topicId);
+    setContentMode('topic');
+  };
 
   const filteredNavGroups = useMemo(() => {
     const query = searchText.trim().toLowerCase();
@@ -1236,12 +1883,31 @@ function UserGuidePage({ initialView }: UserGuidePageProps) {
     localStorage.setItem(tocExpandedStateLocalStorageKey, JSON.stringify(expandedGroups));
   }, [expandedGroups]);
 
-  const selectedTopic = topicsById[selectedTopicId] ?? topics[0];
+  useEffect(() => {
+    localStorage.setItem(icsPrintDensityLocalStorageKey, icsPrintDensity);
+  }, [icsPrintDensity]);
 
-  const openTopic = (topicId: string) => {
-    setSelectedTopicId(topicId);
-    setContentMode('topic');
-  };
+  const selectedTopic = topicsById[selectedTopicId] ?? topicsWithDeepDive[0];
+
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash || hash.length <= 1) {
+      return;
+    }
+
+    const params = new URLSearchParams(hash.slice(1));
+    const topic = params.get('topic');
+    const link = params.get('link');
+    if (topic && topicsById[topic]) {
+      openTopic(topic);
+    }
+
+    if (link) {
+      window.setTimeout(() => {
+        sectionRefs.current[link]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 120);
+    }
+  }, [topicsById]);
 
   const toggleGroup = (groupId: string) => {
     setExpandedGroups((current) => ({ ...current, [groupId]: !(current[groupId] ?? true) }));
@@ -1269,7 +1935,7 @@ function UserGuidePage({ initialView }: UserGuidePageProps) {
   };
 
   return (
-    <div className="ipoc-help-page container-fluid py-3">
+    <div className="ipoc-help-page container-fluid py-3" data-ics-print-density={icsPrintDensity}>
       <Row className="g-3">
         <Col lg={isTocCollapsed ? 'auto' : 3} className={`ipoc-help-toc-col ${isTocCollapsed ? 'ipoc-help-toc-col-collapsed' : ''}`}>
           <Card className={`shadow-sm ipoc-help-toc-card sticky-top ${isTocCollapsed ? 'ipoc-help-toc-card-collapsed' : ''}`} style={{ top: '1rem', maxHeight: 'calc(100vh - 2rem)' }}>
@@ -1430,19 +2096,87 @@ function UserGuidePage({ initialView }: UserGuidePageProps) {
 
               <Row className="g-3">
                 {selectedTopic.sections.map((section) => (
-                  <Col xl={6} key={section.id}>
+                  <Col xl={selectedTopic.sections.length > 1 ? 6 : 12} key={section.id}>
                     <Card className="shadow-sm h-100 ipoc-help-doc-card">
                       <Card.Header className="fw-semibold">{section.title}</Card.Header>
                       <Card.Body>
                         {section.links.map((link) => {
                           const accordionBase = `${section.id}-${link.id}`;
                           return (
-                            <div key={link.id} className="mb-4 pb-1 border-bottom">
+                            <div
+                              key={link.id}
+                              className={`mb-4 pb-1 border-bottom ${link.id === 'incidents-ics-workflow-context-diagram' ? 'ipoc-ics-presentation-section' : ''} ${link.id === 'incidents-ics-workflow-presentation-mode' ? 'ipoc-ics-presentation-mode-section' : ''}`}
+                              data-testid={link.id === 'incidents-ics-workflow-context-diagram' ? 'user-guide-ics-presentation-section' : undefined}
+                              ref={(element) => {
+                                sectionRefs.current[link.id] = element;
+                              }}
+                            >
                               <div className="d-flex align-items-center justify-content-between gap-2 mb-1">
                                 <div className="fw-semibold mb-1">{link.title}</div>
                                 <Badge bg="secondary" className="fw-semibold">{link.kind}</Badge>
                               </div>
                               <div className="small text-muted mb-2">{link.detail}</div>
+
+                              {link.id === 'incidents-ics-workflow-context-diagram' && (
+                                <div className="mb-3 ipoc-ics-presentation-summary-wrap" data-testid="user-guide-ics-scenario-summary-grid">
+                                  <div className="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2" data-testid="user-guide-ics-print-density-controls">
+                                    <div className="small text-uppercase fw-semibold text-muted mb-0" data-testid="user-guide-ics-presentation-heading">Scenario summary for executive briefing</div>
+                                    <div className="btn-group btn-group-sm" role="group" aria-label="ICS print density">
+                                      <button
+                                        type="button"
+                                        className={`btn ${icsPrintDensity === 'standard' ? 'btn-primary' : 'btn-outline-primary'}`}
+                                        onClick={() => setIcsPrintDensity('standard')}
+                                        data-testid="user-guide-ics-print-density-standard"
+                                      >
+                                        Print: Standard
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className={`btn ${icsPrintDensity === 'compact' ? 'btn-primary' : 'btn-outline-primary'}`}
+                                        onClick={() => setIcsPrintDensity('compact')}
+                                        data-testid="user-guide-ics-print-density-compact"
+                                      >
+                                        Print: Compact
+                                      </button>
+                                    </div>
+                                  </div>
+                                  <IcsWorkflowScenarioDiagram />
+                                  <Row className="g-2 mb-2 ipoc-ics-scenario-card-grid">
+                                    <Col md={4}>
+                                      <Card className="h-100 border-success-subtle bg-success-subtle ipoc-ics-scenario-card ipoc-ics-scenario-card-small">
+                                        <Card.Body className="p-2">
+                                          <div className="small fw-semibold mb-1">Small Incident</div>
+                                          <div className="small mb-0">Lean command path focused on immediate life safety, rapid tasking, and minimal transfer overhead.</div>
+                                        </Card.Body>
+                                      </Card>
+                                    </Col>
+                                    <Col md={4}>
+                                      <Card className="h-100 border-info-subtle bg-info-subtle ipoc-ics-scenario-card ipoc-ics-scenario-card-multiagency">
+                                        <Card.Body className="p-2">
+                                          <div className="small fw-semibold mb-1">Multi-Agency Expansion</div>
+                                          <div className="small mb-0">Unified command with full section activation, recurring IAP loop cadence, and span-of-control governance.</div>
+                                        </Card.Body>
+                                      </Card>
+                                    </Col>
+                                    <Col md={4}>
+                                      <Card className="h-100 border-secondary-subtle bg-light ipoc-ics-scenario-card ipoc-ics-scenario-card-demob">
+                                        <Card.Body className="p-2">
+                                          <div className="small fw-semibold mb-1">Demobilization-Heavy</div>
+                                          <div className="small mb-0">Resource release sequencing, unresolved action ownership handoff, and closeout packet readiness.</div>
+                                        </Card.Body>
+                                      </Card>
+                                    </Col>
+                                  </Row>
+                                  <div className="d-flex flex-wrap gap-2 small ipoc-ics-role-legend" data-testid="user-guide-ics-role-color-legend">
+                                    <Badge bg="light" text="dark">IC · Green</Badge>
+                                    <Badge bg="light" text="dark">Safety · Red</Badge>
+                                    <Badge bg="light" text="dark">Operations · Orange</Badge>
+                                    <Badge bg="light" text="dark">Planning · Blue</Badge>
+                                    <Badge bg="light" text="dark">Logistics · Violet</Badge>
+                                    <Badge bg="light" text="dark">Finance/Admin · Gray</Badge>
+                                  </div>
+                                </div>
+                              )}
 
                               {link.callout && (
                                 <div className={`border rounded-2 px-3 py-2 mb-2 ${getCalloutClassName(link.callout.tone)}`}>
@@ -1515,7 +2249,7 @@ function UserGuidePage({ initialView }: UserGuidePageProps) {
                                   </Accordion.Item>
                                 )}
 
-                                {link.codeSample && (
+                                {link.codeSample && link.id !== 'incidents-ics-workflow-context-diagram' && (
                                   <Accordion.Item eventKey={`${accordionBase}-code`}>
                                     <Accordion.Header>{link.codeSample.title}</Accordion.Header>
                                     <Accordion.Body>

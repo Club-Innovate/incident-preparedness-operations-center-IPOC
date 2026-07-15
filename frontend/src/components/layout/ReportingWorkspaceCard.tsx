@@ -77,6 +77,7 @@ const REPORT_APPROVAL_DECISIONS_SCOPE = 'reports-pending-approval-decisions-v1';
 const REPORT_DECISION_HISTORY_SCOPE = 'reports-pending-approval-decision-history-v1';
 const REPORT_ASSISTANT_PREFILL_PROMPT_KEY = 'ipoc.agent.prefillPrompt';
 const REPORT_EXECUTIVE_BRIEF_CACHE_LOCAL_KEY = 'ipoc.reports.executiveDecisionBriefCache.v1';
+const REPORT_EXECUTIVE_BRIEF_STALE_MAX_AGE_MS = 6 * 60 * 60 * 1000;
 
 type ReportFilterPreset = {
   id: string;
@@ -124,6 +125,11 @@ type ExecutiveDecisionBriefPackage = {
   hasDecisionHistory: boolean;
 };
 
+type ResolvedExecutiveDecisionBrief = {
+  briefPackage: ExecutiveDecisionBriefPackage;
+  source: 'live' | 'cache';
+};
+
 type ExecutiveDecisionBriefCache = {
   narrative: string;
   generatedUtc: string;
@@ -157,6 +163,25 @@ const REPORT_DEFAULT_PALETTE: VisualizationPalette = {
 
 function isHexColor(value: unknown): value is string {
   return typeof value === 'string' && /^#[0-9a-fA-F]{6}$/.test(value);
+}
+
+function formatDurationFromMs(durationMs: number): string {
+  if (!Number.isFinite(durationMs) || durationMs < 0) {
+    return 'Unknown age';
+  }
+
+  const totalMinutes = Math.floor(durationMs / 60000);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (hours <= 0) {
+    return `${minutes}m`;
+  }
+
+  return `${hours}h ${minutes}m`;
+}
+
+function csvEscape(value: string | number | null | undefined): string {
+  return `"${String(value ?? '').replace(/"/g, '""')}"`;
 }
 
 function normalizePalette(candidate: unknown, fallback: VisualizationPalette): VisualizationPalette {
@@ -228,6 +253,7 @@ function ReportingWorkspaceCard({
   const [executiveBriefPreviewRecommendationCount, setExecutiveBriefPreviewRecommendationCount] = useState(0);
   const [executiveBriefPreviewHasBaseline, setExecutiveBriefPreviewHasBaseline] = useState(false);
   const [executiveBriefPreviewHasDecisionHistory, setExecutiveBriefPreviewHasDecisionHistory] = useState(false);
+  const [executiveBriefPreviewLastCacheRestored, setExecutiveBriefPreviewLastCacheRestored] = useState(false);
   const [reportFilterPresetName, setReportFilterPresetName] = useState('');
   const [reportFilterPresets, setReportFilterPresets] = useState<ReportFilterPreset[]>(() => {
     try {
@@ -360,7 +386,6 @@ function ReportingWorkspaceCard({
   };
 
   const exportPendingApprovalExecutiveSummaryCsv = () => {
-    const csvEscape = (value: string | number | null | undefined) => `"${String(value ?? '').replace(/"/g, '""')}"`;
     const rows = pendingApprovalRows
       .map((row) => {
         const savedDecision = pendingApprovalDecisions[row.incidentId];
@@ -698,6 +723,7 @@ function ReportingWorkspaceCard({
       setExecutiveBriefPreviewRecommendationCount(Number.isFinite(parsed.recommendationCount) ? Number(parsed.recommendationCount) : 0);
       setExecutiveBriefPreviewHasBaseline(parsed.hasBaseline === true);
       setExecutiveBriefPreviewHasDecisionHistory(parsed.hasDecisionHistory === true);
+      setExecutiveBriefPreviewLastCacheRestored(true);
     } catch {
       // Ignore malformed local brief cache payloads.
     }
@@ -1229,6 +1255,13 @@ function ReportingWorkspaceCard({
     activityDelta: leftComparisonMetrics && rightComparisonMetrics ? leftComparisonMetrics.recentCreatedPercent - rightComparisonMetrics.recentCreatedPercent : 0,
   };
 
+  const executiveBriefPreviewGeneratedMs = executiveBriefPreviewGeneratedUtc ? Date.parse(executiveBriefPreviewGeneratedUtc) : Number.NaN;
+  const executiveBriefPreviewAgeMs = Number.isFinite(executiveBriefPreviewGeneratedMs) ? Math.max(0, nowMs - executiveBriefPreviewGeneratedMs) : Number.NaN;
+  const executiveBriefPreviewIsStale = Number.isFinite(executiveBriefPreviewAgeMs)
+    ? executiveBriefPreviewAgeMs > REPORT_EXECUTIVE_BRIEF_STALE_MAX_AGE_MS
+    : false;
+  const executiveBriefPreviewAgeText = Number.isFinite(executiveBriefPreviewAgeMs) ? formatDurationFromMs(executiveBriefPreviewAgeMs) : 'Unknown age';
+
   const swapComparisonSides = () => {
     if (!comparisonLeftValue && !comparisonRightValue) {
       return;
@@ -1324,37 +1357,80 @@ function ReportingWorkspaceCard({
     setExecutiveBriefPreviewHasDecisionHistory(briefPackage.hasDecisionHistory);
   };
 
+  const resolveExecutiveDecisionBriefForAction = (allowCachedFallback: boolean): ResolvedExecutiveDecisionBrief | null => {
+    const liveBriefPackage = buildExecutiveDecisionBriefPackage();
+    if (liveBriefPackage) {
+      setExecutiveBriefPreviewLastCacheRestored(false);
+      return {
+        briefPackage: liveBriefPackage,
+        source: 'live',
+      };
+    }
+
+    if (!allowCachedFallback) {
+      return null;
+    }
+
+    if (executiveBriefPreviewMarkdown.trim().length === 0) {
+      onNotify?.('No executive brief is available yet. Generate a brief from pending recommendations first.', 'warning');
+      return null;
+    }
+
+    const fallbackGeneratedUtc = executiveBriefPreviewGeneratedUtc ?? new Date().toISOString();
+    const cachedBriefPackage: ExecutiveDecisionBriefPackage = {
+      narrative: executiveBriefPreviewMarkdown,
+      generatedUtc: fallbackGeneratedUtc,
+      recommendationCount: executiveBriefPreviewRecommendationCount,
+      hasBaseline: executiveBriefPreviewHasBaseline,
+      hasDecisionHistory: executiveBriefPreviewHasDecisionHistory,
+    };
+
+    setExecutiveBriefPreviewGeneratedUtc(fallbackGeneratedUtc);
+    setExecutiveBriefPreviewLastCacheRestored(true);
+    onNotify?.('No current recommendation rows available. Using the last generated executive brief from cache.', 'info');
+    return {
+      briefPackage: cachedBriefPackage,
+      source: 'cache',
+    };
+  };
+
   const exportExecutiveDecisionBrief = () => {
-    const briefPackage = buildExecutiveDecisionBriefPackage();
-    if (!briefPackage) {
+    const resolved = resolveExecutiveDecisionBriefForAction(true);
+    if (!resolved) {
       return;
     }
+
+    const { briefPackage, source } = resolved;
 
     applyExecutiveBriefPreviewPackage(briefPackage);
     const blob = new Blob([briefPackage.narrative], { type: 'text/markdown;charset=utf-8;' });
     downloadBlob(blob, 'reports-executive-decision-brief', 'md');
-    onNotify?.(`Executive decision brief exported with ${briefPackage.recommendationCount} recommendation bundle item(s).`, 'success');
+    onNotify?.(
+      source === 'cache'
+        ? `Executive decision brief exported from cache with ${briefPackage.recommendationCount} recommendation bundle item(s).`
+        : `Executive decision brief exported with ${briefPackage.recommendationCount} recommendation bundle item(s).`,
+      'success',
+    );
   };
 
   const previewExecutiveDecisionBrief = () => {
-    const briefPackage = buildExecutiveDecisionBriefPackage();
-    if (!briefPackage) {
-      if (executiveBriefPreviewMarkdown.trim().length > 0) {
-        setExecutiveBriefPreviewOpen(true);
-        onNotify?.('Showing last generated executive brief from cache because no recommendations are currently available.', 'info');
-      }
+    const resolved = resolveExecutiveDecisionBriefForAction(true);
+    if (!resolved) {
       return;
     }
 
+    const { briefPackage } = resolved;
     applyExecutiveBriefPreviewPackage(briefPackage);
     setExecutiveBriefPreviewOpen(true);
   };
 
   const copyExecutiveDecisionBriefToClipboard = async () => {
-    const briefPackage = buildExecutiveDecisionBriefPackage();
-    if (!briefPackage) {
+    const resolved = resolveExecutiveDecisionBriefForAction(true);
+    if (!resolved) {
       return;
     }
+
+    const { briefPackage, source } = resolved;
 
     applyExecutiveBriefPreviewPackage(briefPackage);
     if (!window.navigator.clipboard || typeof window.navigator.clipboard.writeText !== 'function') {
@@ -1364,17 +1440,19 @@ function ReportingWorkspaceCard({
 
     try {
       await window.navigator.clipboard.writeText(briefPackage.narrative);
-      onNotify?.('Executive decision brief copied to clipboard.', 'success');
+      onNotify?.(source === 'cache' ? 'Executive decision brief copied to clipboard from cache.' : 'Executive decision brief copied to clipboard.', 'success');
     } catch {
       onNotify?.('Unable to copy executive decision brief to clipboard.', 'danger');
     }
   };
 
   const stageExecutiveDecisionBriefForAssistant = () => {
-    const briefPackage = buildExecutiveDecisionBriefPackage();
-    if (!briefPackage) {
+    const resolved = resolveExecutiveDecisionBriefForAction(true);
+    if (!resolved) {
       return;
     }
+
+    const { briefPackage, source } = resolved;
 
     applyExecutiveBriefPreviewPackage(briefPackage);
     const assistantPrompt = [
@@ -1384,7 +1462,35 @@ function ReportingWorkspaceCard({
     ].join('\n');
 
     localStorage.setItem(REPORT_ASSISTANT_PREFILL_PROMPT_KEY, assistantPrompt);
-    onNotify?.('Executive decision brief staged for AI Incident Co-Pilot. Open Assistant and submit when ready.', 'info');
+    onNotify?.(
+      source === 'cache'
+        ? 'Cached executive decision brief staged for AI Incident Co-Pilot. Open Assistant and submit when ready.'
+        : 'Executive decision brief staged for AI Incident Co-Pilot. Open Assistant and submit when ready.',
+      'info',
+    );
+  };
+
+  const clearExecutiveDecisionBriefCache = () => {
+    setExecutiveBriefPreviewMarkdown('');
+    setExecutiveBriefPreviewGeneratedUtc(null);
+    setExecutiveBriefPreviewRecommendationCount(0);
+    setExecutiveBriefPreviewHasBaseline(false);
+    setExecutiveBriefPreviewHasDecisionHistory(false);
+    setExecutiveBriefPreviewLastCacheRestored(false);
+    setExecutiveBriefPreviewOpen(false);
+    localStorage.removeItem(REPORT_EXECUTIVE_BRIEF_CACHE_LOCAL_KEY);
+    onNotify?.('Executive decision brief cache cleared.', 'info');
+  };
+
+  const regenerateExecutiveDecisionBriefFromLiveData = () => {
+    const liveBriefPackage = buildExecutiveDecisionBriefPackage();
+    if (!liveBriefPackage) {
+      return;
+    }
+
+    applyExecutiveBriefPreviewPackage(liveBriefPackage);
+    setExecutiveBriefPreviewLastCacheRestored(false);
+    onNotify?.('Executive decision brief regenerated from current recommendation data.', 'success');
   };
 
   const stampExecutiveDeltaBaseline = () => {
@@ -1833,6 +1939,245 @@ function ReportingWorkspaceCard({
     failureRatePercent: Number(((externalProviderHealthTrends?.totals.failureRate ?? 0) * 100).toFixed(2)),
     providersObserved: externalProviderHealthTrends?.providerSummary.length ?? 0,
     federationEnvironments: externalProviderHealthFederationSummary?.environmentCount ?? 0,
+  };
+
+  const hvaSnapshotRows = [
+    {
+      hazard: 'Public health surge escalation',
+      probability: severityRiskScore >= 70 ? 'High' : severityRiskScore >= 45 ? 'Moderate' : 'Low',
+      impact: volumeHealthScore >= 75 ? 'High' : volumeHealthScore >= 45 ? 'Moderate' : 'Low',
+      mitigation: 'Elevate cross-agency command watch, verify surge staffing posture, and pre-stage critical supply channels.',
+    },
+    {
+      hazard: 'Command delivery degradation',
+      probability: governancePosture.failureRatePercent >= 10 ? 'Moderate' : 'Low',
+      impact: reportingCompletenessScore < 60 ? 'High' : 'Moderate',
+      mitigation: 'Activate external provider governance drill, route to Operations for corrective dispatch sequencing, and confirm acknowledgments.',
+    },
+    {
+      hazard: 'Decision latency due to unresolved recommendations',
+      probability: pendingApprovalRows.length > 0 ? 'Moderate' : 'Low',
+      impact: selectedPendingApprovalSummary.pending > 0 ? 'High' : 'Moderate',
+      mitigation: 'Run pending approval batch triage and publish executive brief with attributed decision history before shift handoff.',
+    },
+  ];
+
+  const exportHvaReadinessSnapshotCsv = () => {
+    const generatedUtc = new Date().toISOString();
+    const metadata = [
+      ['GeneratedUtc', generatedUtc],
+      ['ReportWindowDays', reportWindowDays],
+      ['ReportGroupBy', reportGroupBy],
+      ['StatusFilter', reportStatusFilter],
+      ['TypeFilter', reportTypeFilter],
+      ['VolumeHealthScore', volumeHealthScore],
+      ['SeverityRiskScore', severityRiskScore],
+      ['ReportingCompletenessScore', reportingCompletenessScore],
+      ['GovernanceFailureRatePercent', governancePosture.failureRatePercent],
+      ['PendingApprovalRows', pendingApprovalRows.length],
+    ].map(([key, value]) => `# ${csvEscape(key)},${csvEscape(value)}`);
+
+    const header = ['Hazard', 'Probability', 'Impact', 'Mitigation'].join(',');
+    const rows = hvaSnapshotRows.map((row) => [
+      csvEscape(row.hazard),
+      csvEscape(row.probability),
+      csvEscape(row.impact),
+      csvEscape(row.mitigation),
+    ].join(','));
+
+    const content = [...metadata, header, ...rows].join('\n');
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    downloadBlob(blob, 'reports-hva-readiness-snapshot', 'csv');
+    onNotify?.('HVA readiness snapshot CSV exported for RFP evidence workflows.', 'success');
+  };
+
+  const exportFemaCompatibleAarCsv = () => {
+    const generatedUtc = new Date().toISOString();
+    const metadata = [
+      ['GeneratedUtc', generatedUtc],
+      ['Format', 'FEMA-Compatible AAR/IP Baseline'],
+      ['ReportWindowDays', reportWindowDays],
+      ['ReportGroupBy', reportGroupBy],
+      ['StatusFilter', reportStatusFilter],
+      ['TypeFilter', reportTypeFilter],
+      ['IncidentRows', filtered.length],
+      ['PendingApprovalRows', pendingApprovalRows.length],
+      ['DecisionHistoryRows', pendingApprovalDecisionHistoryRows.length],
+      ['VolumeHealthScore', volumeHealthScore],
+      ['SeverityRiskScore', severityRiskScore],
+      ['ReportingCompletenessScore', reportingCompletenessScore],
+    ].map(([key, value]) => `# ${csvEscape(key)},${csvEscape(value)}`);
+
+    const summaryHeader = ['Section', 'Metric', 'Value'].join(',');
+    const summaryRows = [
+      ['Operational summary', 'Comparative posture narrative', comparisonNarrative],
+      ['Operational summary', 'Executive baseline UTC', executiveDeltaReferenceDateUtc ?? 'Not captured'],
+      ['Operational summary', 'Governance failure rate percent', governancePosture.failureRatePercent],
+      ['Operational summary', 'Top queue incidents in scope', decisionQueueRows.length],
+    ].map((row) => row.map((value) => csvEscape(value)).join(','));
+
+    const decisionHeader = ['Section', 'DecidedAtUtc', 'IncidentNumber', 'IncidentName', 'Decision', 'DecidedBy', 'Rationale'].join(',');
+    const decisionRows = (pendingApprovalDecisionHistoryRows.length > 0
+      ? pendingApprovalDecisionHistoryRows
+      : [{
+        decidedAtUtc: generatedUtc,
+        incidentNumber: 'N/A',
+        incidentName: 'No decision history entries in current report scope',
+        decision: 'N/A',
+        decidedByDisplayName: '',
+        rationale: '',
+      }]
+    ).map((entry) => [
+      csvEscape('Decision history'),
+      csvEscape(entry.decidedAtUtc),
+      csvEscape(entry.incidentNumber),
+      csvEscape(entry.incidentName),
+      csvEscape(entry.decision),
+      csvEscape(entry.decidedByDisplayName ?? ''),
+      csvEscape(entry.rationale ?? ''),
+    ].join(','));
+
+    const timelineHeader = ['Section', 'TimelineDate', 'RiskScore', 'ActiveIncidents', 'Incidents'].join(',');
+    const timelineRows = (riskTimelineRows.length > 0
+      ? riskTimelineRows
+      : [{ date: 'N/A', riskScore: 0, activeIncidents: 0, incidents: 0 }]
+    ).map((row) => [
+      csvEscape('Risk timeline'),
+      csvEscape(row.date),
+      csvEscape(row.riskScore),
+      csvEscape(row.activeIncidents),
+      csvEscape(row.incidents),
+    ].join(','));
+
+    const hazardHeader = ['Section', 'Hazard', 'Probability', 'Impact', 'Mitigation'].join(',');
+    const hazardRows = hvaSnapshotRows.map((row) => [
+      csvEscape('HVA readiness'),
+      csvEscape(row.hazard),
+      csvEscape(row.probability),
+      csvEscape(row.impact),
+      csvEscape(row.mitigation),
+    ].join(','));
+
+    const content = [
+      ...metadata,
+      summaryHeader,
+      ...summaryRows,
+      decisionHeader,
+      ...decisionRows,
+      timelineHeader,
+      ...timelineRows,
+      hazardHeader,
+      ...hazardRows,
+    ].join('\n');
+
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    downloadBlob(blob, 'reports-fema-compatible-aar', 'csv');
+    onNotify?.('FEMA-compatible AAR/IP baseline CSV exported.', 'success');
+  };
+
+  const exportRiskTimelineReplayCsv = () => {
+    const generatedUtc = new Date().toISOString();
+    const metadata = [
+      ['GeneratedUtc', generatedUtc],
+      ['ReportWindowDays', reportWindowDays],
+      ['ReportGroupBy', reportGroupBy],
+      ['StatusFilter', reportStatusFilter],
+      ['TypeFilter', reportTypeFilter],
+      ['IncidentRows', filtered.length],
+      ['TimelineRows', riskTimelineRows.length],
+    ].map(([key, value]) => `# ${csvEscape(key)},${csvEscape(value)}`);
+
+    const timelineHeader = ['TimelineDate', 'RiskScore', 'ActiveIncidents', 'Incidents'].join(',');
+    const timelineRows = (riskTimelineRows.length > 0
+      ? riskTimelineRows
+      : [{ date: 'N/A', riskScore: 0, activeIncidents: 0, incidents: 0 }]
+    ).map((row) => [
+      csvEscape(row.date),
+      csvEscape(row.riskScore),
+      csvEscape(row.activeIncidents),
+      csvEscape(row.incidents),
+    ].join(','));
+
+    const replayHeader = ['IncidentNumber', 'IncidentName', 'CreatedUtc', 'Status', 'Severity'].join(',');
+    const replayRows = (filtered.length > 0
+      ? [...filtered]
+        .sort((left, right) => Date.parse(left.createdUtc) - Date.parse(right.createdUtc))
+        .slice(0, 200)
+      : [{ incidentNumber: 'N/A', incidentName: 'No incidents in current report scope', createdUtc: generatedUtc, incidentStatusCode: 'N/A', severityCode: 'N/A' }]
+    ).map((incident) => [
+      csvEscape(incident.incidentNumber),
+      csvEscape(incident.incidentName),
+      csvEscape(incident.createdUtc),
+      csvEscape(incident.incidentStatusCode),
+      csvEscape(incident.severityCode ?? 'Unspecified'),
+    ].join(','));
+
+    const content = [
+      ...metadata,
+      timelineHeader,
+      ...timelineRows,
+      replayHeader,
+      ...replayRows,
+    ].join('\n');
+
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    downloadBlob(blob, 'reports-risk-timeline-replay', 'csv');
+    onNotify?.('Risk timeline replay CSV exported.', 'success');
+  };
+
+  const aarImprovementPlanRows = [
+    {
+      capabilityGap: 'Decision closure latency',
+      observedSignal: `${selectedPendingApprovalSummary.pending} pending recommendation decisions`,
+      correctiveAction: 'Run batch decision workflow and publish executive brief with attributed decision log before next command update.',
+      ownerLane: 'Operations',
+      targetWindow: 'Next operational period',
+    },
+    {
+      capabilityGap: 'Reporting completeness drift',
+      observedSignal: `Reporting completeness score at ${reportingCompletenessScore}%`,
+      correctiveAction: 'Assign overdue objective/task triage owner and execute mid-shift reporting integrity checkpoint.',
+      ownerLane: 'Planning',
+      targetWindow: 'Within 24 hours',
+    },
+    {
+      capabilityGap: 'Risk stabilization pressure',
+      observedSignal: `Severity risk index ${severityRiskScore}% with ${decisionQueueRows.length} queue incidents in scope`,
+      correctiveAction: 'Prioritize high-risk queue incidents for command routing and verify cross-workspace mitigation handoff completion.',
+      ownerLane: 'Incident Command',
+      targetWindow: 'Immediate',
+    },
+  ];
+
+  const exportAarImprovementPlanCsv = () => {
+    const generatedUtc = new Date().toISOString();
+    const metadata = [
+      ['GeneratedUtc', generatedUtc],
+      ['Format', 'AAR Improvement Plan Baseline'],
+      ['ReportWindowDays', reportWindowDays],
+      ['ReportGroupBy', reportGroupBy],
+      ['StatusFilter', reportStatusFilter],
+      ['TypeFilter', reportTypeFilter],
+      ['IncidentRows', filtered.length],
+      ['DecisionQueueRows', decisionQueueRows.length],
+      ['PendingApprovalRows', pendingApprovalRows.length],
+      ['ReportingCompletenessScore', reportingCompletenessScore],
+      ['SeverityRiskScore', severityRiskScore],
+    ].map(([key, value]) => `# ${csvEscape(key)},${csvEscape(value)}`);
+
+    const header = ['CapabilityGap', 'ObservedSignal', 'CorrectiveAction', 'OwnerLane', 'TargetWindow'].join(',');
+    const rows = aarImprovementPlanRows.map((row) => [
+      csvEscape(row.capabilityGap),
+      csvEscape(row.observedSignal),
+      csvEscape(row.correctiveAction),
+      csvEscape(row.ownerLane),
+      csvEscape(row.targetWindow),
+    ].join(','));
+
+    const content = [...metadata, header, ...rows].join('\n');
+    const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+    downloadBlob(blob, 'reports-aar-improvement-plan', 'csv');
+    onNotify?.('AAR improvement plan baseline CSV exported.', 'success');
   };
 
   const applyReportTemplate = (template: 'executive' | 'risk' | 'volume') => {
@@ -2306,6 +2651,22 @@ function ReportingWorkspaceCard({
                 </div>
                 <div className="d-inline-flex align-items-center gap-2">
                   <IconActionButton
+                    iconClassName="bi bi-journal-richtext"
+                    tooltip="Export FEMA-compatible AAR/IP baseline CSV for after-action readiness evidence"
+                    ariaLabel="Export FEMA-compatible AAR IP baseline CSV"
+                    onClick={exportFemaCompatibleAarCsv}
+                    variant="outline-dark"
+                    testId="reports-fema-aar-export"
+                  />
+                  <IconActionButton
+                    iconClassName="bi bi-clipboard2-check"
+                    tooltip="Export AAR improvement plan baseline CSV with corrective actions and owner lanes"
+                    ariaLabel="Export AAR improvement plan baseline CSV"
+                    onClick={exportAarImprovementPlanCsv}
+                    variant="outline-secondary"
+                    testId="reports-aar-improvement-plan-export"
+                  />
+                  <IconActionButton
                     iconClassName="bi bi-clock-history"
                     tooltip="Capture trend delta baseline timestamp"
                     ariaLabel="Capture trend delta baseline timestamp"
@@ -2345,6 +2706,62 @@ function ReportingWorkspaceCard({
                     variant="outline-info"
                     testId="reports-executive-brief-stage-assistant"
                   />
+                  <IconActionButton
+                    iconClassName="bi bi-trash"
+                    tooltip="Clear cached executive brief preview content"
+                    ariaLabel="Clear cached executive decision brief preview"
+                    onClick={clearExecutiveDecisionBriefCache}
+                    variant="outline-secondary"
+                    disabled={executiveBriefPreviewMarkdown.trim().length === 0}
+                    testId="reports-executive-brief-clear-cache"
+                  />
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+
+        <Row className="g-2 mb-3">
+          <Col md={12}>
+            <Card className="border-0 bg-body-tertiary" data-testid="reports-hva-readiness-card">
+              <Card.Body className="py-2">
+                <div className="d-flex flex-wrap align-items-center justify-content-between gap-2 mb-2">
+                  <div>
+                    <div className="small fw-semibold">HVA readiness snapshot</div>
+                    <div className="small text-muted">Command-ready hazard probability/impact baseline derived from current report scope.</div>
+                  </div>
+                  <div className="d-inline-flex align-items-center gap-2">
+                    <IconActionButton
+                      iconClassName="bi bi-file-earmark-spreadsheet"
+                      tooltip="Export HVA readiness snapshot as CSV for bid and operational evidence workflows"
+                      ariaLabel="Export HVA readiness snapshot CSV"
+                      onClick={exportHvaReadinessSnapshotCsv}
+                      variant="outline-primary"
+                      testId="reports-hva-readiness-export"
+                    />
+                  </div>
+                </div>
+                <div className="table-responsive" data-testid="reports-hva-readiness-table">
+                  <table className="table table-sm mb-0">
+                    <thead>
+                      <tr>
+                        <th>Hazard</th>
+                        <th className="text-end">Probability</th>
+                        <th className="text-end">Impact</th>
+                        <th>Mitigation baseline</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {hvaSnapshotRows.map((row) => (
+                        <tr key={row.hazard}>
+                          <td><strong>{row.hazard}</strong></td>
+                          <td className="text-end">{row.probability}</td>
+                          <td className="text-end">{row.impact}</td>
+                          <td className="small text-muted">{row.mitigation}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </Card.Body>
             </Card>
@@ -2359,6 +2776,11 @@ function ReportingWorkspaceCard({
             <div className="small text-muted mb-2" data-testid="reports-executive-brief-preview-meta">
               Generated: {executiveBriefPreviewGeneratedUtc ? new Date(executiveBriefPreviewGeneratedUtc).toLocaleString() : 'Unknown'} · Recommendations: {executiveBriefPreviewRecommendationCount}
             </div>
+            {executiveBriefPreviewGeneratedUtc ? (
+              <div className="small text-muted mb-2" data-testid="reports-executive-brief-preview-generated-utc">
+                Generated UTC (exact): {executiveBriefPreviewGeneratedUtc}
+              </div>
+            ) : null}
             <div className="small mb-2" data-testid="reports-executive-brief-preview-quality-checklist">
               <div className="fw-semibold">Brief quality checklist</div>
               <div className="d-inline-flex flex-wrap gap-1 mt-1">
@@ -2371,6 +2793,14 @@ function ReportingWorkspaceCard({
                 <Badge bg={executiveBriefPreviewHasDecisionHistory ? 'success' : 'warning'}>
                   Decision history {executiveBriefPreviewHasDecisionHistory ? 'included' : 'missing'}
                 </Badge>
+                <Badge bg={executiveBriefPreviewIsStale ? 'warning' : 'success'} data-testid="reports-executive-brief-preview-freshness">
+                  Freshness {executiveBriefPreviewIsStale ? `stale (${executiveBriefPreviewAgeText})` : `current (${executiveBriefPreviewAgeText})`}
+                </Badge>
+                {executiveBriefPreviewLastCacheRestored ? (
+                  <Badge bg="info" data-testid="reports-executive-brief-preview-cache-source">
+                    Source cache-restored
+                  </Badge>
+                ) : null}
               </div>
             </div>
             <pre className="small mb-0" style={{ whiteSpace: 'pre-wrap' }} data-testid="reports-executive-brief-preview-content">{executiveBriefPreviewMarkdown}</pre>
@@ -2378,6 +2808,15 @@ function ReportingWorkspaceCard({
           <Modal.Footer>
             <Button size="sm" variant="outline-secondary" onClick={() => setExecutiveBriefPreviewOpen(false)}>
               Close
+            </Button>
+            <Button
+              size="sm"
+              variant="outline-warning"
+              onClick={regenerateExecutiveDecisionBriefFromLiveData}
+              disabled={pendingApprovalRows.length === 0}
+              data-testid="reports-executive-brief-preview-regenerate"
+            >
+              Regenerate now
             </Button>
             <Button
               size="sm"
@@ -4145,7 +4584,17 @@ function ReportingWorkspaceCard({
 
         <Card className="border-0 bg-body-tertiary mb-3" data-testid="reports-risk-timeline-card">
           <Card.Body className="py-2">
-            <div className="small fw-semibold mb-2">Risk-change timeline</div>
+            <div className="small fw-semibold mb-2 d-flex align-items-center justify-content-between gap-2 flex-wrap">
+              <span>Risk-change timeline</span>
+              <IconActionButton
+                iconClassName="bi bi-clock-history"
+                tooltip="Export risk-change timeline replay CSV for after-action evidence workflows"
+                ariaLabel="Export risk-change timeline replay CSV"
+                onClick={exportRiskTimelineReplayCsv}
+                variant="outline-secondary"
+                testId="reports-risk-timeline-export"
+              />
+            </div>
             {riskTimelineRows.length === 0 ? (
               <div className="small text-muted">No timeline risk data for selected filters and date window.</div>
             ) : (

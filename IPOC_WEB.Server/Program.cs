@@ -5369,6 +5369,106 @@ incidents.MapPut("/{incidentId:long}/command-assignments", async (long incidentI
 .RequireAuthorization(AuthorizationPolicies.IncidentCommander)
 .WithName("UpsertIncidentCommandAssignment");
 
+incidents.MapGet("/{incidentId:long}/command-transfer-log", async (long incidentId, IIncidentQueryService incidentQueryService, IAuditEventWriter auditWriter, HttpContext httpContext, CancellationToken cancellationToken) =>
+{
+    if (incidentId <= 0)
+    {
+        return Results.ValidationProblem(new Dictionary<string, string[]>
+        {
+            ["incidentId"] = ["incidentId must be greater than zero."]
+        });
+    }
+
+    var transferLog = await incidentQueryService.GetIncidentCommandTransferLogAsync(incidentId, cancellationToken);
+
+    await auditWriter.WriteAsync(
+        httpContext,
+        new AuditEventWriteModel(
+            httpContext.TryGetActorUserId(),
+            "INCIDENT",
+            "INCIDENT_COMMAND_TRANSFER_LOG_VIEW",
+            "ic",
+            "IncidentCommandAssignment",
+            incidentId.ToString(CultureInfo.InvariantCulture),
+            incidentId,
+            null,
+            "Success",
+            JsonSerializer.Serialize(new
+            {
+                incidentId,
+                transferCount = transferLog.Count,
+                traceId = httpContext.TraceIdentifier
+            })),
+        cancellationToken);
+
+    return Results.Ok(transferLog);
+})
+.RequireAuthorization(AuthorizationPolicies.IncidentViewer)
+.WithName("GetIncidentCommandTransferLog");
+
+incidents.MapPost("/{incidentId:long}/command-transfer-log", async (
+    long incidentId,
+    CreateIncidentCommandTransferRequestDto request,
+    ClaimsPrincipal user,
+    IIncidentQueryService incidentQueryService,
+    IUserQueryService userQueryService,
+    IAuditEventWriter auditWriter,
+    HttpContext httpContext,
+    CancellationToken cancellationToken) =>
+{
+    if (incidentId <= 0)
+    {
+        return Results.ValidationProblem(new Dictionary<string, string[]>
+        {
+            ["incidentId"] = ["incidentId must be greater than zero."]
+        });
+    }
+
+    var requestErrors = ValidateCreateIncidentCommandTransferRequest(request);
+    if (requestErrors is not null)
+    {
+        return Results.ValidationProblem(requestErrors);
+    }
+
+    var assignedByUserId = await ResolveEffectiveUserIdAsync(user, userQueryService);
+    if (assignedByUserId is null)
+    {
+        return Results.Problem(
+            title: "Unable to resolve request user.",
+            detail: "No active application user is available for command transfer logging.",
+            statusCode: StatusCodes.Status503ServiceUnavailable);
+    }
+
+    await incidentQueryService.UpsertIncidentCommandTransferAsync(incidentId, request, assignedByUserId.Value, cancellationToken);
+
+    await auditWriter.WriteAsync(
+        httpContext,
+        new AuditEventWriteModel(
+            assignedByUserId.Value,
+            "INCIDENT",
+            "INCIDENT_COMMAND_TRANSFER_LOG_CREATE",
+            "ic",
+            "IncidentCommandAssignment",
+            request.IcsPositionId.ToString(CultureInfo.InvariantCulture),
+            incidentId,
+            null,
+            "Success",
+            JsonSerializer.Serialize(new
+            {
+                incidentId,
+                request.IcsPositionId,
+                request.AssignedUserId,
+                request.AssignedContactId,
+                request.AgencyOrganizationId,
+                traceId = httpContext.TraceIdentifier
+            })),
+        cancellationToken);
+
+    return Results.NoContent();
+})
+.RequireAuthorization(AuthorizationPolicies.IncidentCommander)
+.WithName("CreateIncidentCommandTransferLog");
+
 incidents.MapDelete("/{incidentId:long}/command-assignments/{icsPositionId:int}", async (long incidentId, int icsPositionId, IIncidentQueryService incidentQueryService, IAuditEventWriter auditWriter, HttpContext httpContext, CancellationToken cancellationToken) =>
 {
     if (incidentId <= 0)
@@ -11862,6 +11962,48 @@ static Dictionary<string, string[]>? ValidateUpsertCommandAssignmentRequest(Upse
     if (!string.IsNullOrWhiteSpace(request.Notes) && request.Notes.Trim().Length > 1000)
     {
         errors["notes"] = ["Notes cannot exceed 1000 characters."];
+    }
+
+    return errors.Count == 0 ? null : errors;
+}
+
+static Dictionary<string, string[]>? ValidateCreateIncidentCommandTransferRequest(CreateIncidentCommandTransferRequestDto request)
+{
+    var errors = new Dictionary<string, string[]>();
+
+    if (request.IcsPositionId <= 0)
+    {
+        errors["icsPositionId"] = ["IcsPositionId must be greater than zero."];
+    }
+
+    if (request.AssignedUserId is null && request.AssignedContactId is null)
+    {
+        errors["request"] = ["Either AssignedUserId or AssignedContactId must be provided."];
+    }
+
+    if (request.AssignedUserId is not null && request.AssignedUserId <= 0)
+    {
+        errors["assignedUserId"] = ["AssignedUserId must be greater than zero when provided."];
+    }
+
+    if (request.AssignedContactId is not null && request.AssignedContactId <= 0)
+    {
+        errors["assignedContactId"] = ["AssignedContactId must be greater than zero when provided."];
+    }
+
+    if (request.AgencyOrganizationId is not null && request.AgencyOrganizationId <= 0)
+    {
+        errors["agencyOrganizationId"] = ["AgencyOrganizationId must be greater than zero when provided."];
+    }
+
+    if (!string.IsNullOrWhiteSpace(request.TransferSummary) && request.TransferSummary.Trim().Length > 500)
+    {
+        errors["transferSummary"] = ["TransferSummary cannot exceed 500 characters."];
+    }
+
+    if (!string.IsNullOrWhiteSpace(request.CommandPostLocation) && request.CommandPostLocation.Trim().Length > 200)
+    {
+        errors["commandPostLocation"] = ["CommandPostLocation cannot exceed 200 characters."];
     }
 
     return errors.Count == 0 ? null : errors;

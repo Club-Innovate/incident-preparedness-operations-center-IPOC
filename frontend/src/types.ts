@@ -1263,6 +1263,34 @@ export interface UpsertIncidentCommandAssignmentRequest {
   notes?: string;
 }
 
+export interface IncidentCommandTransferLogEntry {
+  incidentCommandAssignmentId: number;
+  incidentId: number;
+  icsPositionId: number;
+  positionCode: string;
+  positionName: string;
+  icsSection: string;
+  assignedUserId: number | null;
+  assignedUserDisplayName: string | null;
+  assignedContactId: number | null;
+  assignedContactName: string | null;
+  agencyOrganizationId: number | null;
+  agencyOrganizationName: string | null;
+  assignedFromUtc: string;
+  assignedToUtc: string | null;
+  assignmentStatusCode: string;
+  notes: string | null;
+}
+
+export interface CreateIncidentCommandTransferRequest {
+  icsPositionId: number;
+  assignedUserId?: number;
+  assignedContactId?: number;
+  agencyOrganizationId?: number;
+  transferSummary?: string;
+  commandPostLocation?: string;
+}
+
 export interface ActiveUser {
   userId: number;
   displayName: string;

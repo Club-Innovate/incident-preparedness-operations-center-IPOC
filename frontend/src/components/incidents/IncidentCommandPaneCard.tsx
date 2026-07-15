@@ -37,6 +37,7 @@ import type {
   IncidentOperationalPeriod,
   IncidentObjective,
   IncidentOperationalInsight,
+  UserReportPreset,
   NotificationRecipient,
   UpdateRecipientDeliveryStatusRequest,
   UpdateIncidentObjectiveRequest,
@@ -45,6 +46,7 @@ import type {
   LookupValue,
   SituationReport,
   IncidentCommunicationLifecycleSummary,
+  IncidentCommandTransferLogEntry,
 } from '../../types';
 import LabelWithInfo from '../common/LabelWithInfo';
 import IconActionButton from '../common/IconActionButton';
@@ -158,6 +160,67 @@ type IncidentCommandPaneCardProps = {
   onNotify?: (message: string, variant: 'success' | 'danger' | 'warning' | 'info') => void;
 };
 
+type TransferQuickRangeKey = 'today' | 'last24h' | 'last7d';
+
+type TransferFilterPreset = {
+  id: string;
+  name: string;
+  statusFilter: string;
+  sectionFilter: string;
+  dateFromFilter: string;
+  dateToFilter: string;
+  userReportPresetId?: number;
+};
+
+const transferFilterPresetScope = 'incident-command-transfer-filter-presets-v1';
+const transferFilterPresetLocalStorageKey = 'ipoc.incident.commandTransferFilterPresets.v1';
+
+function toDateInputValue(value: Date): string {
+  return value.toISOString().slice(0, 10);
+}
+
+function parseTransferFilterPreset(record: UserReportPreset): TransferFilterPreset | null {
+  try {
+    const parsed = JSON.parse(record.presetJson) as {
+      statusFilter?: string;
+      sectionFilter?: string;
+      dateFromFilter?: string;
+      dateToFilter?: string;
+    };
+
+    return {
+      id: `server-${record.userReportPresetId}`,
+      name: record.presetName,
+      statusFilter: parsed.statusFilter?.trim() || 'All',
+      sectionFilter: parsed.sectionFilter?.trim() || 'All',
+      dateFromFilter: parsed.dateFromFilter?.trim() || '',
+      dateToFilter: parsed.dateToFilter?.trim() || '',
+      userReportPresetId: record.userReportPresetId,
+    };
+  } catch {
+    return null;
+  }
+}
+
+type IncidentCommandTransferLogGridRow = {
+  id: string;
+  transferUtc: string;
+  icsSection: string;
+  positionName: string;
+  assignedTo: string;
+  commandPost: string;
+  transferSummary: string;
+  statusCode: string;
+  transferDateUtc: string;
+};
+
+type IapCycleStatusRow = {
+  id: string;
+  stage: string;
+  status: 'Complete' | 'In Progress' | 'Pending';
+  evidence: string;
+};
+
 type TabKey = 'overview' | 'tasks' | 'timeline' | 'periods' | 'resources' | 'communications' | 'sitrep';
 type RemediationIntent = 'resource-open-unassigned' | 'resource-transition-coverage' | 'iap-approve-period' | 'iap-build-packet' | null;
 
@@ -169,9 +232,55 @@ type IcsCommandStructureGridRow = {
   icsSection: string;
   assignmentStatus: 'Assigned' | 'Vacant';
   assignedTo: string;
+  assignedInitials: string;
+  avatarBgColor: string;
+  avatarTextColor: string;
+  roleColorLegend: string;
   agency: string;
   notes: string;
 };
+
+function getInitialsFromDisplayName(value: string): string {
+  const words = value.trim().split(/\s+/).filter(Boolean);
+  if (words.length === 0) {
+    return 'NA';
+  }
+
+  if (words.length === 1) {
+    return words[0].slice(0, 2).toUpperCase();
+  }
+
+  return `${words[0][0] ?? ''}${words[1][0] ?? ''}`.toUpperCase();
+}
+
+function resolveIcsRoleAvatarColors(positionCode: string): { bgColor: string; textColor: string; legend: string } {
+  const normalized = normalizePositionKey(positionCode);
+  if (normalized === 'IC') {
+    return { bgColor: '#9fd6b6', textColor: '#1f3d2b', legend: 'Incident Commander (green)' };
+  }
+
+  if (normalized.startsWith('SO')) {
+    return { bgColor: '#e8a3ad', textColor: '#4a1d24', legend: 'Safety Officer (red)' };
+  }
+
+  if (normalized.startsWith('OPS')) {
+    return { bgColor: '#f2c29f', textColor: '#5a3418', legend: 'Operations Section Chief (orange)' };
+  }
+
+  if (normalized.startsWith('PLN')) {
+    return { bgColor: '#9ed9e8', textColor: '#1d3e49', legend: 'Planning Section Chief (blue)' };
+  }
+
+  if (normalized.startsWith('LOG')) {
+    return { bgColor: '#cbb6f2', textColor: '#372257', legend: 'Logistics Section Chief (violet)' };
+  }
+
+  if (normalized.startsWith('FIN') || normalized.startsWith('ADM')) {
+    return { bgColor: '#d7dbe2', textColor: '#333840', legend: 'Finance/Admin Section Chief (gray)' };
+  }
+
+  return { bgColor: '#c6d0dc', textColor: '#253241', legend: 'General ICS assignment' };
+}
 
 function isAbortError(error: unknown): boolean {
   return error instanceof Error && error.name === 'AbortError';
@@ -413,6 +522,30 @@ function IncidentCommandPaneCard({
   const [icsAutoRefreshAttempted, setIcsAutoRefreshAttempted] = useState(false);
   const [assignmentAutoRefreshAttempted, setAssignmentAutoRefreshAttempted] = useState(false);
   const [isIcsCommandStructureExpanded, setIsIcsCommandStructureExpanded] = useState(true);
+  const [commandTransferLogRows, setCommandTransferLogRows] = useState<IncidentCommandTransferLogEntry[]>([]);
+  const [commandTransferLogLoading, setCommandTransferLogLoading] = useState(false);
+  const [transferPositionIdInput, setTransferPositionIdInput] = useState('');
+  const [transferAssignedUserIdInput, setTransferAssignedUserIdInput] = useState('');
+  const [transferSummaryInput, setTransferSummaryInput] = useState('');
+  const [transferCommandPostLocationInput, setTransferCommandPostLocationInput] = useState('');
+  const [transferStatusFilter, setTransferStatusFilter] = useState('All');
+  const [transferSectionFilter, setTransferSectionFilter] = useState('All');
+  const [transferDateFromFilter, setTransferDateFromFilter] = useState('');
+  const [transferDateToFilter, setTransferDateToFilter] = useState('');
+  const [transferFilterPresetNameInput, setTransferFilterPresetNameInput] = useState('');
+  const [transferFilterPresets, setTransferFilterPresets] = useState<TransferFilterPreset[]>(() => {
+    const raw = localStorage.getItem(transferFilterPresetLocalStorageKey);
+    if (!raw) {
+      return [];
+    }
+
+    try {
+      const parsed = JSON.parse(raw) as TransferFilterPreset[];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  });
   const [editingOperationalPeriodId, setEditingOperationalPeriodId] = useState<number | null>(null);
   const [editingOperationalPeriodNumberInput, setEditingOperationalPeriodNumberInput] = useState('');
   const [editingOperationalPeriodNameInput, setEditingOperationalPeriodNameInput] = useState('');
@@ -434,6 +567,83 @@ function IncidentCommandPaneCard({
   const [editingObjectiveDueInput, setEditingObjectiveDueInput] = useState('');
   const [objectiveEditValidationError, setObjectiveEditValidationError] = useState<string | null>(null);
   const [savingObjectiveEdit, setSavingObjectiveEdit] = useState(false);
+
+  const loadCommandTransferLog = async () => {
+    if (!selectedIncidentId) {
+      setCommandTransferLogRows([]);
+      return;
+    }
+
+    setCommandTransferLogLoading(true);
+    try {
+      const api = await import('../../api');
+      const rows = await api.getIncidentCommandTransferLog(selectedIncidentId);
+      setCommandTransferLogRows(rows);
+    } catch (error) {
+      console.error('Failed to load command transfer log:', error);
+      onNotify?.(error instanceof Error ? error.message : 'Failed to load command transfer log.', 'danger');
+    } finally {
+      setCommandTransferLogLoading(false);
+    }
+  };
+
+  const transferPositionOptions = useMemo(() => (
+    icsPositions
+      .slice()
+      .sort((a, b) => a.sortOrder - b.sortOrder)
+      .map((position) => ({
+        value: String(position.icsPositionId),
+        label: `${position.positionCode} · ${position.positionName}`,
+      }))
+  ), [icsPositions]);
+
+  const transferUserOptions = useMemo(() => (
+    taskAssignableUsers
+      .slice()
+      .sort((left, right) => left.displayName.localeCompare(right.displayName))
+      .map((user) => ({
+        value: String(user.userId),
+        label: user.organizationName ? `${user.displayName} (${user.organizationName})` : user.displayName,
+      }))
+  ), [taskAssignableUsers]);
+
+  const handleCreateCommandTransferLog = async () => {
+    if (!selectedIncidentId) {
+      onNotify?.('Select an incident before logging command transfer.', 'warning');
+      return;
+    }
+
+    const positionId = Number(transferPositionIdInput);
+    const userId = Number(transferAssignedUserIdInput);
+
+    if (!Number.isFinite(positionId) || positionId <= 0) {
+      onNotify?.('ICS position is required for transfer logging.', 'warning');
+      return;
+    }
+
+    if (!Number.isFinite(userId) || userId <= 0) {
+      onNotify?.('Assigned user is required for transfer logging.', 'warning');
+      return;
+    }
+
+    try {
+      const api = await import('../../api');
+      await api.createIncidentCommandTransferLog(selectedIncidentId, {
+        icsPositionId: positionId,
+        assignedUserId: userId,
+        transferSummary: transferSummaryInput.trim() || undefined,
+        commandPostLocation: transferCommandPostLocationInput.trim() || undefined,
+      });
+
+      setTransferSummaryInput('');
+      setTransferCommandPostLocationInput('');
+      await Promise.all([loadCommandTransferLog(), onRefreshIncidentCommandAssignments()]);
+      onNotify?.('Command transfer log entry added.', 'success');
+    } catch (error) {
+      console.error('Failed to create command transfer log entry:', error);
+      onNotify?.(error instanceof Error ? error.message : 'Failed to create command transfer log entry.', 'danger');
+    }
+  };
 
   const beginOperationalPeriodEdit = (period: IncidentOperationalPeriod) => {
     setOperationalPeriodEditValidationError(null);
@@ -1433,6 +1643,49 @@ function IncidentCommandPaneCard({
   ]);
 
   useEffect(() => {
+    if ((activeTab !== 'overview' && activeTab !== 'sitrep') || !isAuthenticated || commandTransferLogLoading || commandTransferLogRows.length > 0) {
+      return;
+    }
+
+    void loadCommandTransferLog();
+  }, [activeTab, isAuthenticated, commandTransferLogLoading, commandTransferLogRows.length, selectedIncidentId]);
+
+  useEffect(() => {
+    localStorage.setItem(transferFilterPresetLocalStorageKey, JSON.stringify(transferFilterPresets));
+  }, [transferFilterPresets]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+
+    let isMounted = true;
+    import('../../api')
+      .then((api) => api.getUserReportPresets(transferFilterPresetScope))
+      .then((presets) => {
+        if (!isMounted) {
+          return;
+        }
+
+        const mapped = presets
+          .map((preset) => parseTransferFilterPreset(preset))
+          .filter((preset): preset is TransferFilterPreset => preset !== null)
+          .slice(0, 12);
+
+        if (mapped.length > 0) {
+          setTransferFilterPresets(mapped);
+        }
+      })
+      .catch((error) => {
+        console.error('Failed to load transfer filter presets:', error);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [isAuthenticated]);
+
+  useEffect(() => {
     if (!import.meta.env.DEV || activeTab !== 'overview') {
       return;
     }
@@ -1462,10 +1715,19 @@ function IncidentCommandPaneCard({
     setIcsAutoRefreshAttempted(false);
     setAssignmentAutoRefreshAttempted(false);
     setOptimisticAssignedUsers({});
+    setCommandTransferLogRows([]);
+    setTransferPositionIdInput('');
+    setTransferAssignedUserIdInput('');
+    setTransferSummaryInput('');
+    setTransferCommandPostLocationInput('');
+    setTransferStatusFilter('All');
+    setTransferSectionFilter('All');
+    setTransferDateFromFilter('');
+    setTransferDateToFilter('');
   }, [selectedIncidentId]);
 
   useEffect(() => {
-    if ((activeTab !== 'tasks' && activeTab !== 'periods' && activeTab !== 'communications') || !isAuthenticated || taskAssignableUsersLoading || taskAssignableUsers.length > 0) {
+    if ((activeTab !== 'overview' && activeTab !== 'tasks' && activeTab !== 'periods' && activeTab !== 'communications') || !isAuthenticated || taskAssignableUsersLoading || taskAssignableUsers.length > 0) {
       return;
     }
 
@@ -2390,6 +2652,81 @@ function IncidentCommandPaneCard({
     { field: 'statusCode', headerName: 'Status', minWidth: 120, flex: 0.8, cellRenderer: (params: { value?: string }) => <Badge bg={statusVariant(params.value ?? '')}>{params.value ?? '—'}</Badge> },
     { field: 'assignedToUserDisplayName', headerName: 'Assigned To', minWidth: 170, flex: 1 },
     { field: 'dueUtc', headerName: 'Due', minWidth: 170, flex: 1, valueFormatter: (params) => (params.value ? new Date(String(params.value)).toLocaleString() : '—') },
+  ], []);
+
+  const iapCycleStatusRows = useMemo<IapCycleStatusRow[]>(() => {
+    const approvedPeriods = incidentOperationalPeriods.filter((period) => period.statusCode.toLowerCase() === 'approved').length;
+    const hasObjectives = incidentObjectives.length > 0;
+    const hasAssignments = incidentCommandAssignments.length > 0;
+    const openTasks = incidentTasks.filter((task) => task.statusCode.toLowerCase() !== 'completed').length;
+    const hasSitrep = (situationReports.length > 0) || !!ics201Data;
+
+    const stageStatus = (isComplete: boolean, inProgress: boolean): IapCycleStatusRow['status'] => {
+      if (isComplete) {
+        return 'Complete';
+      }
+
+      if (inProgress) {
+        return 'In Progress';
+      }
+
+      return 'Pending';
+    };
+
+    return [
+      {
+        id: 'iap-stage-understand',
+        stage: '1. Understand situation',
+        status: stageStatus(hasSitrep, !!incidentDetail),
+        evidence: hasSitrep ? 'SITREP / ICS-201 available' : 'Awaiting SITREP capture',
+      },
+      {
+        id: 'iap-stage-objectives',
+        stage: '2. Establish objectives',
+        status: stageStatus(hasObjectives, incidentOperationalPeriods.length > 0),
+        evidence: hasObjectives ? `${incidentObjectives.length} objective(s)` : 'No objectives recorded',
+      },
+      {
+        id: 'iap-stage-develop',
+        stage: '3. Develop plan',
+        status: stageStatus(hasAssignments && hasObjectives, hasAssignments || hasObjectives),
+        evidence: hasAssignments ? `${incidentCommandAssignments.length} assignment(s)` : 'Command assignments pending',
+      },
+      {
+        id: 'iap-stage-approve',
+        stage: '4. Approve and disseminate',
+        status: stageStatus(approvedPeriods > 0, incidentOperationalPeriods.length > 0),
+        evidence: approvedPeriods > 0 ? `${approvedPeriods} approved period(s)` : 'No approved operational periods',
+      },
+      {
+        id: 'iap-stage-execute',
+        stage: '5. Execute plan',
+        status: stageStatus(openTasks === 0 && incidentTasks.length > 0, incidentTasks.length > 0),
+        evidence: incidentTasks.length > 0 ? `${openTasks} open task(s)` : 'No execution tasks',
+      },
+      {
+        id: 'iap-stage-evaluate',
+        stage: '6. Evaluate and revise',
+        status: stageStatus(commandTransferLogRows.length > 0, hasSitrep || incidentTimelineEvents.length > 0),
+        evidence: commandTransferLogRows.length > 0 ? `${commandTransferLogRows.length} transfer log row(s)` : 'No transfer/evaluation logs yet',
+      },
+    ];
+  }, [incidentOperationalPeriods, incidentObjectives, incidentCommandAssignments, incidentTasks, situationReports, ics201Data, incidentDetail, commandTransferLogRows.length, incidentTimelineEvents.length]);
+
+  const iapCycleStatusColumnDefs: ColDef<IapCycleStatusRow>[] = useMemo(() => [
+    { field: 'stage', headerName: 'IAP Stage', minWidth: 240, flex: 1.3 },
+    {
+      field: 'status',
+      headerName: 'Status',
+      minWidth: 140,
+      flex: 0.8,
+      cellRenderer: (params: { value?: IapCycleStatusRow['status'] }) => {
+        const status = params.value ?? 'Pending';
+        const bg = status === 'Complete' ? 'success' : status === 'In Progress' ? 'info' : 'secondary';
+        return <Badge bg={bg}>{status}</Badge>;
+      },
+    },
+    { field: 'evidence', headerName: 'Evidence', minWidth: 240, flex: 1.4 },
   ], []);
 
   const ics214GridRows = useMemo(() => (ics214Data?.entries ?? []).slice(0, 50).map((entry, index) => ({
@@ -3607,6 +3944,8 @@ function IncidentCommandPaneCard({
       ?? (assignment?.assignedUserId ? `User #${assignment.assignedUserId}` : null)
       ?? optimisticAssignedDisplayName
       ?? '—';
+    const avatarRoleColors = resolveIcsRoleAvatarColors(position.positionCode);
+    const assignedInitials = assignedTo === '—' ? 'VA' : getInitialsFromDisplayName(assignedTo);
 
     return {
       id: `ics-position-${position.icsPositionId}`,
@@ -3616,6 +3955,10 @@ function IncidentCommandPaneCard({
       icsSection: position.icsSection,
       assignmentStatus: isAssigned ? 'Assigned' : 'Vacant',
       assignedTo,
+      assignedInitials,
+      avatarBgColor: avatarRoleColors.bgColor,
+      avatarTextColor: avatarRoleColors.textColor,
+      roleColorLegend: avatarRoleColors.legend,
       agency: assignment?.agencyOrganizationName ?? '—',
       notes: assignment?.notes ?? '—',
     };
@@ -3635,7 +3978,41 @@ function IncidentCommandPaneCard({
         return <Badge bg={value === 'Assigned' ? 'success' : 'secondary'}>{value}</Badge>;
       },
     },
-    { field: 'assignedTo', headerName: 'Assigned To', minWidth: 220, flex: 1.4 },
+    {
+      field: 'assignedTo',
+      headerName: 'Assigned To',
+      minWidth: 260,
+      flex: 1.5,
+      cellRenderer: (params: { data?: IcsCommandStructureGridRow }) => {
+        const row = params.data;
+        if (!row) {
+          return null;
+        }
+
+        return (
+          <div className="d-flex align-items-center gap-2">
+            <span
+              className="rounded-circle d-inline-flex align-items-center justify-content-center fw-semibold"
+              title={row.roleColorLegend}
+              style={{
+                width: 28,
+                height: 28,
+                backgroundColor: row.avatarBgColor,
+                color: row.avatarTextColor,
+                fontSize: '0.72rem',
+                border: `1px solid ${row.avatarTextColor}`,
+              }}
+            >
+              {row.assignedInitials}
+            </span>
+            <div className="d-flex flex-column">
+              <span>{row.assignedTo}</span>
+              <small className="text-muted">{row.roleColorLegend}</small>
+            </div>
+          </div>
+        );
+      },
+    },
     { field: 'agency', headerName: 'Agency', minWidth: 180, flex: 1.1 },
     { field: 'notes', headerName: 'Notes', minWidth: 220, flex: 1.4, cellClass: 'text-truncate' },
     {
@@ -3695,6 +4072,328 @@ function IncidentCommandPaneCard({
       },
     },
   ], [incidentActionLoading, isAuthenticated, onRemoveCommandAssignment]);
+
+  const incidentCommandTransferLogRows = useMemo<IncidentCommandTransferLogGridRow[]>(() => commandTransferLogRows.map((row, index) => {
+    const raw = row as unknown as Record<string, unknown>;
+    const notes = typeof raw.notes === 'string' ? raw.notes : '';
+    const commandPostMatch = notes.match(/CommandPost:\s*([^|]+)/i);
+    const transferSummaryMatch = notes.match(/Transfer:\s*([^|]+)/i);
+
+    const idValue = raw.incidentCommandTransferLogEntryId ?? raw.incidentCommandAssignmentId ?? index;
+    const transferUtcValue = raw.transferUtc ?? raw.assignedFromUtc ?? raw.createdUtc ?? '';
+    const sectionValue = typeof raw.icsSection === 'string' ? raw.icsSection : '—';
+    const positionValue = typeof raw.positionName === 'string' ? raw.positionName : '—';
+    const assignedUserDisplayName = typeof raw.assignedUserDisplayName === 'string' ? raw.assignedUserDisplayName : '';
+    const assignedContactName = typeof raw.assignedContactName === 'string' ? raw.assignedContactName : '';
+    const commandPostLocation = typeof raw.commandPostLocation === 'string' ? raw.commandPostLocation : '';
+    const transferSummary = typeof raw.transferSummary === 'string' ? raw.transferSummary : '';
+    const statusCodeValue = typeof raw.statusCode === 'string'
+      ? raw.statusCode
+      : typeof raw.assignmentStatusCode === 'string'
+        ? raw.assignmentStatusCode
+        : 'Unknown';
+
+    return {
+      id: `command-transfer-${String(idValue)}`,
+      transferUtc: String(transferUtcValue),
+      icsSection: sectionValue,
+      positionName: positionValue,
+      assignedTo: assignedUserDisplayName || assignedContactName || '—',
+      commandPost: commandPostLocation || commandPostMatch?.[1]?.trim() || '—',
+      transferSummary: transferSummary || transferSummaryMatch?.[1]?.trim() || '—',
+      statusCode: statusCodeValue,
+      transferDateUtc: String(transferUtcValue),
+    };
+  }), [commandTransferLogRows]);
+
+  const transferStatusFilterOptions = useMemo(() => {
+    const options = Array.from(new Set(incidentCommandTransferLogRows.map((row) => row.statusCode).filter((value) => value && value !== '—')))
+      .sort((left, right) => left.localeCompare(right));
+    return ['All', ...options];
+  }, [incidentCommandTransferLogRows]);
+
+  const transferSectionFilterOptions = useMemo(() => {
+    const options = Array.from(new Set(incidentCommandTransferLogRows.map((row) => row.icsSection).filter((value) => value && value !== '—')))
+      .sort((left, right) => left.localeCompare(right));
+    return ['All', ...options];
+  }, [incidentCommandTransferLogRows]);
+
+  const filteredIncidentCommandTransferLogRows = useMemo(() => {
+    const fromUtc = transferDateFromFilter.trim().length > 0 ? new Date(transferDateFromFilter).getTime() : null;
+    const toUtc = transferDateToFilter.trim().length > 0 ? new Date(`${transferDateToFilter}T23:59:59.999`).getTime() : null;
+
+    return incidentCommandTransferLogRows.filter((row) => {
+      if (transferStatusFilter !== 'All' && row.statusCode !== transferStatusFilter) {
+        return false;
+      }
+
+      if (transferSectionFilter !== 'All' && row.icsSection !== transferSectionFilter) {
+        return false;
+      }
+
+      if (fromUtc !== null || toUtc !== null) {
+        const rowUtc = new Date(row.transferDateUtc).getTime();
+        if (Number.isNaN(rowUtc)) {
+          return false;
+        }
+
+        if (fromUtc !== null && rowUtc < fromUtc) {
+          return false;
+        }
+
+        if (toUtc !== null && rowUtc > toUtc) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+  }, [incidentCommandTransferLogRows, transferStatusFilter, transferSectionFilter, transferDateFromFilter, transferDateToFilter]);
+
+  const handleClearTransferFilters = () => {
+    setTransferStatusFilter('All');
+    setTransferSectionFilter('All');
+    setTransferDateFromFilter('');
+    setTransferDateToFilter('');
+  };
+
+  const handleApplyTransferQuickRange = (range: TransferQuickRangeKey) => {
+    const now = new Date();
+
+    if (range === 'today') {
+      const today = toDateInputValue(now);
+      setTransferDateFromFilter(today);
+      setTransferDateToFilter(today);
+      return;
+    }
+
+    if (range === 'last24h') {
+      const previous = new Date(now.getTime() - (24 * 60 * 60 * 1000));
+      setTransferDateFromFilter(toDateInputValue(previous));
+      setTransferDateToFilter(toDateInputValue(now));
+      return;
+    }
+
+    const previous = new Date(now.getTime() - (7 * 24 * 60 * 60 * 1000));
+    setTransferDateFromFilter(toDateInputValue(previous));
+    setTransferDateToFilter(toDateInputValue(now));
+  };
+
+  const handleApplyTransferFilterPreset = (preset: TransferFilterPreset) => {
+    setTransferStatusFilter(preset.statusFilter || 'All');
+    setTransferSectionFilter(preset.sectionFilter || 'All');
+    setTransferDateFromFilter(preset.dateFromFilter || '');
+    setTransferDateToFilter(preset.dateToFilter || '');
+    onNotify?.(`Applied transfer filter preset: ${preset.name}`, 'info');
+  };
+
+  const handleSaveTransferFilterPreset = async () => {
+    const normalizedName = transferFilterPresetNameInput.trim();
+    if (!normalizedName) {
+      onNotify?.('Preset name is required before saving transfer filters.', 'warning');
+      return;
+    }
+
+    const nextPreset: TransferFilterPreset = {
+      id: `local-${Date.now()}`,
+      name: normalizedName,
+      statusFilter: transferStatusFilter,
+      sectionFilter: transferSectionFilter,
+      dateFromFilter: transferDateFromFilter,
+      dateToFilter: transferDateToFilter,
+    };
+
+    const existing = transferFilterPresets.filter((preset) => preset.name.toLowerCase() !== normalizedName.toLowerCase());
+    const localNext = [nextPreset, ...existing].slice(0, 12);
+
+    try {
+      if (isAuthenticated) {
+        const api = await import('../../api');
+        const userReportPresetId = await api.upsertUserReportPreset(transferFilterPresetScope, {
+          presetName: normalizedName,
+          presetJson: JSON.stringify({
+            statusFilter: transferStatusFilter,
+            sectionFilter: transferSectionFilter,
+            dateFromFilter: transferDateFromFilter,
+            dateToFilter: transferDateToFilter,
+          }),
+        });
+
+        const merged = localNext.map((preset) => (
+          preset.id === nextPreset.id
+            ? { ...preset, id: `server-${userReportPresetId}`, userReportPresetId }
+            : preset
+        ));
+        setTransferFilterPresets(merged);
+        localStorage.setItem(transferFilterPresetLocalStorageKey, JSON.stringify(merged));
+        setTransferFilterPresetNameInput('');
+        onNotify?.('Transfer filter preset saved.', 'success');
+        return;
+      }
+    } catch (error) {
+      console.error('Failed to save transfer filter preset to server; using local fallback.', error);
+    }
+
+    setTransferFilterPresets(localNext);
+    localStorage.setItem(transferFilterPresetLocalStorageKey, JSON.stringify(localNext));
+    setTransferFilterPresetNameInput('');
+    onNotify?.('Transfer filter preset saved locally.', 'success');
+  };
+
+  const handleDeleteTransferFilterPreset = async (preset: TransferFilterPreset) => {
+    try {
+      if (isAuthenticated && preset.userReportPresetId) {
+        const api = await import('../../api');
+        await api.deleteUserReportPreset(transferFilterPresetScope, preset.userReportPresetId);
+      }
+    } catch (error) {
+      console.error('Failed to delete transfer filter preset from server; removing locally.', error);
+    }
+
+    const next = transferFilterPresets.filter((item) => item.id !== preset.id);
+    setTransferFilterPresets(next);
+    localStorage.setItem(transferFilterPresetLocalStorageKey, JSON.stringify(next));
+    onNotify?.('Transfer filter preset removed.', 'info');
+  };
+
+  const handleExportTransferLedgerCsv = () => {
+    if (filteredIncidentCommandTransferLogRows.length === 0) {
+      onNotify?.('No transfer rows available for export in the current filter scope.', 'warning');
+      return;
+    }
+
+    const csvRows = [
+      ['TransferUtc', 'Section', 'Position', 'AssignedTo', 'CommandPost', 'TransferSummary', 'Status'],
+      ...filteredIncidentCommandTransferLogRows.map((row) => [
+        row.transferUtc,
+        row.icsSection,
+        row.positionName,
+        row.assignedTo,
+        row.commandPost,
+        row.transferSummary,
+        row.statusCode,
+      ]),
+    ];
+
+    const csv = csvRows
+      .map((row) => row.map((value) => toCsvCell(value)).join(','))
+      .join('\n');
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    downloadBlob(`incident-${selectedIncidentId ?? 'transfer'}-command-transfer-ledger.csv`, blob);
+    onNotify?.('Command transfer ledger CSV exported.', 'success');
+  };
+
+  const handleExportTransferLedgerJson = () => {
+    if (filteredIncidentCommandTransferLogRows.length === 0) {
+      onNotify?.('No transfer rows available for JSON export in the current filter scope.', 'warning');
+      return;
+    }
+
+    const payload = {
+      generatedUtc: new Date().toISOString(),
+      incidentId: selectedIncidentId,
+      filters: {
+        status: transferStatusFilter,
+        section: transferSectionFilter,
+        dateFromUtc: transferDateFromFilter || null,
+        dateToUtc: transferDateToFilter || null,
+      },
+      rowCount: filteredIncidentCommandTransferLogRows.length,
+      rows: filteredIncidentCommandTransferLogRows,
+    };
+
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json;charset=utf-8;' });
+    downloadBlob(`incident-${selectedIncidentId ?? 'transfer'}-command-transfer-ledger.json`, blob);
+    onNotify?.('Command transfer ledger JSON exported.', 'success');
+  };
+
+  const handleOpenIcsWorkflowGuide = () => {
+    const helpUrl = new URL(window.location.pathname, window.location.origin);
+    helpUrl.searchParams.set('help', '1');
+    helpUrl.searchParams.set('view', 'incidents');
+    helpUrl.hash = 'topic=incidents-command-workspace&link=incidents-ics-workflow-context-diagram';
+    window.open(helpUrl.toString(), '_blank');
+  };
+
+  const transferLedgerSummary = useMemo(() => {
+    const latestTransferUtc = filteredIncidentCommandTransferLogRows.length > 0
+      ? filteredIncidentCommandTransferLogRows
+        .map((row) => new Date(row.transferDateUtc).getTime())
+        .filter((value) => Number.isFinite(value))
+        .sort((left, right) => right - left)[0] ?? null
+      : null;
+
+    const sectionCount = new Set(filteredIncidentCommandTransferLogRows.map((row) => row.icsSection)).size;
+
+    return {
+      totalRows: incidentCommandTransferLogRows.length,
+      inScopeRows: filteredIncidentCommandTransferLogRows.length,
+      sectionCount,
+      latestTransferUtc: latestTransferUtc ? new Date(latestTransferUtc).toLocaleString() : '—',
+    };
+  }, [filteredIncidentCommandTransferLogRows, incidentCommandTransferLogRows.length]);
+
+  const transferInsightSignal = useMemo(() => {
+    const latestUtcMillis = incidentCommandTransferLogRows
+      .map((row) => new Date(row.transferDateUtc).getTime())
+      .filter((value) => Number.isFinite(value))
+      .sort((left, right) => right - left)[0] ?? null;
+
+    if (latestUtcMillis === null) {
+      return {
+        label: 'Transfer signal NO LOG',
+        variant: 'warning' as const,
+        detail: 'No command transfer entries logged',
+      };
+    }
+
+    const hoursSinceLatest = Math.floor((Date.now() - latestUtcMillis) / (60 * 60 * 1000));
+    if (hoursSinceLatest > 24) {
+      return {
+        label: 'Transfer signal WATCH',
+        variant: 'warning' as const,
+        detail: `Latest transfer ${hoursSinceLatest}h ago`,
+      };
+    }
+
+    return {
+      label: 'Transfer signal STABLE',
+      variant: 'success' as const,
+      detail: `Latest transfer ${hoursSinceLatest}h ago`,
+    };
+  }, [incidentCommandTransferLogRows]);
+
+  const incidentCommandTransferLogColumnDefs: ColDef<IncidentCommandTransferLogGridRow>[] = useMemo(() => [
+    {
+      field: 'transferUtc',
+      headerName: 'Transfer UTC',
+      minWidth: 170,
+      flex: 1,
+      valueFormatter: (params) => (params.value ? new Date(String(params.value)).toLocaleString() : '—'),
+    },
+    { field: 'icsSection', headerName: 'Section', minWidth: 140, flex: 1 },
+    { field: 'positionName', headerName: 'Position', minWidth: 180, flex: 1.1 },
+    { field: 'assignedTo', headerName: 'Assigned To', minWidth: 180, flex: 1.2 },
+    { field: 'commandPost', headerName: 'Command Post', minWidth: 180, flex: 1.2 },
+    { field: 'transferSummary', headerName: 'Transfer Summary', minWidth: 220, flex: 1.4, cellClass: 'text-truncate' },
+    {
+      field: 'statusCode',
+      headerName: 'Status',
+      minWidth: 120,
+      flex: 0.8,
+      cellRenderer: (params: { value?: string }) => {
+        const status = params.value ?? 'Unknown';
+        const statusNormalized = status.toLowerCase();
+        const bg = statusNormalized === 'assigned' || statusNormalized === 'accepted'
+          ? 'success'
+          : statusNormalized === 'released'
+            ? 'secondary'
+            : 'info';
+        return <Badge bg={bg}>{status}</Badge>;
+      },
+    },
+  ], []);
 
   const ics205CommunicationsRows = useMemo(() => (ics205Data?.activeCommunications ?? []).slice(0, 25).map((communication) => ({
     id: communication.incidentCommunicationId,
@@ -5226,6 +5925,7 @@ function IncidentCommandPaneCard({
                       <Badge bg="light" text="dark">Timeline 24h: {operationalInsight.timelineActivity24hCount} (Δ {formatDelta(operationalInsight.timelineActivity24hDelta)})</Badge>
                       <Badge bg="light" text="dark">Comms 24h: {operationalInsight.communicationActivity24hCount} (Δ {formatDelta(operationalInsight.communicationActivity24hDelta)})</Badge>
                       <Badge bg="light" text="dark">SITREP: {operationalInsight.staleSitrepHours === null ? 'No SITREP' : `${operationalInsight.staleSitrepHours}h stale`}</Badge>
+                      <Badge bg={transferInsightSignal.variant}>{transferInsightSignal.label}: {transferInsightSignal.detail}</Badge>
                     </div>
                     <Accordion flush>
                       <Accordion.Item eventKey="operational-insight-details">
@@ -5269,6 +5969,27 @@ function IncidentCommandPaneCard({
                   </div>
                 )}
 
+                <Card className="mb-3 border-light-subtle" data-testid="incident-iap-cycle-status-card">
+                  <Card.Header className="small fw-semibold d-flex align-items-center gap-2">
+                    <i className="bi bi-arrow-repeat" aria-hidden="true" />
+                    <span className="me-auto">IAP Cycle Status</span>
+                    <LabelWithInfo
+                      text=""
+                      info="Tracks ICS planning cycle progression: Understand, Objectives, Develop, Approve, Execute, Evaluate and revise."
+                    />
+                  </Card.Header>
+                  <Card.Body>
+                    <IpocDataGrid
+                      gridId="incident-iap-cycle-status-grid"
+                      rowData={iapCycleStatusRows}
+                      columnDefs={iapCycleStatusColumnDefs}
+                      emptyMessage="No IAP cycle status available."
+                      pageSize={6}
+                      height={280}
+                    />
+                  </Card.Body>
+                </Card>
+
                 <Card className="mb-3 border-light-subtle">
                   <Card.Header className="small fw-semibold d-flex align-items-center gap-2">
                     <i className="bi bi-diagram-3" aria-hidden="true" />
@@ -5276,6 +5997,14 @@ function IncidentCommandPaneCard({
                     <LabelWithInfo
                       text=""
                       info="Use this command structure board to manage role coverage, current assignments, and assignment notes in a dense operational view."
+                    />
+                    <IconActionButton
+                      iconClassName="bi bi-journal-text"
+                      tooltip="Open ICS workflow context diagram in User Guide"
+                      ariaLabel="Open ICS workflow context diagram in User Guide"
+                      onClick={handleOpenIcsWorkflowGuide}
+                      variant="outline-secondary"
+                      testId="incident-open-ics-workflow-guide"
                     />
                     <IconActionButton
                       iconClassName={isIcsCommandStructureExpanded ? 'bi bi-arrows-collapse' : 'bi bi-arrows-expand'}
@@ -5313,6 +6042,274 @@ function IncidentCommandPaneCard({
                         emptyMessage="No command positions configured."
                         pageSize={10}
                         height={380}
+                      />
+                    )}
+                  </Card.Body>
+                </Card>
+
+                <Card className="mb-3 border-light-subtle" data-testid="incident-command-transfer-ledger-card">
+                  <Card.Header className="small fw-semibold d-flex align-items-center gap-2">
+                    <i className="bi bi-arrow-left-right" aria-hidden="true" />
+                    <span className="me-auto">ICS Command Transfer Ledger</span>
+                    <LabelWithInfo
+                      text=""
+                      info="Log command transfer events and verify assignment continuity across operational periods and demobilization handoffs."
+                    />
+                    <IconActionButton
+                      iconClassName="bi bi-arrow-clockwise"
+                      tooltip="Refresh command transfer ledger"
+                      ariaLabel="Refresh command transfer ledger"
+                      onClick={() => { void loadCommandTransferLog(); }}
+                      disabled={!isAuthenticated || commandTransferLogLoading}
+                      variant="outline-secondary"
+                    />
+                  </Card.Header>
+                  <Card.Body>
+                    <Row className="g-2 mb-3" data-testid="incident-command-transfer-entry-form">
+                      <Col lg={2} md={6}>
+                        <Form.Group controlId="commandTransferPositionId">
+                          <Form.Label className="small mb-1">Position</Form.Label>
+                          <Form.Control
+                            size="sm"
+                            as="select"
+                            value={transferPositionIdInput}
+                            onChange={(event) => setTransferPositionIdInput(event.target.value)}
+                          >
+                            <option value="">Select position</option>
+                            {transferPositionOptions.map((option) => (
+                              <option key={`transfer-position-${option.value}`} value={option.value}>{option.label}</option>
+                            ))}
+                          </Form.Control>
+                        </Form.Group>
+                      </Col>
+                      <Col lg={2} md={6}>
+                        <Form.Group controlId="commandTransferAssignedUserId">
+                          <Form.Label className="small mb-1">Assigned User</Form.Label>
+                          <Form.Control
+                            size="sm"
+                            as="select"
+                            value={transferAssignedUserIdInput}
+                            onChange={(event) => setTransferAssignedUserIdInput(event.target.value)}
+                          >
+                            <option value="">Select user</option>
+                            {transferUserOptions.map((option) => (
+                              <option key={`transfer-user-${option.value}`} value={option.value}>{option.label}</option>
+                            ))}
+                          </Form.Control>
+                        </Form.Group>
+                      </Col>
+                      <Col lg={3} md={6}>
+                        <Form.Group controlId="commandTransferSummary">
+                          <Form.Label className="small mb-1">Transfer Summary</Form.Label>
+                          <Form.Control
+                            size="sm"
+                            value={transferSummaryInput}
+                            onChange={(event) => setTransferSummaryInput(event.target.value)}
+                            placeholder="Transferred from Fire to Public Works"
+                            maxLength={500}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col lg={3} md={6}>
+                        <Form.Group controlId="commandTransferCommandPost">
+                          <Form.Label className="small mb-1">Command Post</Form.Label>
+                          <Form.Control
+                            size="sm"
+                            value={transferCommandPostLocationInput}
+                            onChange={(event) => setTransferCommandPostLocationInput(event.target.value)}
+                            placeholder="Public Works truck"
+                            maxLength={200}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col lg={2} md={12} className="d-flex align-items-end justify-content-end">
+                        <IconActionButton
+                          iconClassName="bi bi-plus-circle"
+                          tooltip="Create command transfer ledger entry"
+                          ariaLabel="Create command transfer ledger entry"
+                          onClick={() => { void handleCreateCommandTransferLog(); }}
+                          disabled={!isAuthenticated || incidentActionLoading}
+                          variant="outline-primary"
+                        />
+                      </Col>
+                    </Row>
+
+                    <Row className="g-2 mb-3" data-testid="incident-command-transfer-filter-form">
+                      <Col lg={2} md={6}>
+                        <Form.Group controlId="commandTransferStatusFilter">
+                          <Form.Label className="small mb-1">Status Filter</Form.Label>
+                          <Form.Select
+                            size="sm"
+                            value={transferStatusFilter}
+                            onChange={(event) => setTransferStatusFilter(event.target.value)}
+                          >
+                            {transferStatusFilterOptions.map((option) => (
+                              <option key={`transfer-status-filter-${option}`} value={option}>{option}</option>
+                            ))}
+                          </Form.Select>
+                        </Form.Group>
+                      </Col>
+                      <Col lg={2} md={6}>
+                        <Form.Group controlId="commandTransferSectionFilter">
+                          <Form.Label className="small mb-1">Section Filter</Form.Label>
+                          <Form.Select
+                            size="sm"
+                            value={transferSectionFilter}
+                            onChange={(event) => setTransferSectionFilter(event.target.value)}
+                          >
+                            {transferSectionFilterOptions.map((option) => (
+                              <option key={`transfer-section-filter-${option}`} value={option}>{option}</option>
+                            ))}
+                          </Form.Select>
+                        </Form.Group>
+                      </Col>
+                      <Col lg={2} md={6}>
+                        <Form.Group controlId="commandTransferDateFromFilter">
+                          <Form.Label className="small mb-1">Date From (UTC)</Form.Label>
+                          <Form.Control
+                            size="sm"
+                            type="date"
+                            value={transferDateFromFilter}
+                            onChange={(event) => setTransferDateFromFilter(event.target.value)}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col lg={2} md={6}>
+                        <Form.Group controlId="commandTransferDateToFilter">
+                          <Form.Label className="small mb-1">Date To (UTC)</Form.Label>
+                          <Form.Control
+                            size="sm"
+                            type="date"
+                            value={transferDateToFilter}
+                            onChange={(event) => setTransferDateToFilter(event.target.value)}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col lg={3} md={6}>
+                        <Form.Group controlId="commandTransferPresetName">
+                          <Form.Label className="small mb-1">Preset Name</Form.Label>
+                          <Form.Control
+                            size="sm"
+                            value={transferFilterPresetNameInput}
+                            onChange={(event) => setTransferFilterPresetNameInput(event.target.value)}
+                            placeholder="Night shift handoff"
+                            maxLength={80}
+                          />
+                        </Form.Group>
+                      </Col>
+                      <Col lg={4} md={12} className="d-flex align-items-end justify-content-end gap-2">
+                        <IconActionButton
+                          iconClassName="bi bi-bookmark-plus"
+                          tooltip="Save current transfer filter preset"
+                          ariaLabel="Save current transfer filter preset"
+                          onClick={() => { void handleSaveTransferFilterPreset(); }}
+                          disabled={!isAuthenticated || commandTransferLogLoading}
+                          variant="outline-primary"
+                          testId="incident-transfer-filter-preset-save"
+                        />
+                        <IconActionButton
+                          iconClassName="bi bi-calendar-day"
+                          tooltip="Apply quick range: Today"
+                          ariaLabel="Apply quick range: Today"
+                          onClick={() => handleApplyTransferQuickRange('today')}
+                          disabled={!isAuthenticated || commandTransferLogLoading}
+                          variant="outline-secondary"
+                          testId="incident-transfer-quick-range-today"
+                        />
+                        <IconActionButton
+                          iconClassName="bi bi-clock-history"
+                          tooltip="Apply quick range: Last 24h"
+                          ariaLabel="Apply quick range: Last 24h"
+                          onClick={() => handleApplyTransferQuickRange('last24h')}
+                          disabled={!isAuthenticated || commandTransferLogLoading}
+                          variant="outline-secondary"
+                          testId="incident-transfer-quick-range-last24h"
+                        />
+                        <IconActionButton
+                          iconClassName="bi bi-calendar-week"
+                          tooltip="Apply quick range: Last 7d"
+                          ariaLabel="Apply quick range: Last 7d"
+                          onClick={() => handleApplyTransferQuickRange('last7d')}
+                          disabled={!isAuthenticated || commandTransferLogLoading}
+                          variant="outline-secondary"
+                          testId="incident-transfer-quick-range-last7d"
+                        />
+                        <IconActionButton
+                          iconClassName="bi bi-eraser"
+                          tooltip="Clear transfer ledger filters"
+                          ariaLabel="Clear transfer ledger filters"
+                          onClick={handleClearTransferFilters}
+                          disabled={!isAuthenticated || commandTransferLogLoading}
+                          variant="outline-secondary"
+                        />
+                        <IconActionButton
+                          iconClassName="bi bi-download"
+                          tooltip="Export filtered command transfer ledger as CSV"
+                          ariaLabel="Export filtered command transfer ledger as CSV"
+                          onClick={handleExportTransferLedgerCsv}
+                          disabled={!isAuthenticated || filteredIncidentCommandTransferLogRows.length === 0}
+                          variant="outline-primary"
+                        />
+                        <IconActionButton
+                          iconClassName="bi bi-filetype-json"
+                          tooltip="Export filtered command transfer ledger as JSON"
+                          ariaLabel="Export filtered command transfer ledger as JSON"
+                          onClick={handleExportTransferLedgerJson}
+                          disabled={!isAuthenticated || filteredIncidentCommandTransferLogRows.length === 0}
+                          variant="outline-primary"
+                        />
+                      </Col>
+                    </Row>
+
+                    <div className="d-flex flex-wrap gap-2 mb-3" data-testid="incident-command-transfer-preset-list">
+                      {transferFilterPresets.length === 0 ? (
+                        <span className="small text-muted">No saved transfer presets.</span>
+                      ) : transferFilterPresets.map((preset) => (
+                        <div key={preset.id} className="d-flex align-items-center gap-1 border rounded px-2 py-1">
+                          <button
+                            type="button"
+                            className="btn btn-link btn-sm text-decoration-none p-0"
+                            onClick={() => handleApplyTransferFilterPreset(preset)}
+                            data-testid="incident-transfer-filter-preset-apply"
+                          >
+                            {preset.name}
+                          </button>
+                          <IconActionButton
+                            iconClassName="bi bi-trash"
+                            tooltip={`Delete transfer filter preset ${preset.name}`}
+                            ariaLabel={`Delete transfer filter preset ${preset.name}`}
+                            onClick={() => { void handleDeleteTransferFilterPreset(preset); }}
+                            disabled={!isAuthenticated}
+                            variant="outline-secondary"
+                            testId="incident-transfer-filter-preset-delete"
+                          />
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="d-flex flex-wrap gap-2 mb-3 small" data-testid="incident-command-transfer-summary-chips">
+                      <Badge bg="light" text="dark">Rows in scope {transferLedgerSummary.inScopeRows}</Badge>
+                      <Badge bg="light" text="dark">Total rows {transferLedgerSummary.totalRows}</Badge>
+                      <Badge bg="light" text="dark">Sections {transferLedgerSummary.sectionCount}</Badge>
+                      <Badge bg="light" text="dark">Latest transfer {transferLedgerSummary.latestTransferUtc}</Badge>
+                    </div>
+
+                    {commandTransferLogLoading ? (
+                      <div className="text-center py-3">
+                        <Spinner animation="border" size="sm" role="status">
+                          <span className="visually-hidden">Loading command transfer log...</span>
+                        </Spinner>
+                      </div>
+                    ) : filteredIncidentCommandTransferLogRows.length === 0 ? (
+                      <div className="text-muted small">No command transfer entries logged for this incident.</div>
+                    ) : (
+                      <IpocDataGrid
+                        gridId="incident-command-transfer-log-grid"
+                        rowData={filteredIncidentCommandTransferLogRows}
+                        columnDefs={incidentCommandTransferLogColumnDefs}
+                        emptyMessage="No command transfer entries logged for this incident."
+                        pageSize={8}
+                        height={300}
                       />
                     )}
                   </Card.Body>

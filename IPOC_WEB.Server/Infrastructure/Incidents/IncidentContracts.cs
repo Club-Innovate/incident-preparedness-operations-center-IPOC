@@ -335,6 +335,32 @@ public sealed record UpsertIncidentCommandAssignmentRequestDto(
     long? AgencyOrganizationId,
     string? Notes);
 
+public sealed record IncidentCommandTransferLogEntryDto(
+    long IncidentCommandAssignmentId,
+    long IncidentId,
+    int IcsPositionId,
+    string PositionCode,
+    string PositionName,
+    string IcsSection,
+    long? AssignedUserId,
+    string? AssignedUserDisplayName,
+    long? AssignedContactId,
+    string? AssignedContactName,
+    long? AgencyOrganizationId,
+    string? AgencyOrganizationName,
+    DateTimeOffset AssignedFromUtc,
+    DateTimeOffset? AssignedToUtc,
+    string AssignmentStatusCode,
+    string? Notes);
+
+public sealed record CreateIncidentCommandTransferRequestDto(
+    int IcsPositionId,
+    long? AssignedUserId,
+    long? AssignedContactId,
+    long? AgencyOrganizationId,
+    string? TransferSummary,
+    string? CommandPostLocation);
+
 /// <summary>
 /// Situation Report (SITREP) record for ICS-201 and periodic incident status updates.
 /// </summary>

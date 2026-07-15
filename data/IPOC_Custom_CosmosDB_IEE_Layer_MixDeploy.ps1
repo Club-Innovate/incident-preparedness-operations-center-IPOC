@@ -361,7 +361,7 @@ function Deploy-Azure {
   foreach ($c in $containers) { foreach ($sp in $c.sprocs) { Deploy-AzureSproc $c.name $sp.name $sp.file } }
 
   Write-Section "Azure RBAC note"
-  Write-Host "Account provisioning disables local auth for Azure. Assign Cosmos DB SQL data-plane roles to managed identities as part of the environment IaC/release pipeline." -ForegroundColor Yellow
+  Write-Host "Account provisioning disables local auth for Azure. Assign Cosmos DB SQL data-plane roles to managed identities as part of the environment IaC/release pipeline." -ForegroundColor Cyan
 }
 
 function Deploy-Emulator {
