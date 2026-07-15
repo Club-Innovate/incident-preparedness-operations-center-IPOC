@@ -331,11 +331,11 @@ const topics: GuideTopic[] = [
               'Open Reports and locate the Executive decision brief package card.',
               'Use baseline capture action to set the current trend comparison timestamp.',
               'Review recommendation queue and confidence values in pending approvals section.',
-              'Use export action to download executive decision brief markdown package with trend deltas, recommendation bundle state, and decision log appendix attribution.',
+              'Use export action to download executive decision brief markdown package with trend deltas, recommendation decision state, and attributed decision log appendix.',
             ],
             expectedOutcomes: [
               'Leadership receives a concise decision brief with trend-delta context and prioritized recommendations.',
-              'Command teams can archive consistent brief artifacts across reporting cycles with operator-attributed decision history.',
+              'Command teams can archive consistent brief artifacts across reporting cycles with operator-attributed decision context.',
             ],
             commonPitfalls: [
               'Skipping baseline capture can reduce interpretability of delta metadata across cycles.',
