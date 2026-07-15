@@ -1,5 +1,25 @@
 # IPOC_WEB.StreamingIngestor
 
+`IPOC_WEB.StreamingIngestor` is a .NET 10 Worker reference utility that simulates streaming source-system updates into IPOC_WEB ingestion workflows.
+
+## Work In Progress
+This utility is an implementation baseline used for integration and ingestion validation. It is production-evolution ready but not positioned as a fully hardened production connector out of the box.
+
+## What It Enables
+- Stream-style JSON payload processing for resource and bed availability updates.
+- Dual-path ingestion testing:
+  - `api` mode for endpoint-based ingestion validation.
+  - `db` mode for direct-load simulation and idempotency evidence checks.
+- Fast local iteration for ingestion contract and evidence workflow verification.
+
+## Runtime Modes
+- `api` mode (default)
+  - Posts inventory batch to `/api/v1/resources/import/inventory`
+  - Posts bed availability batch to `/api/v1/beds/import/availability`
+- `db` mode
+  - Loads directly to `res.LocationResourceInventory` and `res.BedAvailabilitySnapshot`
+  - Writes idempotency evidence to `intg.InboundInterfaceMessage`
+
 ## Purpose
 Reference .NET 10 worker utility that simulates streaming source-system updates into IOCEM import endpoints.
 
@@ -44,3 +64,8 @@ dotnet run --project .\IPOC_WEB.StreamingIngestor\IPOC_WEB.StreamingIngestor.csp
 ## Notes
 - This now supports direct stream load to the database and API-based ingestion.
 - For production, add retry/backoff, dead-letter handling, connector adapters, and auth token acquisition for API mode.
+
+## Related Architecture Documentation
+- [Architecture Reference Index](../docs/architecture/README.md)
+- [Data, Integration, and Interoperability Architecture](../docs/architecture/03_Data_Integration_and_Interop_Architecture.md)
+- [Deployment, Operability, and Extensibility](../docs/architecture/07_Deployment_Operability_and_Extensibility.md)

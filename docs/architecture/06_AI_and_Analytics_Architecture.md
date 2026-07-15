@@ -1,0 +1,54 @@
+# 06. AI and Analytics Architecture
+
+## AI and Analytics Objectives
+- Deliver decision-support signals to command teams without replacing human authority.
+- Provide executive-grade reporting and replay artifacts.
+- Preserve traceability and governance around generated recommendations.
+
+## Capability Areas
+- AI Incident Co-Pilot for narrative assistance and structured drafting support.
+- Predictive demand/supply model workflows with acceptance checks.
+- Dashboard/Reports visualization generation from prompt-driven specs.
+- Executive brief, AAR/HVA, and timeline export pathways.
+
+## AI Governance Principles
+- Human approval before operational execution of AI suggestions.
+- Feature-flag-aware enablement to avoid unsafe or misleading UX states.
+- Metadata and evidence context preserved with generated artifacts.
+
+## AI/Analytics Architecture Diagram
+```mermaid
+flowchart TB
+  U[Users] --> FE[Frontend Workspaces]
+  FE --> API[Server APIs]
+  API --> PRED[Predictive Services]
+  API --> COPILOT[AI Co-Pilot Integration]
+  API --> DATA[(Operational Data)]
+  API --> EXP[Executive and AAR Exports]
+
+  FE --> VIZ[Prompt-driven Visualization Specs]
+  VIZ --> API
+  API --> FE
+```
+
+## Operational Workflow (AI-Assisted)
+```mermaid
+sequenceDiagram
+  participant O as Operator
+  participant UI as Frontend
+  participant S as Server
+  participant M as Predictive/AI Services
+
+  O->>UI: Request AI brief or predictive signal
+  UI->>S: Submit scoped request (incident/timeframe)
+  S->>M: Execute model/prompt workflow
+  M-->>S: Return advisory output + metadata
+  S-->>UI: Provide response with governance context
+  O->>UI: Approve/Reject before operational use
+```
+
+## Analytics Outputs
+- Executive decision briefs
+- Comparative and trend analytics
+- Risk timeline replay exports
+- AAR improvement and HVA readiness artifacts
