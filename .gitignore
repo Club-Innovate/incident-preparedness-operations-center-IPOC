@@ -371,3 +371,7 @@ FodyWeavers.xsd
 /audit/**
 /.github/copilot-instructions.md
 /scripts/ai-search-service/export-ai-search-svc.ps1
+
+# Local sensitive configuration files (keep local, do not track)
+/IPOC_WEB.Server/appsettings.json
+/IPOC_WEB.Server/appsettings.Development.json

@@ -57,10 +57,21 @@ For complete architecture context, workflows, security/compliance posture, AI/an
 ## Quick Start (Developer)
 1. Restore and build solution:
    - `dotnet build IPOC_WEB.slnx`
-2. Start the app host and frontend stack for local operation.
-3. Run UI smoke validation:
+2. Create local runtime config files from examples (required):
+   - `copy IPOC_WEB.Server\\appsettings.example.json IPOC_WEB.Server\\appsettings.json`
+   - `copy IPOC_WEB.Server\\appsettings.Development.example.json IPOC_WEB.Server\\appsettings.Development.json`
+   - Replace placeholder values with your local settings/secrets.
+   - Runtime files must not include `.example` in the filename.
+3. Start the app host and frontend stack for local operation.
+4. Run UI smoke validation:
    - `npm run smoke:ui --prefix frontend`
 
 ## Implementation Notes
 - Claims in architecture docs are aligned to current repository implementation and roadmap posture.
 - Compliance narratives describe readiness/alignment workflows and do not represent automatic certification.
+- Local secret-bearing configuration files are intentionally ignored and untracked:
+  - `IPOC_WEB.Server/appsettings.json`
+  - `IPOC_WEB.Server/appsettings.Development.json`
+- Commit-safe templates are provided as:
+  - `IPOC_WEB.Server/appsettings.example.json`
+  - `IPOC_WEB.Server/appsettings.Development.example.json`
