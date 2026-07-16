@@ -375,3 +375,6 @@ FodyWeavers.xsd
 # Local sensitive configuration files (keep local, do not track)
 /IPOC_WEB.Server/appsettings.json
 /IPOC_WEB.Server/appsettings.Development.json
+/frontend/.env
+/frontend/.env.*
+!/frontend/.env.example
