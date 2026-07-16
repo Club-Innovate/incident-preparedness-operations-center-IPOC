@@ -1,0 +1,36 @@
+{
+    "@odata.etag":  "\"0x8DEDDD8367CE86A\"",
+    "name":  "idxr-resource-inventory",
+    "description":  null,
+    "dataSourceName":  "azuresql-1783613149640-datasource",
+    "skillsetName":  "ipoc-embedding-skillset",
+    "targetIndexName":  "ipoc-unified-index",
+    "disabled":  null,
+    "schedule":  null,
+    "parameters":  null,
+    "fieldMappings":  [
+                          {
+                              "sourceFieldName":  "SearchKey",
+                              "targetFieldName":  "SearchKey",
+                              "mappingFunction":  null
+                          },
+                          {
+                              "sourceFieldName":  "IncidentId",
+                              "targetFieldName":  "IncidentId",
+                              "mappingFunction":  null
+                          },
+                          {
+                              "sourceFieldName":  "BotContextText",
+                              "targetFieldName":  "BotContextText",
+                              "mappingFunction":  null
+                          }
+                      ],
+    "outputFieldMappings":  [
+                                {
+                                    "sourceFieldName":  "/document/BotContextTextVector",
+                                    "targetFieldName":  "BotContextTextVector",
+                                    "mappingFunction":  null
+                                }
+                            ],
+    "encryptionKey":  null
+}

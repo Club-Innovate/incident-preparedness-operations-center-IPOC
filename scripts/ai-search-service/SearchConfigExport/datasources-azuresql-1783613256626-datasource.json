@@ -1,0 +1,20 @@
+{
+    "@odata.etag":  "\"0x8DEDDD44955A56D\"",
+    "name":  "azuresql-1783613256626-datasource",
+    "description":  null,
+    "type":  "azuresql",
+    "subtype":  null,
+    "credentials":  {
+                        "connectionString":  null
+                    },
+    "container":  {
+                      "name":  "ic.vw_AI_Search_Communications",
+                      "query":  null
+                  },
+    "dataChangeDetectionPolicy":  {
+                                      "@odata.type":  "#Microsoft.Azure.Search.HighWaterMarkChangeDetectionPolicy",
+                                      "highWaterMarkColumnName":  "HighWaterMark"
+                                  },
+    "dataDeletionDetectionPolicy":  null,
+    "encryptionKey":  null
+}

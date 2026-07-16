@@ -1,0 +1,44 @@
+{
+    "@odata.etag":  "\"0x8DEDDDFED2AF744\"",
+    "name":  "indexer-icsassignments",
+    "description":  null,
+    "dataSourceName":  "azuresql-1783616809928-datasource",
+    "skillsetName":  "ipoc-embedding-skillset",
+    "targetIndexName":  "ipoc-unified-index",
+    "disabled":  null,
+    "schedule":  null,
+    "parameters":  {
+                       "batchSize":  null,
+                       "maxFailedItems":  0,
+                       "maxFailedItemsPerBatch":  0,
+                       "base64EncodeKeys":  null,
+                       "configuration":  {
+
+                                         }
+                   },
+    "fieldMappings":  [
+                          {
+                              "sourceFieldName":  "SearchKey",
+                              "targetFieldName":  "SearchKey",
+                              "mappingFunction":  null
+                          },
+                          {
+                              "sourceFieldName":  "IncidentId",
+                              "targetFieldName":  "IncidentId",
+                              "mappingFunction":  null
+                          },
+                          {
+                              "sourceFieldName":  "BotContextText",
+                              "targetFieldName":  "BotContextText",
+                              "mappingFunction":  null
+                          }
+                      ],
+    "outputFieldMappings":  [
+                                {
+                                    "sourceFieldName":  "/document/BotContextTextVector",
+                                    "targetFieldName":  "BotContextTextVector",
+                                    "mappingFunction":  null
+                                }
+                            ],
+    "encryptionKey":  null
+}

@@ -1,0 +1,36 @@
+{
+    "@odata.etag":  "\"0x8DEDDD321629D1D\"",
+    "name":  "ipoc-embedding-skillset",
+    "description":  "Generates embeddings for all IPOC views",
+    "skills":  [
+                   {
+                       "@odata.type":  "#Microsoft.Skills.Text.AzureOpenAIEmbeddingSkill",
+                       "name":  "generate-botcontext-embedding",
+                       "description":  null,
+                       "context":  "/document",
+                       "resourceUri":  "https://opena-ai-dev-eastus-resource.openai.azure.com",
+                       "apiKey":  "\u003credacted\u003e",
+                       "deploymentId":  "text-embedding-3-small-dev",
+                       "inputs":  [
+                                      {
+                                          "name":  "text",
+                                          "source":  "/document/BotContextText",
+                                          "sourceContext":  null,
+                                          "inputs":  [
+
+                                                     ]
+                                      }
+                                  ],
+                       "outputs":  [
+                                       {
+                                           "name":  "embedding",
+                                           "targetName":  "BotContextTextVector"
+                                       }
+                                   ],
+                       "authIdentity":  null
+                   }
+               ],
+    "cognitiveServices":  null,
+    "knowledgeStore":  null,
+    "encryptionKey":  null
+}

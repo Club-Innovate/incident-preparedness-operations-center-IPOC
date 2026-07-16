@@ -1,7 +1,22 @@
 # 04. Operational Workflows and Command Model
 
+## Executive Overview and How to Use This Document
+This document describes how IPOC_WEB operationalizes incident command into repeatable workflows across modules and roles. It is the architecture bridge between product features and real-world command tempo. For customers, this is often the most important document because it explains how the platform is used under pressure, not just how it is built.
+
+Use this document to:
+- align command doctrine to platform workflow design,
+- train operators and section leads on role-specific execution paths,
+- define briefing and handoff expectations for continuity across shifts.
+
+When presenting to enterprise stakeholders, emphasize that workflow clarity and accountability continuity are the primary differentiators in this architecture slice.
+
 ## Command Model
 IPOC_WEB applies an ICS/NIMS-aligned operational model across module workflows. It emphasizes explicit command ownership, recurring planning cadence, dependency-aware execution, and auditable handoff.
+
+## Operational Value Narrative
+- Reduces command friction by making ownership and dependency status explicit.
+- Improves shift continuity via transfer ledger workflows and briefing-ready context.
+- Improves closure quality through integrated reporting and corrective-action linkage.
 
 ## Core Command Cycle
 ```mermaid
@@ -23,6 +38,15 @@ flowchart LR
 - **Finance/Admin**: reimbursement/procurement and governance checkpoints.
 - **Reports/After Action**: decision artifacts, replay evidence, corrective plans.
 
+## Role-to-Workflow Alignment
+| Role | Primary Workflow Surface | Key Outcome |
+|---|---|---|
+| Incident Commander | Incidents + Reports | Decision continuity and command posture |
+| Operations Lead | Operations | Directive execution and blocker resolution |
+| Planning Lead | Planning | Objective readiness and cadence governance |
+| Logistics Lead | Logistics + COP | Constraint triage and resource stabilization |
+| Finance/Admin Lead | Finance/Admin | Checkpoint evidence and governance closure |
+
 ## Command Transfer and Handoff
 - Transfer ledger captures command transitions with explicit accountability.
 - Quick-range and preset filters accelerate shift turnover evidence slicing.
@@ -32,6 +56,20 @@ flowchart LR
 - Small Incident: lean command path and rapid stabilization.
 - Multi-Agency Expansion: section activation and unified-command cadence.
 - Demobilization-heavy closeout: handoff and unresolved action ownership.
+
+## Shift Handoff Workflow
+```mermaid
+flowchart LR
+  A[Outgoing Lead Summary] --> B[Transfer Ledger Update]
+  B --> C[Open Risks and Blockers Review]
+  C --> D[Incoming Lead Acknowledgement]
+  D --> E[Next-Cycle Priorities Confirmed]
+```
+
+## Practical Usage Guidance
+- Use this document in command tabletop exercises and onboarding sessions.
+- Use role alignment and handoff diagrams as briefing artifacts during shift turnover.
+- Re-validate workflows whenever command policy or module behavior changes.
 
 ## Decision Workflow Diagram
 ```mermaid

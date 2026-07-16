@@ -1,0 +1,144 @@
+{
+    "@odata.etag":  "\"0x8DEDDD29AF1FF10\"",
+    "name":  "ipoc-unified-index",
+    "defaultScoringProfile":  null,
+    "fields":  [
+                   {
+                       "name":  "SearchKey",
+                       "type":  "Edm.String",
+                       "searchable":  true,
+                       "filterable":  true,
+                       "retrievable":  true,
+                       "sortable":  true,
+                       "facetable":  true,
+                       "key":  true,
+                       "indexAnalyzer":  null,
+                       "searchAnalyzer":  null,
+                       "analyzer":  null,
+                       "dimensions":  null,
+                       "vectorSearchProfile":  null,
+                       "synonymMaps":  [
+
+                                       ]
+                   },
+                   {
+                       "name":  "IncidentId",
+                       "type":  "Edm.Int64",
+                       "searchable":  false,
+                       "filterable":  true,
+                       "retrievable":  true,
+                       "sortable":  true,
+                       "facetable":  true,
+                       "key":  false,
+                       "indexAnalyzer":  null,
+                       "searchAnalyzer":  null,
+                       "analyzer":  null,
+                       "dimensions":  null,
+                       "vectorSearchProfile":  null,
+                       "synonymMaps":  [
+
+                                       ]
+                   },
+                   {
+                       "name":  "BotContextText",
+                       "type":  "Edm.String",
+                       "searchable":  true,
+                       "filterable":  true,
+                       "retrievable":  true,
+                       "sortable":  true,
+                       "facetable":  true,
+                       "key":  false,
+                       "indexAnalyzer":  null,
+                       "searchAnalyzer":  null,
+                       "analyzer":  null,
+                       "dimensions":  null,
+                       "vectorSearchProfile":  null,
+                       "synonymMaps":  [
+
+                                       ]
+                   },
+                   {
+                       "name":  "BotContextTextVector",
+                       "type":  "Collection(Edm.Single)",
+                       "searchable":  true,
+                       "filterable":  false,
+                       "retrievable":  true,
+                       "sortable":  false,
+                       "facetable":  false,
+                       "key":  false,
+                       "indexAnalyzer":  null,
+                       "searchAnalyzer":  null,
+                       "analyzer":  null,
+                       "dimensions":  1536,
+                       "vectorSearchProfile":  "ipoc-vector-profile",
+                       "synonymMaps":  [
+
+                                       ]
+                   }
+               ],
+    "scoringProfiles":  [
+
+                        ],
+    "corsOptions":  null,
+    "suggesters":  [
+
+                   ],
+    "analyzers":  [
+
+                  ],
+    "tokenizers":  [
+
+                   ],
+    "tokenFilters":  [
+
+                     ],
+    "charFilters":  [
+
+                    ],
+    "encryptionKey":  null,
+    "similarity":  {
+                       "@odata.type":  "#Microsoft.Azure.Search.BM25Similarity",
+                       "k1":  null,
+                       "b":  null
+                   },
+    "vectorSearch":  {
+                         "algorithms":  [
+                                            {
+                                                "name":  "ipoc-hnsw-algo",
+                                                "kind":  "hnsw",
+                                                "hnswParameters":  {
+                                                                       "metric":  "cosine",
+                                                                       "m":  4,
+                                                                       "efConstruction":  400,
+                                                                       "efSearch":  500
+                                                                   },
+                                                "exhaustiveKnnParameters":  null
+                                            }
+                                        ],
+                         "profiles":  [
+                                          {
+                                              "name":  "ipoc-vector-profile",
+                                              "algorithm":  "ipoc-hnsw-algo"
+                                          }
+                                      ]
+                     },
+    "semantic":  {
+                     "defaultConfiguration":  "ipoc-semantic-config",
+                     "configurations":  [
+                                            {
+                                                "name":  "ipoc-semantic-config",
+                                                "prioritizedFields":  {
+                                                                          "titleField":  null,
+                                                                          "prioritizedContentFields":  [
+                                                                                                           {
+                                                                                                               "fieldName":  "BotContextText"
+                                                                                                           }
+                                                                                                       ],
+                                                                          "prioritizedKeywordsFields":  [
+
+                                                                                                        ]
+                                                                      }
+                                            }
+                                        ]
+                 }
+}

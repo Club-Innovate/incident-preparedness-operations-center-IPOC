@@ -1,0 +1,44 @@
+{
+    "@odata.etag":  "\"0x8DEDDDFC0111AC2\"",
+    "name":  "idxr-incident-master",
+    "description":  null,
+    "dataSourceName":  "ds-incident-master",
+    "skillsetName":  "ipoc-embedding-skillset",
+    "targetIndexName":  "ipoc-unified-index",
+    "disabled":  null,
+    "schedule":  null,
+    "parameters":  {
+                       "batchSize":  null,
+                       "maxFailedItems":  0,
+                       "maxFailedItemsPerBatch":  0,
+                       "base64EncodeKeys":  null,
+                       "configuration":  {
+
+                                         }
+                   },
+    "fieldMappings":  [
+                          {
+                              "sourceFieldName":  "SearchKey",
+                              "targetFieldName":  "SearchKey",
+                              "mappingFunction":  null
+                          },
+                          {
+                              "sourceFieldName":  "IncidentId",
+                              "targetFieldName":  "IncidentId",
+                              "mappingFunction":  null
+                          },
+                          {
+                              "sourceFieldName":  "BotContextText",
+                              "targetFieldName":  "BotContextText",
+                              "mappingFunction":  null
+                          }
+                      ],
+    "outputFieldMappings":  [
+                                {
+                                    "sourceFieldName":  "/document/BotContextTextVector",
+                                    "targetFieldName":  "BotContextTextVector",
+                                    "mappingFunction":  null
+                                }
+                            ],
+    "encryptionKey":  null
+}
