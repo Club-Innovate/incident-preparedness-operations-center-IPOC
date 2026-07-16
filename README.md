@@ -1,13 +1,10 @@
-<div style="width:100%; background-color:#34445D; padding:12px 16px; box-sizing:border-box;">
-<table width="100%" cellspacing="0" cellpadding="0" style="border:0">
+<table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
-	<td bgcolor="#34445D" height="92" align="left" valign="middle" style="border:0;">
-	  &nbsp;&nbsp;&nbsp;&nbsp;
-	  <img src="./frontend/public/ipoc-logo.png" alt="IPOC logo" height="92" style="display:block; border:0; outline:none;" />
+	<td bgcolor="#34445D" align="left" valign="middle" style="padding:12px 16px;">
+	  <img src="./frontend/public/ipoc-logo.png" alt="IPOC logo" height="60" />
 	</td>
   </tr>
 </table>
-</div>
 
 Incident Preparedness Operations Center (IPOC) is a modern command-and-coordination platform for emergency management and public health operations. It unifies incident command, resource posture, executive reporting, governance evidence, and AI-assisted decision support in one architecture.
 
