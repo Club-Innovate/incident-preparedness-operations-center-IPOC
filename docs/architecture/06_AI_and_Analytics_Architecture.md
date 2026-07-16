@@ -1,9 +1,9 @@
 # 06. AI and Analytics Architecture
 
 ## Executive Overview and How to Use This Document
-This document describes how IPOC_WEB turns operational data into decision support through AI-assisted workflows and analytics products, while preserving human command authority. It is intended for architecture reviewers who need to evaluate both innovation value and governance safety.
+AI and analytics capabilities are positioned here as operational decision accelerators, not autonomous decision makers. This section shows how IPOC_WEB converts incident data into actionable intelligence while maintaining human command authority and governance safety.
 
-Use this document to:
+Use this reference to:
 - understand where AI is used and where humans remain the decision authority,
 - align analytics outputs with command and executive reporting workflows,
 - plan extensions to predictive and visualization capabilities responsibly.
@@ -80,6 +80,6 @@ sequenceDiagram
 - AAR improvement and HVA readiness artifacts
 
 ## Practical Usage Guidance
-- Use this document when defining AI governance policy with operations and compliance teams.
+- Use this reference when defining AI governance policy with operations and compliance teams.
 - Use the decision model to train teams on safe AI adoption behaviors.
 - Use output categories to plan executive briefing standards and analytics backlog priorities.

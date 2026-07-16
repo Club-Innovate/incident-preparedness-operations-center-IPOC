@@ -1,9 +1,9 @@
 # IPOC_WEB Architecture Reference
 
 ## Executive Overview and How to Use This Architecture Set
-This architecture set is designed to serve three audiences at once: executive sponsors evaluating platform fit, operational leaders validating command workflow usefulness, and technical teams implementing or extending the solution. Each document is intentionally scoped to a major architecture viewpoint so teams can review quickly at the right depth, then progressively drill into implementation details without losing strategic context.
+This architecture set is curated for three concurrent audiences: executive sponsors validating strategic fit, operational leaders confirming command-workflow usefulness, and technical teams implementing and extending the platform. Each topic is scoped to a distinct architecture viewpoint so readers can move from strategic context to implementation detail without losing narrative continuity.
 
-Use this index as a guided sequence rather than a flat document list. Start with system context to align on mission outcomes, then review component and data architecture to understand technical composition, followed by workflow, security/compliance, and AI/analytics documents to validate operational trust and differentiation. Conclude with deployment and extensibility guidance to plan rollout and growth.
+Read this index as a guided sequence rather than a flat list. Start with system context to align on mission outcomes, then progress through component and data architecture, followed by workflow, security/compliance, and AI/analytics perspectives. Conclude with deployment and extensibility guidance to frame rollout and growth.
 
 For customer and bid conversations, this set should be treated as a narrative package: what the platform does, why it matters, how it works, how it is governed, and how it can scale. That sequencing is central to creating a credible, implementation-ready architecture story.
 

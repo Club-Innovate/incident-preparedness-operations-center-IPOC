@@ -1,14 +1,14 @@
 # 03. Data, Integration, and Interoperability Architecture
 
 ## Executive Overview and How to Use This Document
-This document defines how operational data enters, moves through, and exits IPOC_WEB. It covers ingestion modes, data contracts, interoperability posture, and evidence artifact pathways used by both operations and governance teams. For enterprise implementers, this is the primary source for integration design, data stewardship responsibilities, and auditability expectations.
+Operational credibility depends on data flow integrity. This section maps how data enters IPOC_WEB, how it is validated and governed, and how it exits as decision and evidence artifacts. It provides the integration architecture baseline required for scalable onboarding, stewardship discipline, and audit-ready operations.
 
-Use this document to:
+Use this reference to:
 - design source-system onboarding and connector strategy,
 - validate contract and idempotency requirements,
 - plan evidence retention/export handling for governance and compliance.
 
-In customer-facing architecture reviews, this file demonstrates that IPOC_WEB is not just a UI platform, but a governed operational data system.
+In customer-facing architecture reviews, this file demonstrates that IPOC_WEB is not only a UI experience but a governed operational data system.
 
 ## Data Domains
 - Incident and command workflow entities
@@ -72,7 +72,7 @@ flowchart LR
 
 ## Practical Usage Guidance
 - Use this file as the integration design checklist before onboarding a new source feed.
-- Pair this document with security/compliance architecture for data-handling control reviews.
+- Pair this reference with security/compliance architecture for data-handling control reviews.
 - Use the lifecycle model to identify where quality, observability, and policy checks should be added.
 
 ## Representative Workflow: Bed/Resource Import

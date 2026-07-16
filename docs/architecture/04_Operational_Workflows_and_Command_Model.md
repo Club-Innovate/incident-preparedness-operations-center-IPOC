@@ -1,9 +1,9 @@
 # 04. Operational Workflows and Command Model
 
 ## Executive Overview and How to Use This Document
-This document describes how IPOC_WEB operationalizes incident command into repeatable workflows across modules and roles. It is the architecture bridge between product features and real-world command tempo. For customers, this is often the most important document because it explains how the platform is used under pressure, not just how it is built.
+Operational architecture is where platform value becomes tangible. This section translates incident-command doctrine into repeatable workflows across modules and roles, showing how IPOC_WEB performs under real command tempo rather than only in static feature terms.
 
-Use this document to:
+Use this guide to:
 - align command doctrine to platform workflow design,
 - train operators and section leads on role-specific execution paths,
 - define briefing and handoff expectations for continuity across shifts.
@@ -67,7 +67,7 @@ flowchart LR
 ```
 
 ## Practical Usage Guidance
-- Use this document in command tabletop exercises and onboarding sessions.
+- Use this guide in command tabletop exercises and onboarding sessions.
 - Use role alignment and handoff diagrams as briefing artifacts during shift turnover.
 - Re-validate workflows whenever command policy or module behavior changes.
 

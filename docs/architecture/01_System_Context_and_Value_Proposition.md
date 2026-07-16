@@ -1,14 +1,14 @@
 # 01. System Context and Value Proposition
 
 ## Executive Overview and How to Use This Document
-This document establishes the strategic architecture context for IPOC_WEB: why it exists, who it serves, what measurable outcomes it improves, and where it sits in an emergency-management operating model. It is the starting point for all architecture discussions because it aligns technical scope with mission execution. Without this shared context, downstream architecture detail can be technically correct but operationally misaligned.
+IPOC_WEB is best understood first through mission fit: the operating problem it solves, the stakeholders it serves, and the outcomes it is expected to improve. This section frames that strategic baseline so later technical details remain anchored to command effectiveness, governance trust, and implementation realism.
 
-Use this document in three ways:
+Recommended use in three modes:
 1. **Executive alignment**: validate that platform capabilities map to command, governance, and readiness objectives.
 2. **Program planning**: define success criteria and adoption priorities before implementation sequencing.
 3. **Implementation governance**: ensure every technical increment ties back to command-cycle value and evidence quality.
 
-For customer-facing conversations, this section should be used to explain both the operational promise and the practical boundary of the solution: IPOC_WEB is designed as a command-and-coordination platform with evidence-grade governance workflows.
+For customer-facing conversations, use this section to communicate both ambition and boundary: IPOC_WEB is a command-and-coordination platform built for evidence-grade operational governance.
 
 ## Overview
 IPOC_WEB is an Incident Preparedness Operations Center platform designed for emergency management and public health operations. It unifies incident command, resource coordination, reporting, governance, and continuous improvement in a single operational system.

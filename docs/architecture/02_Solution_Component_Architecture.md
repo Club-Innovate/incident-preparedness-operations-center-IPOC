@@ -1,14 +1,14 @@
 # 02. Solution Component Architecture
 
 ## Executive Overview and How to Use This Document
-This document explains how IPOC_WEB is physically and logically assembled across user experience, API services, runtime hosting, and ingestion utilities. It is intended to answer the implementation-critical questions: where capabilities live, how responsibilities are separated, and how data and control flow across components.
+The solution architecture comes into focus here as a coherent system: user experience, API services, hosting model, and ingestion utilities working as one operational platform. The goal is to make component boundaries and control flow immediately clear so implementation and governance decisions can be made with confidence.
 
-Use this document when:
+Use this reference when:
 - defining solution boundaries for delivery teams,
 - planning integration or extension points,
 - evaluating reliability, security, and maintainability impacts of architecture decisions.
 
-For enterprise architecture reviews, this file should be treated as the structural blueprint that connects strategic goals to deployable software components.
+For enterprise architecture reviews, treat this file as the structural blueprint that connects strategic intent to deployable component design.
 
 ## Component Inventory
 - **Frontend (`frontend`)**: React + TypeScript + Vite user experience across command workspaces.
@@ -96,7 +96,7 @@ sequenceDiagram
 ```
 
 ## Practical Usage Guidance
-- Use this document to allocate ownership boundaries across teams.
+- Use this reference to allocate ownership boundaries across teams.
 - Use the matrix and flow sections to evaluate impact before introducing new modules.
 - Keep this file synchronized with actual repository topology to preserve architectural credibility.
 

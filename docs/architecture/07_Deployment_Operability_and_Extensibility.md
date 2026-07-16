@@ -1,9 +1,9 @@
 # 07. Deployment, Operability, and Extensibility
 
 ## Executive Overview and How to Use This Document
-This document defines how IPOC_WEB is deployed, operated, validated, and evolved over time. It connects architecture to day-two realities: environment setup, quality gates, observability, runbook discipline, and controlled extensibility.
+Sustained platform value depends on day-two excellence. This section outlines how IPOC_WEB is deployed, operated, validated, and evolved with discipline across environments, quality gates, observability signals, and extensibility controls.
 
-Use this document to:
+Use this reference to:
 - plan environment rollout and operational ownership,
 - define validation and release-governance expectations,
 - prioritize extensibility investments without destabilizing core workflows.
@@ -71,7 +71,7 @@ flowchart LR
 4. Additional compliance attestation workflows and evidence automation.
 
 ## Practical Usage Guidance
-- Use this document as the baseline runbook for environment readiness and release checks.
+- Use this reference as the baseline runbook for environment readiness and release checks.
 - Pair deployment and observability sections with security/compliance architecture during go-live planning.
 - Revisit extensibility strategy each quarter to sequence enhancements based on operational value and risk.
 

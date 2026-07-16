@@ -1,9 +1,9 @@
 # 05. Security, Compliance, and Governance Architecture
 
 ## Executive Overview and How to Use This Document
-This document explains how IPOC_WEB enforces trust: who can do what, how actions are governed, and how evidence is produced for audit and compliance workflows. It should be used as the primary architecture reference for security and compliance discussions with customers, internal governance teams, and implementation partners.
+Trust architecture is the foundation for enterprise adoption. This section defines how IPOC_WEB enforces access boundaries, governs high-impact actions, and produces evidence streams that support audit and compliance workflows.
 
-Use this document to:
+Use this reference to:
 - validate access and control architecture against organizational policy,
 - design evidence-generation workflows for requestable compliance artifacts,
 - communicate the difference between readiness posture and formal certification outcomes.
@@ -69,7 +69,7 @@ flowchart TB
 Architecture and workflow controls can support compliance readiness, but formal compliance attestation or certification requires organization-specific governance execution and independent assessment.
 
 ## Practical Usage Guidance
-- Use this document with security and legal teams during deployment planning.
+- Use this reference with security and legal teams during deployment planning.
 - Pair it with data architecture when defining retention and access controls.
 - Use traceability model and cadence sections to structure assessment preparation.
 
