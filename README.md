@@ -51,6 +51,7 @@ For complete architecture context, workflows, security/compliance posture, AI/an
 - `IPOC_WEB.Server/` - .NET 10 API and governance services
 - `IPOC_WEB.AppHost/` - app host/orchestration project
 - `IPOC_WEB.StreamingIngestor/` - .NET worker for stream simulation
+- `data/` - database initialization script and Azure SQL data-tier transfer guidance
 - `planning/` - implementation strategy and evidence artifacts
 - `security-compliance/` - compliance and operations supporting artifacts
 
@@ -68,6 +69,18 @@ For complete architecture context, workflows, security/compliance posture, AI/an
 4. Run UI smoke validation:
    - `npm run smoke:ui --prefix frontend`
 
+## Data and Cache Setup References
+- **Local database schema/bootstrap script**:
+  - `data/iocem-db-script.sql`
+  - Run this script against your local/dev SQL target when initializing a new IOCEM database instance.
+- **Azure SQL import into a different logical server (BACPAC flow)**:
+  - `data/data-tier-app/import-into-other-azure-sql-database-server.md`
+  - Use this when transferring data-tier artifacts to a new Azure SQL server/database.
+- **Cache runtime mode (local vs Redis)**:
+  - Local/in-memory cache is supported for developer startup.
+  - Redis mode is supported for shared/runtime consistency (including Docker-hosted Redis in local environments).
+  - Configure cache behavior in server settings (`Cache:UseRedis`) and validate via Administrator cache controls in the app.
+
 ## Local Rendering Recovery (if frontend does not load)
 - Confirm local runtime files exist and are populated:
   - `IPOC_WEB.Server/appsettings.json`
@@ -81,6 +94,9 @@ For complete architecture context, workflows, security/compliance posture, AI/an
 ## Implementation Notes
 - Claims in architecture docs are aligned to current repository implementation and roadmap posture.
 - Compliance narratives describe readiness/alignment workflows and do not represent automatic certification.
+- Data-tier migration and bootstrap references:
+  - `data/iocem-db-script.sql`
+  - `data/data-tier-app/import-into-other-azure-sql-database-server.md`
 - Local secret-bearing configuration files are intentionally ignored and untracked:
   - `IPOC_WEB.Server/appsettings.json`
   - `IPOC_WEB.Server/appsettings.Development.json`

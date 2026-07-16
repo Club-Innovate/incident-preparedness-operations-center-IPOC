@@ -1790,6 +1790,22 @@ export function normalizeKpi(key: string, rawValue: number, rawDelta: number): D
               'All operators use standardized terms during handoff and escalation.',
             ],
           },
+          {
+            id: 'reference-implementation-assets',
+            title: 'Implementation asset references (database, cache, and setup)',
+            kind: 'REFERENCE',
+            detail: 'Quick pointers to implementation artifacts used for local setup, data-tier transfer, and runtime cache behavior.',
+            tutorial: [
+              'Use `data/iocem-db-script.sql` to initialize schema/roles for a new local or dev IOCEM SQL database instance.',
+              'Use `data/data-tier-app/import-into-other-azure-sql-database-server.md` for BACPAC-based import into another Azure SQL logical server.',
+              'Use Administrator cache controls with `Cache:UseRedis` to validate local in-memory mode versus Redis-backed runtime behavior.',
+              'For Docker-based local Redis operation, align runtime configuration and then verify freshness and cache-clear workflows from Administrator surfaces.',
+            ],
+            sectionChecklist: [
+              'Database bootstrap/import artifact selected for the target environment scenario.',
+              'Cache mode expectation (local or Redis) is documented and validated after startup.',
+            ],
+          },
         ],
       },
     ],
