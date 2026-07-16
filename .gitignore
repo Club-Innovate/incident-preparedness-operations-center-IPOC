@@ -370,3 +370,4 @@ FodyWeavers.xsd
 /audit/
 /audit/**
 /.github/copilot-instructions.md
+/scripts/ai-search-service/export-ai-search-svc.ps1
