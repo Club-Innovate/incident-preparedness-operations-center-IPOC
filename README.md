@@ -157,4 +157,4 @@ For complete architecture context, workflows, security/compliance posture, AI/an
 - Commit-safe templates are provided as:
   - `IPOC_WEB.Server/appsettings.example.json`
   - `IPOC_WEB.Server/appsettings.Development.example.json`
-  - `frontend/.env.example`
+  - `frontend/.env.example` 
