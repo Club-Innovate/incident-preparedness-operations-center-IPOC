@@ -1,4 +1,13 @@
-# IPOC
+<div style="width:100%; background-color:#34445D; padding:12px 16px; box-sizing:border-box;">
+<table width="100%" cellspacing="0" cellpadding="0" style="border:0">
+  <tr>
+	<td bgcolor="#34445D" height="92" align="left" valign="middle" style="border:0;">
+	  &nbsp;&nbsp;&nbsp;&nbsp;
+	  <img src="./frontend/public/ipoc-logo.png" alt="IPOC logo" height="92" style="display:block; border:0; outline:none;" />
+	</td>
+  </tr>
+</table>
+</div>
 
 Incident Preparedness Operations Center (IPOC) is a modern command-and-coordination platform for emergency management and public health operations. It unifies incident command, resource posture, executive reporting, governance evidence, and AI-assisted decision support in one architecture.
 
@@ -33,6 +42,53 @@ flowchart LR
 - Reporting, executive briefs, AAR/HVA readiness, and replay exports
 - Admin governance, session controls, and audit evidence pathways
 - AI Incident Co-Pilot and predictive analytics support
+
+## Platform Screens at a Glance
+
+### Common Operating Picture (COP)
+![Common Operating Picture](./frontend/public/cop.png)
+
+The Common Operating Picture provides shared geospatial and situational context so command, operations, and support teams act from the same live operating baseline. It supports coordinated prioritization, cross-module awareness, and escalation discipline during active incident cycles.
+
+Supporting features include map-informed triage context, readiness signals, incident-scoped situational awareness, and command handoff continuity.
+
+See details:
+- [Operational Workflows and Command Model](./docs/architecture/04_Operational_Workflows_and_Command_Model.md)
+- [Solution Component Architecture](./docs/architecture/02_Solution_Component_Architecture.md)
+
+### Logistics Workspace
+![Logistics Workspace](./frontend/public/logistics.png)
+
+The Logistics workspace supports fulfillment coordination, resource continuity, and disruption-aware support operations across incidents. It is designed to keep supply and service workflows aligned with operational urgency and command objectives.
+
+Supporting features include queue-based logistics actions, weather/disruption context, map-backed location awareness, and analytics-driven support prioritization.
+
+See details:
+- [Operational Workflows and Command Model](./docs/architecture/04_Operational_Workflows_and_Command_Model.md)
+- [Data, Integration, and Interoperability Architecture](./docs/architecture/03_Data_Integration_and_Interop_Architecture.md)
+
+### Incident Workspace
+![Incident Workspace](./frontend/public/incident-workspace.png)
+
+The Incident workspace is the command-centered execution surface for incident lifecycle management, operational alignment, and section-level coordination. It helps teams maintain clear ownership, decision traceability, and progression from activation through closeout.
+
+Supporting features include ICS-aligned command controls, dependency-aware execution flow, decision logging expectations, and cross-functional coordination patterns.
+
+See details:
+- [Operational Workflows and Command Model](./docs/architecture/04_Operational_Workflows_and_Command_Model.md)
+- [Security, Compliance, and Governance Architecture](./docs/architecture/05_Security_Compliance_and_Governance_Architecture.md)
+
+### Report Workspace
+![Report Workspace](./frontend/public/report-workspace.png)
+
+The Report workspace packages operational outcomes into executive-ready and audit-supporting artifacts. It is used to produce decision-ready narratives, replay evidence, and structured outputs that support governance and after-action workflows.
+
+Supporting features include executive brief framing, AAR/HVA readiness outputs, evidence-oriented export workflows, and traceable reporting context.
+
+See details:
+- [Security, Compliance, and Governance Architecture](./docs/architecture/05_Security_Compliance_and_Governance_Architecture.md)
+- [Deployment, Operability, and Extensibility](./docs/architecture/07_Deployment_Operability_and_Extensibility.md)
+- [Architecture Reference Index](./docs/architecture/README.md)
 
 ## Architecture and Reference Documentation
 For complete architecture context, workflows, security/compliance posture, AI/analytics model, and deployment guidance:
