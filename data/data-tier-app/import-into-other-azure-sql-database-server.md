@@ -1,4 +1,3 @@
----
 # Import into the other Azure SQL Database server
 
 The recipient can use SSMS:
@@ -12,4 +11,3 @@ The recipient can use SSMS:
 7. Complete the wizard.
 
 The import generally creates a new database. It is not the equivalent of overwriting an existing database with `RESTORE DATABASE`. Azure SQL Database supports importing BACPAC files from local storage or Azure Blob Storage.
----
