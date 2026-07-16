@@ -27,19 +27,21 @@ import react from '@vitejs/plugin-react';
 
 const certPath = path.resolve(__dirname, '.cert', 'aspnetapp.pem');
 const keyPath = path.resolve(__dirname, '.cert', 'aspnetapp.key');
+const configuredPort = Number.parseInt(process.env.PORT ?? '', 10);
+const devPort = Number.isFinite(configuredPort) && configuredPort > 0 ? configuredPort : 51015;
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
-    host: 'localhost',
+    host: true,
     https: fs.existsSync(certPath) && fs.existsSync(keyPath)
       ? {
           cert: fs.readFileSync(certPath),
           key: fs.readFileSync(keyPath),
         }
       : undefined,
-    port: 51009,
+    port: devPort,
     strictPort: true,
     proxy: {
       // Proxy API calls to the app service

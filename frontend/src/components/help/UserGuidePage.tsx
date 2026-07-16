@@ -1467,12 +1467,16 @@ export function normalizeKpi(key: string, rawValue: number, rawDelta: number): D
               'Location and ICS tabs: ensure naming standards, geolocation accuracy, and position hierarchy consistency.',
               'Cache mode and ingestion tabs: apply changes in controlled increments, then validate data freshness indicators.',
               'Weather default and token/config tabs: confirm secrets and defaults align with operational policy.',
+              'Startup recovery discipline: keep local runtime files (`appsettings.json`, `appsettings.Development.json`, `.env.development`) present and sourced from `.example` templates when onboarding/rebuilding.',
+              'Frontend render recovery: if local UI fails to load and startup logs show Vite bind errors, verify AppHost/frontend port alignment and move to an available non-reserved local port per environment policy.',
               'After each update, verify effects in impacted modules and capture audit notes before finalizing.',
             ],
             sectionChecklist: [
               'User/role alignment verified for current shift.',
               'Critical location data and ICS hierarchy validated.',
               'Data ingestion and cache freshness checks passed.',
+              'Local runtime config files exist with valid environment-specific values.',
+              'Frontend startup endpoint is reachable from the active workstation profile.',
               'Audit notes captured with timestamp and actor.',
             ],
             commonPitfalls: [

@@ -43,7 +43,7 @@ if (useRedis)
 var webfrontend = builder.AddViteApp("webfrontend", "../frontend")
     .WithReference(server)
     .WaitFor(server)
-    .WithHttpsEndpoint(port: 51009, name: "https", env: "PORT");
+    .WithHttpsEndpoint(port: 51015, name: "https", env: "PORT");
 
 server.PublishWithContainerFiles(webfrontend, "wwwroot");
 

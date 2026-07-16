@@ -60,11 +60,23 @@ For complete architecture context, workflows, security/compliance posture, AI/an
 2. Create local runtime config files from examples (required):
    - `copy IPOC_WEB.Server\\appsettings.example.json IPOC_WEB.Server\\appsettings.json`
    - `copy IPOC_WEB.Server\\appsettings.Development.example.json IPOC_WEB.Server\\appsettings.Development.json`
+	  - `copy frontend\\.env.example frontend\\.env.development`
    - Replace placeholder values with your local settings/secrets.
    - Runtime files must not include `.example` in the filename.
-3. Start the app host and frontend stack for local operation.
+3. Start the app host and frontend stack for local operation:
+   - `dotnet run --project IPOC_WEB.AppHost/IPOC_WEB.AppHost.csproj --launch-profile https`
 4. Run UI smoke validation:
    - `npm run smoke:ui --prefix frontend`
+
+## Local Rendering Recovery (if frontend does not load)
+- Confirm local runtime files exist and are populated:
+  - `IPOC_WEB.Server/appsettings.json`
+  - `IPOC_WEB.Server/appsettings.Development.json`
+  - `frontend/.env.development`
+- If Vite reports port bind errors (`EACCES` / `EADDRINUSE`), use a non-reserved local port and keep AppHost + Vite aligned.
+- Current frontend dev endpoint is set to `51015`.
+- If Windows reserved ports change on your machine, check with:
+  - `netsh int ipv4 show excludedportrange protocol=tcp`
 
 ## Implementation Notes
 - Claims in architecture docs are aligned to current repository implementation and roadmap posture.
@@ -72,6 +84,8 @@ For complete architecture context, workflows, security/compliance posture, AI/an
 - Local secret-bearing configuration files are intentionally ignored and untracked:
   - `IPOC_WEB.Server/appsettings.json`
   - `IPOC_WEB.Server/appsettings.Development.json`
+  - `frontend/.env.development`
 - Commit-safe templates are provided as:
   - `IPOC_WEB.Server/appsettings.example.json`
   - `IPOC_WEB.Server/appsettings.Development.example.json`
+  - `frontend/.env.example`
