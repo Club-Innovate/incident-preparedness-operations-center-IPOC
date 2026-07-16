@@ -1,7 +1,7 @@
 <table width="100%" cellpadding="0" cellspacing="0" border="0">
   <tr>
 	<td bgcolor="#34445D" align="left" valign="middle" style="padding:12px 16px;">
-	  <img src="./frontend/public/ipoc-logo.png" alt="IPOC logo" height="60" />
+	  <img src="./frontend/public/ipoc-color-logo.png" alt="IPOC logo" height="60" />
 	</td>
   </tr>
 </table>
