@@ -3450,7 +3450,7 @@ const ADMIN_USER_BULK_IMPORT_HISTORY_LOCAL_KEY = 'ipoc.admin.userBulkImportHisto
                         void handleSeedSyntheticData();
                       }}
                       variant="outline-success"
-                      disabled={syntheticSeedLoading || adminDataMode !== 'demo' || !Boolean(readiness?.adminDataOpsScriptExecutionEnabled)}
+                      disabled={syntheticSeedLoading || adminDataMode !== 'demo' || !readiness?.adminDataOpsScriptExecutionEnabled}
                     />
                     <IconActionButton
                       iconClassName={syntheticResetLoading ? 'bi bi-arrow-repeat' : 'bi bi-trash3'}
@@ -3460,7 +3460,7 @@ const ADMIN_USER_BULK_IMPORT_HISTORY_LOCAL_KEY = 'ipoc.admin.userBulkImportHisto
                         void handleResetSyntheticData();
                       }}
                       variant="outline-warning"
-                      disabled={syntheticResetLoading || adminDataMode !== 'demo' || !Boolean(readiness?.adminDataOpsScriptExecutionEnabled)}
+                      disabled={syntheticResetLoading || adminDataMode !== 'demo' || !readiness?.adminDataOpsScriptExecutionEnabled}
                     />
                   </div>
                 </div>

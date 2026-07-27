@@ -88,4 +88,11 @@ jobs:
         run: npm run build
 
       - name: NPM audit (high and critical)
-        run: npm audit --audit-level=high
+        run: npm audit --audit-level=high --json > npm-audit-report.json
+
+      - name: Upload npm audit report
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: npm-audit-report
+          path: frontend/npm-audit-report.json

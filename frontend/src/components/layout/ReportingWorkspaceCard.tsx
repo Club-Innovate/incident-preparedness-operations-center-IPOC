@@ -1858,7 +1858,7 @@ function ReportingWorkspaceCard({
     }
 
     for (const row of selectedPendingApprovalRows) {
-      // eslint-disable-next-line no-await-in-loop
+       
       await setPendingApprovalDecision(row, decision, { silent: true });
     }
 
